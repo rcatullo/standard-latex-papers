@@ -1,0 +1,419 @@
+\documentclass[12pt]{article}
+
+\usepackage{standard}
+\newtheorem*{rs}{Rosetta Stone}
+
+\title{\large\bfseries{HONORS THESIS}}
+\author{\normalsize{RYAN CATULLO}}
+\date{}
+
+\begin{document}
+
+\maketitle
+\abstract{We study the geometric Langland's correspondence, which describes a bijection between the data of the moduli stack of principal $G$-bundles and finite dimensional representations of linear algebraic groups. }
+
+\tableofcontents
+
+\vspace{4em}
+\pagestyle{fancy}
+
+\section*{Acknowledgements}
+This project is submitted in partial fulfillment of the requirements for the degree in Bachelor of Science in Mathematics with Honors. I would like to thank my advisor, Professor Xinwen Zhu, for suggesting this topic and providing invaluable guidance through the research process. 
+
+\section{Notation}
+
+We first fix some notation. Let $k$ denote a commutative field. Let $\Aff_k = \CommAlg_k^{\op}$ be the category of affine $k$-schemes, which is the opposite category of commutative $k$-algebras. We fix the fpqc topology when referring to (pre)sheaves and (pre)stacks. We regard a presheaf as a discrete prestack so we can make definitions in the greatest generality. By a $k$-group $G$ we mean a sheaf of groups on $\Aff_k$. 
+
+\begin{defn}\label{gtorsor}
+    Let $X$ be a prestack on $\Aff_k$, and $G$ a $k$-group. A $G$\textit{-torsor} $\cale$ over $X$ is a prestack $\cale$ endowed with a left $G$-action, and a map $\pi \colon \cale \to X$ such that the following conditions hold.
+    \begin{enumerate}[label=(\roman*)]
+        \item The map $\pi \colon \cale \to X$ is $G$-equivariant, where $X$ is endowed with the trivial $G$-action.
+        \item For every $\spec R \to X$, there is a faithfully flat map $\spec R' \to \spec R$ such that $\spec R' \times_X \cale$ is $G$-equivariantly isomorphic to $\spec R' \times G$.
+    \end{enumerate}
+\end{defn}
+
+We denote the fpqc stack whose $R$-points are $G$-torsors $\cale$ on $\spec R$ with a $G$-equivariant map $\cale \to X$ by the quotient stack $[X/G]$. The motivation is that, since $X/G$ is not necessarily representable by a scheme, if it were then for every $\spec R \to X$ we would have the fiber product diagram below, where the down arrows indicate $G$-torsors and the map $\cale \to X$ is $G$-equivariant.
+\begin{figure}[H]
+    \centering
+    \begin{tikzcd}
+X_R = \cale \arrow[d] \arrow[r] & X \arrow[d] \\
+\spec R \arrow[r]                              & X/G             
+\end{tikzcd}
+\end{figure}
+The special case $[\spec k/G]$ is denoted $\bg$, and is called the classifying stack of $G$, so named as maps $X \to \bg$ correspond to $G$-torsors $\cale = X \times_{\bg} \spec k$ on $X$.
+
+Let $\cale \to X$ be a $G$-torsor and $V$ a $G$-space, i.e. a $k$-space with a $G$-action. We define the associated bundle or twisted product as the stack given by
+\[\cale \times^G V := [\cale \times V/G]\]
+where $G$ acts diagonally on $\cale \times V$. There is a natural projection $\cale \times^G V \to X$ with fibers isomorphic to $V$. This notation should be suggestive.
+
+Namely, if $V$ is a linear representation of $G$ we denote the associated bundle by $V_{\cale}$. The fibers over $X$ are isomorphic to the vector space $V$, so we can regard it as a vector bundle. In particular, if $\cale$ is a $\GL_n$-torsor and $V = k^n$ is the standard representation of $\GL_n$, then $\cale \to V_{\cale}$ defines an equivalence of groupoids between $\GL_n$-torsors and rank $n$ vector bundles on $X$.
+
+\subsection{Hom Stacks and $\Bun_G(X)$}
+
+For a base scheme $S$, let $X$ be a scheme over $S$, $\mfX$ a stack over $S$. Then we define the presheaf of groupoids
+\begin{align*}
+    \rHom_S(X, \mfX) \colon (\Sch/S)^{\op} &\longrightarrow \Grpd \\
+    (T \to S) &\longmapsto \Hom(T \times_S X, \mfX)
+\end{align*}
+If $\mfX$ is a fppf stack, so is $\rHom_S(X, \mfX)$. We focus on the special case $\mfX = \bg$ and $X$ is a smooth projective curve.
+
+\begin{defn}
+    Let $X$ be smooth projective curve over an algebraically closed field $k$, and let $G$ be an affine algebraic group over $k$. Define the following presheaf, which is a sheaf since $\bg$ is as well.
+    \[\Bun_G(X) := \rHom_k(X, \bg)\]
+    We show $\Bun_G(X)$ is in fact a algebraic stack locally of finite type, called the \textit{moduli space of principal $G$-bundles on $X$}
+\end{defn}
+
+When it is clear from context, we omit $k$. Consider the functor of points of $\Bun_G(X)$.
+\[\rHom(X, \bg)(*) = \Hom(X, \bg) = \bg(X)\]
+By definition of $\bg$, this is the groupoid of $G$-bundles on $X$.
+
+We analyze the sheaf of sections, as a corollary showing that for $X$ projective, the diagonal of $\Bun_G(X)$ is schematic. In the case $\mfX = Y$ is a scheme, namely $Y = \bba^1$, a point of $\rHom(X, \bba^1)$ is the vector space $\Hom(X, \bba^1) = \Gamma(X, \calo_X)$ (recall $X$ is a curve). Then it is reasonable to expect that $\rHom(X,Y)$ is a scheme when this vector space is finite dimensional.
+
+Properness of $X$ is a natural condition that implies the vector space of global sections is finite dimensional. We will show $\rHom(X,Y)$ is representable for $X$ proper and $Y$ quasi-projective. More generally, define the sheaf of sections as follows.
+
+\begin{defn}
+    Let $S$ be a scheme, and $X \to S$ an $S$-scheme. Let $Y \to X$ be morphism. Let $\Sect_S(X, Y)$ be the presheaf on $\Sch/S$ sending
+    \[(T \to S) \mapsto \Hom_{X_{T}}(X_{T}, Y_{T}) = \Hom_{X}(X_{T}, Y)\]
+    Since the Yoneda functor $\Hom(-, Y)$ is an fppf sheaf of sets, so is $\Sect_S(X, Y)$.
+\end{defn}
+
+\begin{thm}\label{sectrep}
+    Suppose $X \to S$ is a flat, proper morphism and $Y \to X$ is quasiprojective. Then $\Sect_S(X,Y)$ is representable by a scheme.
+\end{thm}
+
+\begin{proof}
+    See \cite{Wang} Theorem 3.1.1, the proof is tangential to content of this paper.
+\end{proof}
+
+In the case $S = k$, this functor is exactly $\rHom_k(X, Y)$. Recall that we want to show the diagonal morphism is representable.
+\begin{equation}\label{diag}
+\Bun_G(X) \to \Bun_G(X) \times \Bun_G(X)    
+\end{equation}
+
+It's not hard to show that for $G, H$ linear algebraic groups over $k$, $\bg \times \mathcal{B}H \cong \mathcal{B}(G \times H)$ and therefore $\Bun_G(X) \times \Bun_H(X) \cong \Bun_{G \times H}(X)$. Thus in (\ref{diag}) we have a morphism $\Bun_G(X) \to \Bun_{G \times G}(X)$ which we want to show is representable. It suffices to prove the following more general assertion.
+
+\begin{prop}\label{injrep}
+    Let $G \to H$ be an injective homomorphism of affine algebraic groups. Then the corresponding morphism of stacks $\Bun_G(X) \to \Bun_H(X)$ is representable by schemes.
+\end{prop}
+
+We will also use this proposition to reduce showing $\Bun_G(X)$ is an algebraic stack to showing $\Bun_{\GL_n}(X)$ is an algebraic stack. Indeed, just pick an embedding $G \to \GL_n$ and this follows by the above proposition and the fact that if $\mfX \to \mfY$ is representable with the $\mfY$ an algebraic stack, then $\mfX$ is an algebraic stack. We will show later that $\Bun_{\GL_n}(X)$ has a smooth surjective atlas.
+
+Recall that $\bg \to \bh$ is representable and quasiprojective, and the map $\Bun_G(X) \to \Bun_H(X)$ is just given by applying $\rHom(X, -)$. The schematic fibers of $\rHom(X,\bg) \to \rHom(X, \bh)$ look like $\Sect_S(X,Z)$ for $X,Z,S$ satisfying the conditions of Theorem \ref{sectrep}, hence the schematic fibers are representable by schemes. We make this argument rigorous.
+
+\begin{prop}
+    Let $\mfX \to \mfY$ be a representable quasi-projective map of presheaves on $\Sch/S$. Then for $X$ a proper $S$-scheme, the map $\rHom_S(X, \mfX) \to \rHom_S(X, \mfY)$ is representable by schemes
+\end{prop}
+
+\begin{proof}
+    Fix a $T$-point $T \to \rHom_S(X, \mfY)$, i.e. a map $X_T \to \mfY$. Then the product
+    \[\rHom_S(X, \mfX) \times_{\rHom_S(X, \mfY)} T\]
+    is a presheaf of groupoids associating $R \to T$ to 
+    \[\Hom_{X_T}(X_R, \mfX \times_{\mfY} X_T)\]
+    Let $Z_T = \mfX \times_{\mfY} X_T$, and note that by assumption $Z_T$ is a quasi-projective scheme over $X_T$. Then we see easily that the above fiber is identified with $\Sect_T(X_T, Z_T)$, hence by Theorem \ref{sectrep} this presheaf is representable by schemes.
+\end{proof}
+
+There is another standard theorem on $\Bun_G(X)$ which we omit from this paper, but which can be found in \cite{Wang} Theorem 1.0.1.
+
+\begin{thm}
+    For $X$ a smooth projective curve over an algebraically closed field $k$, $G$ an affine algebraic group over $k$, the stack $\Bun_G(X)$ is an algebraic stack locally of finite type.
+\end{thm}
+
+We will however give the reason $\Bun_G(X)$ is not finite type. Denote by $\Bun_r(X)$ the stack $\Bun_{\GL_r}(X)$.
+
+\begin{rem}
+Elements of $\Bun_r(X)$ are maps $S \times X \to \calb\text{GL}_r$, which in turn are $\GL_r$-bundles $Z_{S \times X} \to S \times X$. Since $\GL_r$ acts on a vector space $V$ of dimension $r$, we can form the associated bundle $V_{Z_{S \times X}}$ which is a fiber bundle on $S \times X$ with fiber isomorphic $V$, i.e. a rank-$r$ vector bundle on $S \times X$. Therefore, $\Bun_r(X)$ is the stack of rank-$r$ vector bundles on $X$.
+\end{rem}
+
+\begin{thm}\label{noft}
+    There is no surjection from a scheme of finite type to $\Bun_r(X)$.
+\end{thm}
+
+There are two reasons this is true. The first is that the determinant of a vector bundle varies continuously in families, and since there are infinitely many components of $\Pic(X)$ it follows that $\Bun_2(X)$ has infinitely many components. Additionally, each connected component is not of finite type.
+
+Fix an ample line bundle $\ox(1)$ on $X$. For a vector bundle $\calf$ on $X$, let $\calf(n) = \calf \otimes \ox(1)^{\otimes n}$ which we call the \textit{$n$th twist of $\calf$}. If $S$ is a scheme, then let $X_S = S \times X$ and let $\calf_S$ denote the pullback of $\calf$ along $X_S \to X$. Consider the rank-$2$ vector bundles $\ox(n) \oplus \ox(-n)$ as points of $\Bun_2(X)$. Then Theorem \ref{noft} follows from the following two lemmas.
+
+\begin{lem}\label{bun2conn}
+    For every $n$, there is a connected variety $Y$, a map $Y \to \Bun_2(X)$, and two points $y_0,y_1$ such that $y_0$ maps to $\ox \oplus \ox$ and $y_1$ maps to $\ox(n) \oplus \ox(-n)$.
+\end{lem}
+
+That is, all of the $\ox(n) \oplus \ox(-n)$ lie in the same connected component of the atlas.
+
+\begin{lem}\label{bun2ft}
+    There is no map $Y \to \Bun_2(X)$ from a scheme of finite type $Y$ and points $y_n \in Y$, $n = 0,1,\ldots$ such that $y_n$ maps to $ \ox(n) \oplus \ox(-n)$. 
+\end{lem}
+
+Recall that by Serre vanishing, for $\calf$ a sheaf on a curve $X$ and $n \gg 0$ we have that $\calf(n)$ is generated by global sections, and that $H^1(X, \calf(n)) = 0$. There is a relative version which says for a scheme $S$ of finite type and $n \gg 0$, the sheaf $\calf_S(n)$ is generated by global sections and $R^1p_* \calf_S(n) = 0$ where $p \colon X_S \to S$ is projection to $S$.
+
+\begin{proof}[Proof of Lemma \ref{bun2conn}] Let $\calf = \ox \oplus \ox$, and note by Serre vanishing for $n \gg 0$ $\calf(n)$ is globally generated. That is, we have a never-zero section of $\Gamma(X, \calf(n))$ which gives a short exact sequence.
+\[0 \to \ox \to \calf(n) \to \calf(n)/\ox \to 0\]
+The cokernel $\call$ is a line bundle since $\calf(n)$ is rank $2$, hence we have a short exact sequence.
+\[0 \to \ox(-n) \to \calf \to \call(-n) \to 0\]
+Taking determinants, 
+\[\call(-n) = \det(\calf) \otimes \ox(n) = \ox(n)\]
+and so $\calf = \ox \oplus \ox$ is an extension of $\ox(-n)$ by $\ox(n)$. Therefore, we can let $Y$ be the affine space associated to the vector space $\Ext(\ox(n), \ox(-n))$.
+\end{proof}
+
+\begin{todo}
+    Give proofs of Lemma 1.7 and Theorem 1.5
+\end{todo}
+
+\section{Uniformization}
+
+The idea of uniformization is to exhibit a bijection between $\Bun_G(X)$ and a quotient of a so-called "loop group" by left and right actions of loop subgroups. First we describe the topological uniformization theorem to gain intuition.
+
+\subsection{Topological Motivation}
+
+Let $X$ be a compact connected oriented smooth real surface of genus $g$
+and $G$ a connected topological group. The notion of a topological $G$-bundle is what one expects: a space $\pi \colon E \to X$ admitting a right $G$-action for which $\pi$ is invariant, and which is locally trivial in the topological sense. 
+
+\begin{defn}
+    Let $x_0 \in X$ and let $D \subset X$ be a neighborhood of $x_0$ homeomorphic to a disk $D$. Define $D^* = D \setminus x_0$ and $X^* = X \setminus x_0$. Then we have the following three groups.
+    \begin{align*}
+        L^{\text{top}} G &= \{f \colon D^* \to G \mid f \text{ continuous}\} \\
+        L^{\text{top}}_+ G &= \{f \colon D \to G \mid f \text{ continuous}\} \\
+        L^{\text{top}}_X G &= \{f \colon X^* \to G \mid f \text{ continuous}\} 
+    \end{align*}
+\end{defn}
+
+Then these groups satisfy the following by definition.
+\[L^{\text{top}}_X G \subset L^{\text{top}} G \supset L^{\text{top}}_+ G\]
+Let $\Bun^{\text{top}}_G(X)$ be the set of isomorphism classes of topological $G$-bundles on $X$.
+
+\begin{prop}[Topological Uniformization]\label{topunif}
+    There is a canonical bijection
+    \[_{L^{\text{top}}_X G}\backslash^{L^{\text{top}} G}/_{L^{\text{top}}_+ G} \xlongrightarrow{\sim} \Bun^{\text{top}}_G(X)\]
+\end{prop}
+
+\begin{lem}\label{lemma1}
+    If $E$ is a topological $G$-bundle on $X$, the restrictions of $E$ to $D$ and $X^*$ are trivial. 
+\end{lem}
+
+\begin{proof}
+
+To see this for $D$, note that it is contractible so any $G$-bundle on $D$ is necessarily trivial. This is because contractible implies there are maps $f \colon D \to *$ and $g \colon * \to D$ for a point $* \in D$ such that $g \circ f \sim \id_D$ are homotopic, so their pullbacks are isomorphic.
+    \[f^* g^* E \cong (g \circ f)^* E \cong \id_D^* E = E \]
+    Then $g^*E$ is a $G$-bundle on $*$, which must be trivial, hence $f^* g^* E \cong E$ is also trivial. 
+
+    For the restriction to $X^*$, note $X$ is a $2$-dimensional CW complex and, since $G$ is connected, there is no obstruction to the existence of a section of a $G$-bundle on $X^*$. Assume without loss of generality that $x_0$ lies in the interior of a $2$-cell $D^2$. Pick elements $g_{\varepsilon_0}$ in the fiber of $E$ over every $0$-cell $\varepsilon_0$ on $X$. Then a $1$-cell $\varepsilon_1 = [0,1]$ is contractible, $E\vert_{\varepsilon_1}$ is trivial by the above argument. Since $G$ is connected, there is a section
+    \[\varepsilon_1 \to \varepsilon_1 \times G \cong E\vert_{\varepsilon_1}\] 
+    extending the $0$-cell sections on $0$ and $1$ (i.e. there is a path in $G$ from $g_0$ to $g_1$). Do this for every $1$-cell. 
+    
+    For a $2$-cell $\varepsilon_2 = D^2$, again $E \vert_{\varepsilon_2}$ is trivial and we have a section $S^1 \to E \vert_{\varepsilon_2}$. Since $G$ is simply connected, any map $S^1 \to G$ extends to $D^2 \to G$ by definition, so we can extend this section. If our $2$-cell is punctured by $x_0$, then it is homotopic to the boundary $S^1$ so we can extend it without the simply connected hypothesis.
+\end{proof}
+
+\begin{proof}[Proof of Proposition \ref{topunif}]
+        Let $E$ be a $G$-bundle on $X$. By Lemma \ref{lemma1}, the restrictions of $E$ to $D$ and $X^*$ are trivial. Choose trivializations $\sigma \colon E \vert_D \xlongrightarrow{\sim} D \times G$ and $\tau \colon E \vert_{X^*} \xlongrightarrow{\sim} X^* \times G$. Then the transition function $\gamma = \tau \circ (\sigma\vert_{D^*})^{-1}$ is an element of $L^{\text{top}} G$. In the other direction, given $\gamma \in L^{\text{top}} G$ and (trivial) $G$-bundles on $D$ and $X^*$, we can glue them along $\gamma$ on the intersection $D \cap X^* = D^*$ to get a $G$-bundle on $X$. Thus, we have a canonical bijection
+        \[L^{\text{top}}G = \left\{(E, \sigma, \tau) \mid E \in \Bun_G(X), \sigma \colon E \vert_D \xlongrightarrow{\sim} D \times G, \tau \colon E \vert_{X^*} \xlongrightarrow{\sim} X^* \times G\right\}\]
+        Check that multiplying $\gamma \in L^{\text{top}}G$ on the right by $\alpha \in L^{\text{top}}_+ G$ changes the trivialization $\sigma$, and on the left by $\beta^{-1} \in L^{\text{top}}_X G$ changes $\tau$. Thus quotienting by these actions forgets the trivializations $\sigma, \tau$, hence we get the desired bijection.
+\end{proof}
+
+\begin{cor}
+    $\Bun_G(X)$ is in bijection with $\pi_1(G)$. 
+\end{cor}
+
+\begin{proof}
+    \begin{todo}
+        Write this proof.
+    \end{todo}
+\end{proof}
+
+\subsection{Algebraic Uniformization}\label{unif}
+
+We now want to transfer over the ideas to the stack-theoretic construction of $\Bun_G(X)$ and obtain an analog of Proposition \ref{topunif}. Let $k$ be an algebraically closed field, $X$ a smooth, connected and complete algebraic curve over $k$ and $G$ an affine algebraic group over $k$. Let $x_0 \in X$ be a closed point, and define $X^* = X \setminus x_0$. 
+\begin{rem}
+    $X^*$ is affine. Pick any rational function $X \dashrightarrow \bbp^1$ with a pole at $x_0$ and regular elsewhere, and note $X^*$ is the preimage of $\bba^1 = \bbp^1 \setminus x_0$. 
+\end{rem}
+How do we pick $D$ a "neighborhood of $x_0$ homeomorphic to a disk"? Let $\hat{\calo}_{X,x}$ be the completion of the local ring at $x$ and define $D_{x_0} := \spec \hat{\calo}_{X,x}$. If we choose a local coordinate $z$, we can identify $\hat{\calo}_{X,x}$ with $k[[z]]$, hence $D_{x_0}$ with the "formal disk" $\spec k [[z]]$.
+
+Then $D^*_{x_0} = D_{x_0} \setminus x_0$ is $\spec K_{x_0}$ where $K_{x_0}$ is the fraction field of $\hat{\calo}_{X,x}$, hence is identified in the local coordinate $z$ with $\spec k ((z))$. Thus, if $U = \spec R$ we denote $D^*_U := \spec R ((z))$, $D_U := \spec R [[z]]$, and $X^*_U := X^* \times U$. 
+
+The analogue of $L^{\text{top}} G$ is $\Hom(D^*, G)$, i.e. $k ((z))$-valued points in $G$ which we denote $G(k ((z)))$. We need to make this functorial.
+\begin{defn}
+    Define the $k$-group $LG, L_X G, L^+G$ as the following functors.
+    \begin{align*}
+    LG \colon \Aff/k &\longrightarrow \Grp \\
+    U = \spec R &\longmapsto G(R ((z))) \\
+     \\
+    L^+ G \colon \Aff/k &\longrightarrow \Grp \\
+    U = \spec R &\longmapsto G(R [[z]]) \\ 
+     \\
+    L_X G \colon \Aff/k &\longrightarrow \Grp \\
+    U = \spec R &\longmapsto G(\calo(X^*_U))
+\end{align*}
+\end{defn}
+
+\begin{defn}
+    Let $\Gr_G$ be the quotient $k$-space $LG/L^+G$, that is the sheafification of the presheaf
+\[U = \spec R \longmapsto G(R((z)))/G(R[[z]])\]
+\end{defn}
+
+Then $\Gr_G$ admits a left-action by $L_X G$, so we can form the quotient stack $[L_X G \backslash \Gr_G ]$. 
+\begin{todo}
+    Sanity check. Write out this action explicitly.
+\end{todo}
+\begin{thm}[Uniformization] Suppose $G$ is semi-simple. Then there is a canonical isomorphism of stacks
+\[[_{L_X G}\backslash^{LG}/_{L^+ G}] \xlongrightarrow{\sim} \Bun_G(X)\]
+    Moreover, the $L_X G$-bundle $\Gr_G \xrightarrow{L_X G} \Bun_G(X)$ is locally trivial in the \'etale topology if the characteristic of $k$ does not divide the order of $\pi_1(G(\bbc))$
+\end{thm}
+
+\begin{todo}
+    Write proof or outline.
+\end{todo}
+
+\section{The Determinant and Pfaffian Line Bundles}
+
+Let $X$ be a projective curve, smooth and connected over an algebraically closed field $k$.
+
+\subsection{The Determinant Line Bundle}
+
+Let $\fanf$ be a vector bundle over $X_S = X \times_k S$ where $S$ is a locally noetherian $k$-scheme. We think of $\fanf$ as a family of vector bundles parameterized by $S$.
+
+\begin{defn}
+    Let $K^{\bullet}$ be a complex of locally free $\calo_S$-modules.
+    \[0 \to K^0 \xrightarrow{\gamma} K^1 \to 0\]
+    We say $K^{\bullet}$ is \textit{representative of the cohomology of $\fanf$} if for all base changes $T \xrightarrow{f} S$
+    \begin{figure}[H]
+        \centering
+        \begin{tikzcd}
+X_T \arrow[d, "u"] \arrow[r, "g"] & X_S \arrow[d, "p"] \\
+T \arrow[r, "f"]                  & S                 
+\end{tikzcd}
+    \end{figure}
+    we have $H^i(f^* K^{\bullet}) = R^i u_* g^* \fanf$.
+\end{defn}
+
+In particular, if $s \in S$ is closed then 
+\begin{equation}\label{cbcclosedpoint}
+    H^i(K^{\bullet}_s) = H^i(X, \fanf_s)
+\end{equation}
+Compare this with the Cohomology and Base Change theorem. In our context, choose a resolution
+\[0 \to P_1 \to P_0 \to F \to 0\]
+of $\fanf$ by $S$-flat coherent $\calo_{X_S}$-modules such that $p_* P_0 = 0$.
+\begin{todo}
+    Show how this follows from relative Serre's theorem A. Also explain below sentence, i.e. why is this complex representative of the cohomology of $\fanf$?
+\end{todo}
+Then $p_* P_0 = 0$ and, by base change for coherent cohomology, the following is a convenient choice.
+\begin{equation}\label{rpfcomplex}
+    0 \to R^1 p_* P_0 \to R^1 p_* P_1 \to 0
+\end{equation}
+\begin{todo}
+This result is generally quoted as choosing a perfect complex
+of length one representing $Rp_* \fanf$ in the derived category $\cald_c(S)$. Explain this.
+\end{todo}
+\begin{defn}
+    The \textit{determinant bundle} of a complex $K^{\bullet}$ of locally free $\calo_S$-modules $0 \to K^0 \to K^1 \to 0$ is
+    \[\det K^{\bullet} = \bigwedge^{\text{top}} K^0 \otimes \left(\bigwedge^{\text{top}} K^1 \right)^{-1}\]
+    The determinant of $\fanf$ is defined as
+    \[\cald_{\fanf} = \det(Rp_* \fanf)^{-1}\]
+    where $Rp_* \fanf$ is the complex (\ref{rpfcomplex}) above.
+\end{defn}
+In general, given a representative $K^{\bullet}$ for the cohomology of $\fanf$ we can let $\cald_{\fanf} = \det(K^{\bullet})^{-1}$, which does not depend up to canonical isomorphism on our choice of $K^{\bullet}$. 
+
+If we apply (\ref{cbcclosedpoint}), the definition of representative complex for a closed point, we can see that the fiber of $\cald_{\fanf}$ at $s \in S$ is
+\[\cald_{\fanf}(s) = \left(\bigwedge^{\text{top}} H^0(X, \fanf_s)\right)^{-1} \otimes \left(\bigwedge^{\text{top}} H^1(X, \fanf_s) \right)\]
+Consider $\fane$ a vector bundle on $X$, and let $X_S \xrightarrow{q} X$. Then we can consider the determinant of the twisted bundle $\fanf \otimes q^* \fane$. Then one can show that $\cald_{\fanf \otimes q^* \fane}$ only depends on the class of $\fane$ in $K(X)$, the Grothendieck group.
+\begin{todo}
+    Check this.
+\end{todo}
+Thus, we obtain a group morphism, \textit{Le Potier's determinant morphism}
+\begin{align*}
+    \lambda_{\fanf} \colon K(X) &\longrightarrow \Pic(S) \\
+    \fanh &\longmapsto \cald_{\fanf \otimes q^* \fanh}
+\end{align*}
+where $\fanh = \sum [\fane_i]$ is a formal sum of isomorphism classes of vector bundles subject relations generated by vanishing of alternating sums in exact sequences.
+\begin{rem}
+    If $\fanf$ comes from an $\SL_r$-bundle, i.e. has trivial determinant, then twisting by $\fanh$ and taking determinants means taking the $\rank(\fanh)$-th power of $\cald_{\fanf}$.
+\end{rem}
+\begin{lem}
+    Suppose $\fanf$ is a vector bundle on $X_S$ such that $\bigwedge^{\text{top}} \fanf$ is the pullback of some line bundle on $X$. Then
+    \[\cald_{\fanf \otimes q^* \fanh} = \cald_{\fanf}^{\otimes \rank(\fanh)} \in \Pic(S)\]
+\end{lem}
+\begin{proof}
+    It suffices to to show this for $\fanh = \fane$ a vector bundle. After writing $\fane$ as an extension, we can assume $\fane = \fanl$ is a line bundle on $X$. Thus, it suffices to show it for $\fanl = \calo_X(-p)$ for $p \in X$. Consider the short exact sequence
+    \[0 \to \fanf \otimes q^*\calo_X(-p) \to \fanf \to \fanf \otimes q^*\calo_p \to 0\]
+    Applying determinants, we get $\cald_{\fanf} = \cald_{\fanf \otimes q^*\calo_X(-p)} \otimes \cald_{\fanf \otimes q^*\calo_p}$. Since $\bigwedge^{\text{top}}\fanf$ is the pullback of a line bundle on $X$, it follows that $\cald_{\fanf \otimes q^*\calo_p}$ is trivial and we are done.
+\end{proof}
+\begin{todo}
+    Expand on this. How is this relevant to affine Grassmannian
+\end{todo}
+\subsection{Pfaffian Bundle}
+\begin{todo}
+    This section.
+\end{todo}
+
+\section{Affine Grassmannian}
+An equivalent viewpoint of $\Gr_G$ is the following. Let $\bbf$ be a complete discrete valuation field, $\calo$ its ring of integers, $k$ its residue field, and $V = \bbf^n$.
+\begin{defn}
+    A lattice $\Lambda$ is a finitely generated $\calo$-submodule of $V$ such that $\Lambda \otimes \bbf = V$.
+\end{defn}
+For example, $\Lambda_0 = \calo^{\oplus n}$ is a lattice for $V$. Let $\Gr$ be the set of such lattices. Every lattice can be translated to $\Lambda_0$ by an automorphism of $V$, hence as sets $\Gr = \Gl_n(\bbf)/\Gl_n(\calo)$. Consider the case $X$ is a smooth projective algebraic curve over $k$, and $x \in X(k)$ a point. Then the complete local ring at $x$ is $\calo = k[[t]]$ with residue field $k$, which is also the ring of integers of the complete local discrete valuation field $\bbf = k((t))$. Then we can identify
+\[\Gr = \{\cale \text{ a vector bundle on } X, \text{ }\beta \colon \cale_{X^*} \cong \calo_{X^*}^{\oplus n} \text{ a local trivialization}\}\]
+Which has a natural uniformization map $\Gr \to \Bun_n(X)$, just as in Section \ref{unif}.
+
+\subsection{Definitions and First Properties}
+We start by describing the affine Grassmannian for $G = \Gl_n$. It makes sense to talk about a family of lattices in $k((t))$
+\begin{defn}
+    Let $R$ be a $k$-algebra. An $R$-family of lattices in $k((t))^n$ is a finitely generated projective $R[[t]]$-submodule $\Lambda$ of $R((t))^n$ such that $\Lambda \otimes R((t)) = R((t))^n$.
+\end{defn}
+
+\begin{defn}
+    The affine Grassmannian $\Gr_{\Gl_n}$ for $\Gl_n$ is the presheaf that assigns to every $k$-algebra $R$ the set of $R$-families of lattices in $k((t))^n$.
+\end{defn}
+
+For simplicity, we write $\Gr$ for $\Gr_{\Gl_n}$. The goal is to show the following theorem.
+\begin{thm}\label{indproj}
+    The affine Grassmannian $\Gr$ is represented by an ind-projective scheme.
+\end{thm}
+\begin{defn}
+    A $k$-space is an \textit{ind-scheme} if it is the directed limit of a system of $k$-schemes $(Z_{\alpha})_{\alpha \in I}$ such that the maps $i_{\alpha, \beta} \colon Z_{\alpha} \to Z_{\beta}$ are closed embeddings.
+\end{defn}
+Any property $P$ which is stable under closed embeddings makes sense for ind-schemes. We say $Z$ satisfies ind-$P$ if each $Z_{\alpha}$ has property $P$. Thus, Theorem \ref{indproj} says that $\Gr$ is a directed limit of a system of projective schemes under closed embeddings.
+
+The proof is technical, although the underlying idea is simple. We give motivation by describing this idea on the level of $k$-points. Let $\Lambda_0 = k[[t]]^n$ denote the standard lattice. Let the following denote the subspace of classifying lattices $\Lambda$ in $k((t))^n$ whose formal series and inverses have poles of order $\leq N$.
+\[\Gr^{(N)} = \{\Lambda \in \Gr \mid t^{N}  \Lambda_0 \subset \Lambda \subset t^{-N} \Lambda_0\} \subset \Gr\]
+It should be clear that $\Gr $ is an increasing union of these $\Gr^{(N)}$, hence it suffices to show $\Gr^{(N)}$ is a projective scheme.
+
+For a lattice $\Lambda \in \Gr^{(N)}$, the quotient $\Lambda/t^N \Lambda_0$ can be regarded as a subspace of $k^{2nN} \cong t^{-N} \Lambda_0/t^N \Lambda_0$, stable under the action of $t$. Then $\Gr^{(N)}$ is a closed subscheme of the usual Grassmannian $\Gr(2nN)$ classifying finite dimensional subspaces in $k^{2nN}$, and therefore is a projective scheme.
+
+\begin{proof}[Proof of Theorem \ref{indproj}]
+    For every $R$-family of lattices $\Lambda \subset R((t))^n$ there exists some $N$ large enough such that
+    \begin{equation}\label{grn}
+        t^N R[[t]]^n \subset \Lambda \subset t^{-N} R[[t]]^n
+    \end{equation}
+    So $\Gr$ is the union of subfunctors $\Gr^{(N)}$ consisting of those lattices satisfying (\ref{grn}). The key observation is the following lemma.
+    \begin{lem}\label{grNf}
+        Define the following presheaf.
+        \[\Gr^{(N), f}(R) := \left\{R[[t]]\text{-quotient modules of } \frac{t^{-N} R[[t]]^n}{t^N R[[t]]^n} \text{ that are projective as }R\text{-modules}\right\}\]
+        Then via the following map, $\Gr^{(N)}$ is identified with the presheaf $\Gr^{(N),f}$.
+        \[\Lambda \mapsto Q = t^{-N} R[[t]]/\Lambda \]
+    \end{lem}
+    This is obvious for $R = k$ as we saw above, but subtle for general $R$. Then we have another lemma that completes the idea above.
+    \begin{lem}\label{gr2nN}
+        The functor $\Gr^{(N), f}$ is represented by a closed subscheme of $\Gr(2nN)$.
+    \end{lem}
+    We prove Lemma \ref{gr2nN} first.
+    
+\end{proof}
+
+\section{Applications of $\Gr$ to $\Bun_G$}
+
+Let $X$ be a smooth projective curve over $k$, $G$ a fiberwise connected smooth affine group scheme over $X$. Then as we saw in the previous sections, the moduli stack of $G$-torsors on $X$ $\Bun_G$ is an algebraic stack locally of finite presentation over $k$. 
+
+Let $x$ be a closed point of $X$, and recall the following definition of $\Gr_{G,x}$, where $X^* = X \setminus \{x\}$.
+\[\Gr_{G,x}(R) = \left\{(\cale, \beta) \;\Big|\; \begin{array}{c} \cale \text{ is a } G \text{-torsor on } X_R \\ \beta \colon \cale\vert_{X_R^*} \cong \cale^0 \vert_{X_R^*} \end{array}\right\}\]
+Then we have a natural morphism given by $(\cale, \beta) \mapsto \cale$. 
+\[u_x \colon \Gr_{G,x} \to \Bun_G\]
+Let $G^{X^*}$ denote the space of sections with values in $G$, i.e. $G^{X^*}(R) = \Gamma(X^*_R, G)$. 
+\begin{lem}
+    $G^{X^*}$ is represented by a group ind-scheme.
+\end{lem}
+\begin{proof}
+    Reduction to and proof of the case $G = \GL_n$.
+\end{proof}
+Recall also the loop group $LG_x$.
+\[LG_x(R) = \left\{(\cale, \alpha, \beta) \;\Big|\; \begin{array}{c} \cale \text{ a } G \text{-torsor on } X_R \\ \alpha \colon \cale\vert_{D_{x,R}} \cong \cale^0\vert_{D_{x,R}} \text{ and } \beta \colon \cale\vert_{X_R^*} \cong \cale^0\vert_{X_R^*}\end{array}\right\}\]
+If we restrict $G^{X^*}$ to $D_x^* \subset X^*$.
+
+\printbibliography
+
+\end{document}

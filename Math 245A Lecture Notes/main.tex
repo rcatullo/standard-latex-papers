@@ -1,0 +1,431 @@
+\documentclass[12pt]{article}
+
+\usepackage{standard}
+
+\title{\large\bfseries{TOPICS IN ALGEBRAIC GEOMETRY}}
+\author{\normalsize{RYAN CATULLO}}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\vspace{4em}
+\pagestyle{fancy}
+
+\section*{Acknowledgments}
+This document is a summary of lecture notes from a course on topics of contemporary interest in algebraic geometry, taught by Professor Ravi Vakil in the fall of 2024. The companion reference is Professor Vakil's notes on the Foundations of Algebraic Geometry (FOAG), which can be found on this \href{https://math216.wordpress.com/}{blog}.
+
+\section{Construction of $\Hilb$ and $\Quot$}
+
+The intuitive idea of a moduli space is to parameterize some class of objects of interest by some sort of geometric space. There are a few examples which one should already be familiar with.
+
+\begin{example}
+  Projective space $\bp_{\cc}^n$ can be viewed as a moduli space of lines in $\cc^n$ through the origin since its points correspond to lines.
+\end{example}
+
+This is a half-truth, projective space is really the moduli space of line bundles with $n$ basepoint-free global sections. But we'll get to that in a moment.
+
+\begin{example}
+  As a generalization, the Grassmannian $\gr(k,n)$ can be viewed as a moduli space of $k$-dimensional subspaces of $\cc^n$. Literally, we have $\gr(k,n)$ is the functor sending a scheme $B$ to the set
+  \[\left\{\begin{array}{c}
+  \text{Short exact sequences } \\
+      0 \to \fans \to \calo^{\oplus n} \to \fanq \to 0 \\
+      \text{ over } B
+  \end{array}\right\}/\sim\]
+\end{example}
+
+But we want a more general structure that just points corresponding to our objects of interest. This just means if $\calm$ is our moduli space, then for $\spec k \to \calm$ we get an object $X \to \spec k$. Instead, we require that for all schemes $B$, morphism $B \to \calm$ correspond to families $C \to B$ of objects parameterized by $B$, i.e. the fiber over every point of $B$ is an object of interest.
+
+\begin{philo} A moduli space $\calm$ of objects should satisfy the bijection 
+\[\{\text{Families of objects over a scheme } B\} \longleftrightarrow \{\text{Morphisms } B \to \calm \}\]
+\end{philo}
+
+In fact, this is Yoneda's lemma in disguise. Recall that morphisms to a scheme determine it in a literal sense, via the following lemma.
+
+\begin{lem}
+  There is a fully faithful embedding
+  \[h_{-} \colon \Sch \to \Fun(\Sch^{\op}, \Set)\]
+  where $h_X = \Hom(-, X)$ is the contravariant Hom functor. Thus, $\Sch$ can be recognized as a full subcategory of $\Fun(\Sch^{\op}, \Set)$. 
+\end{lem}
+
+\subsection{Motivation}
+
+Suppose we want to construct a moduli space of closed subschemes of $\bp^n$. Given a base scheme $B$, suppose we have a map $\bp^n_B \to B$ whose fibers are closed subschemes. This is not a great definition since the fiber dimension can jump, which means two closed subschemes of different dimension can be related via a continuous family. This is why we require flatness, since fiber dimension is constant for flat morphisms.
+
+\begin{rem}
+  In fact, flatness implies the Hilbert polynomial of the fibers is constant which is stronger since the degree of the polynomial is dimension. This is what gives the Hilbert scheme it's name.
+\end{rem}
+
+At the time of it's first construction, however, flatness wasn't defined, so instead Grothendieck constructed $\Hilb^{\text{sm}} \subset \Hilb$ which is the moduli space of smooth morphisms $\bp^n_B \to B$ which fixes the issue of preserving fiber dimension. The issue here is that $\Hilb^{\text{sm}}$ isn't proper, and it's one-point compactification isn't very insightful or interesting. Hence the fact that $\Hilb$ is proper tells us that flatness is the correct assumption to make here.
+
+Before we construct either scheme, we start with an extended example which demonstrates how we might come to this definition. We will compute the moduli space of degree $d$ hypersurfaces in $\bp^n$. 
+
+\begin{rem}
+  We can do a quick count to determine beforehand what the answer should be. Let $x_0,\ldots,x_n$ be homogeneous coordinates for $\bp^n$, and note that any hyperplane is defined globally by an equation of the form
+  \[(a_{x_0^d}) x_0^d + (a_{x_0^{d-1}x_1}) x_0^{d-1}x_1 + \ldots + (a_{x_n^d})x_n^d = 0\]
+  where there are $\binom{n+d}{d}$ coefficients to choose, up to scaling. Thus, intuitively the moduli space should be $\bp^{\binom{n+d}{d} - 1}$
+\end{rem}
+
+Let's see what goes wrong if we can't require flatness. Suppose we have a map $\bp^n_B \to B$ such that the fibers are degree $d$ hypersurfaces.
+
+\begin{example}
+  Let $B = \spec k[\varepsilon]/(\varepsilon^2)$ and consider the map $\bp^n_B \to B$ where the fiber over the unique closed point is given by the equations 
+  \[x_0^d + \ldots + x_n^d =  \varepsilon = 0\] 
+  This is technically a hyperplane of degree $d$ by Krull's principal ideal theorem, but intuitively it's not what we mean. A real hyperplane over the dual numbers should have infinitesimal "fuzz", for example the plane given by 
+  \[x_0^d + \ldots + x_n^d + \varepsilon x_0 x_n^{d-1} = 0\]
+\end{example}
+
+The issue is that $B$ isn't reduced, and hence we can cut out extra equations without reducing the dimension of the subscheme. To correct this, we can require the fiber to be an effective Cartier divisor of degree $d$. In the above example, we cut out by one ideal that wasn't a zero-divisor $(x_0^d + \ldots + x_n^d)$ and one that was, namely $(\varepsilon)$. 
+
+Then we have the following result, which confirms our intuition that $\bp^{\binom{n+d}{d} - 1}$ is the moduli space we were looking for.
+
+\begin{thm}\label{cartier}
+  Fix integers $n,d$. We have a bijection between
+  \[\left\{\begin{array}{c}
+      \text{Families } X \to B \text{ where }X \subset \bp^n_B \\
+       \text{ is an effective Cartier divisor} \\
+      \text{of degree }d
+  \end{array}\right\} \longleftrightarrow \left\{\begin{array}{c}
+      \text{Morphisms}  \\
+      B \to \bp^{\binom{n+d}{d} - 1}
+  \end{array}\right\}\]
+  Further, this bijection behaves well with respect to pullbacks. 
+\end{thm}
+
+\begin{proof}
+  Suppose we have a morphism $B \to \bp^{\binom{n+d}{d} - 1}$. Consider the universal hypersurface
+  
+  \[H = \{(a_{x_0^d}) x_0^d + (a_{x_0^{d-1}x_1}) x_0^{d-1}x_1 + \ldots + (a_{x_n^d})x_n^d = 0\} \subset \bp^{\binom{n+d}{d} - 1} \times \bp^n\]
+  
+  There is a natural map $H \to \bp^{\binom{n+d}{d} - 1}$ given by projection to the coefficients. Then we have the following pullback diagram.
+  \begin{figure}[H]
+      \centering
+      \begin{tikzcd}
+X \arrow[r] \arrow[d] & H \arrow[d]                   \\
+B \arrow[r]                      & \mathbb{P}^{\binom{n+d}{d}-1}
+\end{tikzcd}
+  \end{figure}
+  
+  The fiber over a point $b \in B$ in $\bp^n_B$ is the hypersurface whose coefficients are given by the image of $b$ in $\bp^{\binom{n+d}{d}-1}$. 
+
+  \begin{todo}
+      It remains to show $X \subset \bp^n_B$ is an effective Cartier divisor of degree $d$.
+  \end{todo}
+
+  Conversely, suppose we have a map $\pi \colon X \to B$ where $\iota \colon X \hookrightarrow \bp^n_B$ is an effective Cartier divisor of degree $d$, and we want a map $B \to \bp^{\binom{n+d}{d} - 1}$. Consider the closed subscheme short exact sequence.
+  \[0 \to \fani_X \to \calo_{\bp^n_B} \to \calo_X \to 0\]
+  We can twist by $\calo_{\bp^n_B}(d)$ to get the following.
+  \[0 \to \fani_X(d) \to \calo_{\bp^n_B}(d) \to  \calo_X(d) \to 0\]
+  Intuitively, this short exact sequence is saying two degree $d$ polynomials on $\bp^n_B$ that agree up to some degree $d$ polynomial that vanishes on $X$, agree on $X$. Then we can push forward along $\pi$ to get the following.
+  \[0 \to \pi_* \fani_X(d) \to \pi_* \calo_{\bp^n_B}(d) \to \pi_* \calo_X(d) \to R^1 \pi_* \fani_X(d) \to \ldots\]
+  Note that this sequence is no longer short exact since we have higher pushforwards. Further, $\fani_X(d)$ is locally free of rank $1$ since $X$ is a Cartier divisor by definition, and hence $\pi_* \fani_X(d)$ is locally free of rank $1$
+
+  \begin{todo}
+      This is true if $\pi$ is a finite flat morphism of degree $1$, but I'm not sure how to show this assuming just that $X$ is a Cartier divisor.
+  \end{todo}
+  
+  We can show that these higher pushfowards vanish, $\pi_* \calo_{\bp^n_B}(d)$ is free of rank $\binom{n+d}{d}$, and that $\pi_* \calo_X(d)$ is locally free of rank $\binom{n+d}{d} - 1$. Then 
+  \[h^0(B, \pi_* \fani_X(d)) = h^0(B, \pi_* \calo_{\bp^n_B}(d)) - h^0(B, \pi_* \calo_X(d)) = \binom{n+d}{d} - 1\]
+  so we have a line bundle on $B$ with $H^0$ generated by $\binom{n+d}{d} - 1$ global sections, hence a map $B \to \bp^{\binom{n+d}{d}-1}$. We need another theorem to prove these statements so we cover that next, but after that this proof is complete.
+  
+\end{proof}
+In general, maps $B \to \bp^n$ correspond to short exact sequences of sheaves on $B$ below, where $\call$ is locally free of rank $1$ and $\calq$ is locally free.
+\[0 \to \call \to \calo^{\oplus (n+1)} \to \calq \to 0\]
+Similarly, maps $B \to \gr(k, n)$ correspond to short exact sequences 
+\[0 \to \call \to \calo^{\oplus n} \to \calq \to 0\]
+where $\call$ is locally free of rank $k$ and $\calq$ is locally free.
+
+In order to show higher pushforwards vanish, we need the following. There is a good writeup on this theorem by Eric Larson, which is given in Chapter 25 of \cite{V}.
+
+\begin{thm}[Cohomology and Base Change]
+  Suppose $X,Y$ are schemes with $\pi \colon X \to Y$ proper. Let $\fanf$ be a coherent sheaf on $X$, flat over $Y$. Suppose the following is a Cartesian diagram.
+  \begin{center}
+      \begin{tikzcd}
+W \arrow[r, "\psi'"] \arrow[d, "\pi'"'] & X \arrow[d, "\pi"] \\
+Z \arrow[r, "\psi"']                    & Y                 
+\end{tikzcd}
+\end{center}
+  Then there is a push-pull map in the following direction.
+  \[\phi^p_Z \colon \psi^* (R^p \pi_* \fanf) \to R^p \pi'_*( \psi'^* \fanf)\]
+  Suppose for a point $q \in Z$, $\phi^p_q$ is surjective. Then
+  \begin{enumerate}[label=(\roman*)]
+      \item There is an open neighborhood $U$ of $q$ such that for any $\psi \colon Z \to U$, $\phi^p_Z$ is an isomorphism. In particular, $\phi^p_q$ is an isomorphism. 
+      \item Furthermore, $\phi^{p-1}_{q}$ is surjective (hence an isomorphism) if and \\ only if $R^p \pi_* \fanf$ is locally free in some open neighborhood of $q$.
+  \end{enumerate}
+\end{thm}
+
+We use this theorem as a black box in order to finish the proof of Theorem \ref{cartier}. We want to show $R^p \pi_* \fani_X(d) = 0$ for $p > 0$. First, assume we can show $H^p(X_q, \fani_X(d) \mid_{X_q}) = 0$ for all $q \in B$ and $p > 0$. 
+
+\begin{todo}
+  Show this.
+\end{todo}
+
+Then by Cohomology and Base Change, $(R^p \pi_* \fani_X(d))_q = 0$ for all $q \in B$, hence $R^p \pi_* \fani_X(d) = 0$. 
+
+\begin{question}
+  How do we show a moduli space exists? By hand? For the Grassmannian, we have $\gr(k,n) \xrightarrow{\sim} \gr(n-k,n)$ which we can exploit to construct it inductively. There are also Artin's criterion and Hall's thesis that help us show moduli spaces exist. 
+\end{question}
+
+The Hilbert scheme parameterizes families of subschemes of $\bp^n$. Fix some $n$. Then our functor sends
+\[B \mapsto \left\{\begin{tikzcd}
+X \arrow[d, "{\text{flat, f.p.}}"'] \arrow[r, "\text{closed}", hook] & \mathbb{P}^n \times B \arrow[ld] \\
+B                                                                    &                                 
+\end{tikzcd}\right\}/\sim\]
+
+\begin{rem}
+  We need f.p. in order for this to be a moduli space. Check the stacks project for counterexamples.
+\end{rem}
+
+\begin{thm}[Grothendieck]
+  This functor is representable by a scheme. 
+\end{thm}
+
+Now we define the Quot scheme for $\bp^n$ over some algebraically closed field $k$ and $\fane$ a locally free sheaf on $\bp^n$, but in there is no issue generalizing to the situation $X$ is a projective scheme over a Noetherian base $S$, and $\fane$ a locally free sheaf on $X$. 
+\begin{defn}
+  Fix $\fane$ a coherent sheaf on $\bp^n$. For a scheme $B$ over $k$, let $\bp^n_B = \bp^n \times_k B$, and similarly let $\fane_{B} = \fane \times_k \bp^n_B$. Then $\Quot_{\fane/\bp^n}$ is the functor sending a scheme $B$ to equivalence classes of $\langle \fanq, q \rangle$ satisfying the following.
+  \begin{enumerate}[label=(\roman*)]
+      \item $\fanq$ is a coherent sheaf on $\bp^n_B$, flat and finitely presented over $B$.
+      \item $q \colon \fane_{B} \twoheadrightarrow \fanq$ is an surjection of sheaves (read: $\fanq$ is a \textit{quotient} of $\fane_B$, hence the name).
+      \item 
+  \end{enumerate}
+\end{defn}
+The Quot scheme parameterizes quotients of a sheaf on $X$. Fix $\fane$ a coherent sheaf on $\bp^n$. Then $\text{Quot}_{\fanf/\bp^n}$ is the functor sending a scheme $B$ to the following set, up to isomorphism.
+
+\[B \mapsto \left\{\begin{tikzcd}
+0 \to \fanf \to \fanf \arrow[d] \arrow[r, two heads] & {\fanq} \\
+\mathbb{P}^n_B \arrow[d] \arrow[r, "p"]      & \mathbb{P}^n                           \\
+B                                              &                                       
+\end{tikzcd}\right\}\]
+
+If $\fanf = \calo_{\bp^n}^{\oplus r}$, then we denote this space by $\Quot^r \bp^n$. Consider the functor
+
+\[\Hilb_{p(t)} \bp^n \colon B \mapsto \left\{\begin{tikzcd}
+X \arrow[d, "{\text{flat, f.pr.}}"'] \arrow[r, hook] & \mathbb{P}^n_B \arrow[ld] \\
+B                                                    &                          
+\end{tikzcd} \begin{array}{c}
+\text{ such that geometric} \\
+\text{fibers over } B \text{ have} \\
+\text{Hilbert polynomial } p(t)
+\end{array}\right\}\]
+
+Then $\Hilb \bp^n$ is the scheme-theoretic disjoint union of $\Hilb_{p(t)} \bp^n$ over $p(t) \in \qq[t]$. By analogy, consider the following. Let $n \in \zz_{\geq 0}$, $p(t) \in \qq[t]$, and $r \in \zz_{> 0}$. Consider the short exact sequence of the following form.
+\[0 \to \fanf \to \calo^{\oplus r}_{\bp^n_B} \to \fanq \to 0\]
+These are sheaves on $\bp^n_B$, where $\fanf$ is finite type and $\fanq$ is flat, finitely presented over $B$ with Hilbert polynomial $p(t)$.
+
+\begin{note}
+  This is where the name Quot comes from, since it's the functor of quotients of the structure sheaf.
+\end{note}
+
+\begin{rem}
+  When $r = 1$, $\fanf$ is an ideal sheaf and this becomes the closed subscheme exact sequence, where $\fanq = \calo_{\bp^n_B}/\fanf$. Hence we get a closed subscheme $X \hookrightarrow \bp^n_B$ where $\calo_X = \fanq$ which is flat, f.pr. over $B$ with Hilbert polynomial $p(t)$.
+\end{rem}
+
+Now consider the functor
+\[\Quot^{r}_{p(t)} \bp^n \colon B \mapsto \left\{ \begin{array}{c}
+\begin{tikzcd}
+0 \arrow[r] & \fanf \arrow[r] & \mathcal{O}^{\oplus r}_{\mathbb{P}^n_B} \arrow[r] & \fanq \arrow[r] & 0
+\end{tikzcd} \\
+\text{short exact sequences over } \bp^n_B \text{ such that} \\
+\fanf\text{ f.t. over } B \text{ and } \fanq \text{ flat, f.pr. over }B \\
+\text{ with Hilbert polynomial }p(t)
+\end{array}\right\}\]
+
+By the previous remark, $\Quot^1_{p(t)} \bp^n = \Hilb_{p(t)} \bp^n$. It's not true that $\Quot^r \bp^n$ is the scheme-theoretic disjoint union of $\Quot^r_{p(t)} \bp^n$ as with $\Hilb$, but a similar statement holds after we develop the notion of a \textit{flattening stratification} in the next subsection.
+
+\begin{example}
+  Consider the twisted cubic in $\bp^3$ given by
+  \[\rank \begin{bmatrix}
+      w & x & y \\
+      x & y & z
+  \end{bmatrix} = 1\]
+  That is, the vanishing locus of all $2 \times 2$ minors. 
+  \[wy - x^2 = wz - xy = xz - y^2 = 0\]
+  It is a short computation to show $p(t) = 3t + 1$. Can we describe $\Quot_{3t+1} \bp^3$?
+\end{example}
+
+\begin{exer}
+  Show the Hilbert polynomial of the twisted cubic above is $p(t) = 3t+1$.
+\end{exer}
+
+Recall the Grassmannian $G(r,n)$ parameterizes locally free rank-$r$ quotients of $\calo^{\oplus n}_{k}$. There are $10$ coefficients for any quadric in $\bp^3_k$, so picking three quadrics is the same as picking a rank $3$ subsheaf of $\calo^{\oplus 10}_k$, i.e. an element of $G(7,10)$. 
+
+We start by considering $G(7,10)$, the space of three quadrics on $\bp^3$. Note that just taking this can go awry since we get choices like $x^2 = y^2 = z^2 = 0$, i.e. the double point $[1 : 0 : 0 : 0]$. Thus we need to incorporate flatness somehow.
+
+\begin{question}
+  We can take the flattening stratification $\Fl_{3t+1} G(7,10)$ to resolve this problem. However, what if a point of $\Quot_{3t+1} \bp^3$ is cut out by a polynomial of higher degree?
+\end{question}
+
+\begin{todo}
+  Add exposition here on flattening stratification.
+\end{todo}
+
+Now we can consider generalizing this strategy. We can think of $G(7,10)$ as short exact sequence of the following form. Note there are always $\binom{n+d}{d}$ coefficients for degree $d$ polynomials in $k[x_0,\ldots,x_n]$.
+\[0 \to \cali \to \calo_k^{\oplus \binom{n+d}{d}} \to \calq \to 0\]
+where $\calq$ is locally free of rank $p(d)$. If $n = 3, d = 2, p(t) = 3t+1$, we recover $\binom{n+d}{d} = 10$ and $p(2) = 7$. 
+
+\begin{rem}
+  Intuitively, $p(d)$ for $d$ large enough counts $h^0(\bp^n, \calo_{\bp^n} \vert_X(d))$, i.e. the number of coefficients we need to specify a degree $d$ polynomial on $X$. Thus, $\rank \cali$ intuitively counts the number of coefficients to specify a degree $d$ polynomial vanishing on $X$.
+\end{rem}
+
+Fix $n,p(t),r$ as before. Then we want to show that we can pick some $d_0 \gg 0$ to make the following work.
+
+\begin{todo}
+  Let $N = \binom{n+d_0}{n} - p(d_0)$. Show that $\Quot^r_{p(t)} \bp^n \hookrightarrow \Fl_{p(t)} G(p(d_0), N+p(d_0))$ as a closed subscheme.
+\end{todo}
+
+This implies $\Quot$ is projective. For $r = 1$, this says there is some large enough degree $d_0$ such that any closed subscheme of $\bp^n$ with Hilbert polynomial $p(t)$ can be cut out by $N$ polynomials of degree $d_0$.
+
+If we have a map
+\[\calo^{\oplus N}(-d) \xrightarrow{\alpha} \calo^{\oplus r}\]
+Then we can obtain an exact sequence
+\[\calo^{\oplus N}(-d) \xrightarrow{\alpha} \calo^{\oplus r} \to \coker \alpha \to 0\]
+Then if $\coker \alpha$ is flat over $B$ with Hilbert polynomial $p(t)$, we have generated an element of $\Quot^r_{p(t)} \bp^n$. We will show that if $\calo^{\oplus r} \to \calq \to 0$ is exact with $\calq$ flat over $B$ with Hilbert polynomial $p(t)$, then we get an element of $\Fl_{p(t)} G(p(d_0), N + p(d_0))$. 
+
+\begin{proof}
+  Consider the case $r = 1$, i.e. the Hilbert functor for a closed subscheme $X$ of $\bp^n$ over $B$. We have a short exact sequence.
+  \[0 \to \cali_X \to \calo \to \calo_X \to 0\]
+  We can twist by $d$ and pushforward along $\pi \colon X \to B$ (which is flat and f.pr.). For $d = d_0 \gg 0$, by Serre vanishing higher pushforwards vanish, so by Cohomology and Base Change Theorems we get a short exact sequence of locally free sheaves on $B$.
+  \[0 \to \pi_* \cali_X(d_0) \to \pi_* \calo(d_0) \to \pi_* \calo_X(d_0) \to 0\]
+  We can also choose $d_0$ large enough such that $p(d_0) = h^0(X, \calo_X(d_0)) = h^0(B, \pi_* \calo_X(d_0))$. Then the middle is free of rank $\binom{n+d_0}{n}$ and the right has rank $p(d_0)$, hence this is an element of $\Fl_{p(t)} G(p(d_0), \binom{n+d_0}{n})$.
+\end{proof}
+
+\begin{rem}
+  There's an issue here in that we have no limits on how $d_0$ grows, so when we increase $r$ it's possible that $d_0$ goes crazy. Thus, we leave this unfinished for now and come back after we have some background on a topic that resolves this, \textit{Castelnuovo-Mumford Regularity}.
+\end{rem}
+
+Note that for all $d \geq d_0$ as in the above proof, the map 
+\[\cali_X(d) \otimes \calo^{\oplus (n+1)}_k \twoheadrightarrow \cali_X(d+1)\]
+taking some degree $d$ polynomial vanishing $X$ and some linear polynomial on $\bp^n$ to their product is surjective. That is, we cut out by everything we needed to get the structure of $X$ (proof omitted).
+
+\subsection{Castelnuovo-Mumford Regularity}
+
+Consider a projective $k$-scheme $X$, and $\fanf$ a coherent sheaf over $X$. 
+\begin{defn}
+  We say $\fanf$ is $m$-regular if, for all $i > 0$,
+  \[H^i(X, \fanf(m-i)) = 0\]
+\end{defn}
+
+\begin{rem}
+  This is a weird notion, but it will become motivated with time. In particular, as one might guess, it's helpful with inductive arguments about vanishing of higher cohomology.
+\end{rem}
+
+A key theorem which we will work towards is the following. We will use this to show if $\calo^{\oplus r} \twoheadrightarrow \fanf$ where $\fanf$ has Hilbert polynomial $p(t)$, then $\fanf$ is $m$-regular where $m = m(r, n, p(t))$.
+
+\begin{thm}
+  If $\fanf$ is $m$-regular, then $\fanf$ is generated by global sections and has no higher cohomology for all $m' \geq m$.
+\end{thm}
+If $\fanf$ is $m$-regular, then $\fanf(1)$ is $(m-1)$-regular. This is immediate from the definition. Suppose we have a short exact sequence of coherent sheaves on $\bp^n$.
+\[0 \to \fanf' \to \fanf \to \fanf'' \to 0\]
+\begin{prop}
+  The following are true.
+  \begin{enumerate}[label=(\roman*)]
+      \item If $\fanf'$ and $\fanf''$ are $m$-regular, then $\fanf$ is $m$-regular.
+      \item If $\fanf'$ is $(m+1)$-regular and $\fanf$ is $m$-regular, then $\fanf''$ is $m$-regular.
+      \item If $\fanf''$ is $(m-1)$-regular and $\fanf$ is $m$-regular, then $\fanf'$ is $m$-regular.
+  \end{enumerate}
+\end{prop}
+
+\section{Gromov-Witten Theory}
+
+In this section we describe how to use some of the results on moduli spaces and stacks to resolve questions in enumerative geometry. That is, questions of the form of counting geometric objects in some way. The following subsection motivates this idea.
+
+\subsection{Kontsevich and Rational Plane Curves}
+
+This section is not completely rigorous and just presents the ideas given by Kontsevich. We will assume we are in the complex setting throughout. The questions is as follows.
+
+\begin{question}
+  How many degree-$d$ rational plane curves in $\bp^2$ pass through $3d-1$ points in general position? Denote this number $N_d$.
+\end{question}
+
+Denote these points by $p_1, \ldots, p_{3d-1}$. General position means points should impose independent conditions on curves passing through them. For example, $5$ points determine a conic, and $6$ points \textit{may} lie on a conic, but in general do not. Thus, general position with respect to conics means no $6$ points lie on a conic.
+
+Let's consider the more general case of curves in $\bp^r$ first. Such a rational curve is naturally captured by a map $f \colon \bp^1 \to \bp^r$ of degree $d$. We can describe a map by $r+1$ binary forms of degree $d$.
+
+\[f([x \colon y]) = [a_{0,0}x^d + \ldots + a_{0,d}y^d\colon \ldots \colon a_{r,0}x^d + \ldots + a_{r,d}y^d]  \]
+
+Denote the space of such forms $W(r,d)$, which by a quick count of the $a_{i,i}$ above has dimension $(r+1)(d+1) - 1 = rd +r + d$. 
+
+However, we want to count curves up to isomorphism and $W(r,d)$ can have two parametrizations of the same rational curve be represented as distinct. To fix this, we just mod out by parametrizations, i.e. we are interested in the following space.
+\[W(r,d)/\Aut(\bp^1)\]
+Recall $\dim \Aut(\bp^1) = 3$, so we have the following.
+\begin{note}
+  This is not rigorous, we don't know that $W(r,d)/\Aut(\bp^1)$ is even a scheme. But let's assume for intuition's sake that it's a variety.
+\end{note}
+\[\dim W(r,d)/\Aut(\bp^1) = rd + r + d - 3\]
+If we let $r = 2$, we get dimension $2d + 2 + d - 3 = 3d - 1$.
+\begin{cor}
+  There are finitely many rational curves of degree $d$ in $\bp^2$ passing through $3d-1$ points in general position.
+\end{cor}
+
+Intuitively, requiring a curve to pass through a point $p_i$ should define a hypersurface $H_i$ of degree $d_i$ in $W(2,d)/\Aut(\bp^1)$. General position implies these hypersurfaces are in general position, so by Bezout's theorem their intersection contains $d_1 \cdots d_{3d-1}$ points, each with multiplicity $1$. That is, there are finitely many such points.
+
+We can reformulate the question as follows.
+
+\begin{defn}
+  Let $\calm_g(\bp^r,d)$ be the moduli stack of degree-$d$ morphisms from genus $g$ curves to $\bp^r$. This is a smooth Deligne-Mumford stack.
+\end{defn}
+
+We should expect that endowing $W(r,d)/\Aut(\bp^1)$ with some geometric structure should give us a coarse moduli space for $\calm_0(\bp^r,d)$. A rigorous construction of this coarse moduli space is given in Fulton and Pandharipande \cite{FP}.
+
+\begin{defn}
+  Let $\calm_{g,n}(\bp^r, d)$ be the moduli stack of degree-$d$ morphisms from $n$-pointed genus $g$ curves to $\bp^r$. Let $a_1,\ldots,a_n$ denote these marked points.
+\end{defn}
+
+\begin{rem}
+  We have a $n$ natural evaluation maps $e_1,\ldots,e_n$ given by evaluating the morphism $C \to \bp^r$ at $a_i$.
+  \[\calm_{g,n}(\bp^r, d) \xrightarrow{e_i} \bp^r\]
+\end{rem}
+
+Lastly, we want to know the compactification of this space.
+\begin{defn}
+  The \textit{Kontsevich moduli space} $\overline{\calm}_{g,n}(\bp^r,d)$ is the moduli stack of stable degree-$d$ morphisms from $n$-pointed nodal genus $g$ curves to $\bp^r$.
+  \begin{enumerate}[label=(\roman*)]
+      \item By nodal, we mean that the points of $C$ are either smooth or nodes, i.e. the completion of the local ring looks like the union of $x$ and $y$ axes.
+      \[\widehat{\calo_{C,x}} \cong \cc[[x,y]]/(xy)\]
+      \item By a stable map $f \colon C \to \bp^r$, we mean that whenever $f$ is constant on a component of $C$, then that component has at least $3$ distinguished points which are either marked points or points in the normalization lying over a node.
+  \end{enumerate}
+  
+\end{defn}
+
+We will not prove the following theorem, but a proof is given in Behrend and Manin.\cite{BM}
+
+\begin{thm}
+  $\overline{\calm}_{g,n}(\bp^r, d)$ is a finite type proper separated Deligne-Mumford stack and it admits a proper projective coarse moduli scheme $\overline{M}_{g,n}(\bp^r,d)$.
+\end{thm}
+
+Condition (ii) ensures that automorphism groups of the components are finite, which gives compactness. The analogy is the construction of the compactification of $\calm_g$, the space of genus $g$ curves, by considering stable nodal $n$-pointed genus $g$ curves. In fact, the following examples demonstrate this.
+
+\begin{example} The moduli space of degree $0$ maps to a point is the same as just considering the domain, i.e. stable nodal curves.
+  \[\overline{\calm}_{g,n}(\bp^0, 0) \cong \overline{\calm}_{g,n}\]
+\end{example}
+
+\begin{example}
+  The moduli space of degree $0$ stable maps is also easy.
+  \[\overline{\calm}_{g,n}(\bp^r,0) \cong \overline{\calm}_{g,n} \times \bp^r\]
+\end{example}
+
+\begin{example}
+  The coarse moduli space of degree $1$ maps from $\bp^1$ to $\bp^r$ is the Grassmannian.
+  \[\overline{M}_{0,0}(\bp^r, 1) = \Gr(2, n+1) = \gg(1,n)\]
+\end{example}
+
+\begin{prop}
+  The natural inclusion
+  \[\calm_{g,n}(\bp^r, d) \hookrightarrow \overline{\calm}_{g,n}(\bp^r,d)\]
+  is an open immersion with dense image. 
+  
+  Further, the boundary $\partial \overline{\calm}_{g,n}(\bp^r,d)$ is an effective Cartier divisor, more specifically a \textit{normal crossings divisor}.
+\end{prop}
+
+\begin{rem}
+  A strict normal crossings divisor is an effective Cartier divisor $D = \sum D_i$ such that each $D_i$ is smooth over $k$ and $D_i,D_j$ intersect transversely. A normal crossings divisor is a divisor that is \'etale locally strict, i.e. $D_i$ are \'etale locally smooth and intersect transversely. When $k = \cc$, this means locally in the analytic topology
+\end{rem}
+
+A good exposition for this fact is given by Schmitt's lecture notes, section 7.3. which covers the case for $\overline{\calm}_{g,n}$, but which is easily generalizable to our stack \cite{S}.
+
+\printbibliography
+
+\end{document}
