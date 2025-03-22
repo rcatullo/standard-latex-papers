@@ -87,6 +87,10 @@ mathescape=true}
 \definecolor{shadecolor}{gray}{0.95}
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+%% ENUMERATE ENVIRONMENT %%
+\setlist[enumerate,1]{label=(\roman*)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%% THEOREM ENVIRONMENTS %%%%%%%%%%%%%%%%
@@ -326,6 +330,7 @@ mathescape=true}
 \DeclareMathOperator{\Open}{\mathsf{Open}}
 \DeclareMathOperator{\Et}{\mathsf{Et}}
 \DeclareMathOperator{\Sch}{\mathsf{Sch}}
+\DeclareMathOperator{\QCoh}{\mathsf{QCoh}}
 \DeclareMathOperator{\qCoh}{\mathsf{QCoh}}
 \DeclareMathOperator{\qcoh}{\mathsf{QCoh}}
 \DeclareMathOperator{\mor}{Mor}
@@ -363,7 +368,7 @@ mathescape=true}
 \newcommand{\ideal}{\trianglelefteq}
 \newcommand{\acts}{\curverightarrow}
 \newcommand{\actson}{\curverightarrow}
-\renewcommand{\action}{\curverightarrow}
+\newcommand{\action}{\curverightarrow}
 \newcommand{\pt}[1]{#1\Parens{t}}
 \newcommand{\bt}[1]{#1\Brackets{t}}
 %% ANT Tings %%
@@ -441,6 +446,7 @@ mathescape=true}
 \newcommand{\domega}{\, \mathrm{d}\omega}
 \newcommand{\del}{\partial}
 \DeclareMathOperator{\vol}{Vol}
+\newcommand{\eps}{\varepsilon}
 %% Topology Tingz %%
 \DeclareMathOperator{\rel}{rel}
 \newcommand{\lift}[1]{\widetilde{#1}}
