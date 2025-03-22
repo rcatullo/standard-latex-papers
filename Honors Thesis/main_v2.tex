@@ -2,7 +2,7 @@
 
 \usepackage{standard}
 
-\title{\large\bfseries{FROBENIOUS SPLITTING OF $\Bun_G$}}
+\title{\large\bfseries{FROBENIUS SPLITTING OF $\Bun_G$}}
 \author{\normalsize{RYAN CATULLO}}
 \date{}
 
@@ -27,7 +27,135 @@ Let $G$ be an affine group scheme smooth over $k[[t]]$.
     The \textit{affine Grassmannian} of $G$ is 
 \end{defn}
 
+\section{Frobenius Splitting}
 
+We give an overview of the basic definitions and properties of Frobenius splittings based on the exposition given in \cite{Brion2004FrobeniusSM}. The reader should consult this book for a more in-depth discussion.
+
+\begin{defn}
+    Let $X$ be a scheme. Then the \textit{absolute Frobenius morphism} 
+    \[F_X \colon X \longrightarrow X\]
+    is the identity on the underlying space $X$, and the $p$th power map on $\calo_X$.
+\end{defn}
+
+We write $F_X$ as $F$ when $X$ is clear from context, and similarly we denote the associated $p$th-power map on the structure sheaf
+\[F^{\#}_X \colon \calo_X \longrightarrow F_* \calo_X\]
+by $F^{\#}$ when $X$ is clear.
+
+\begin{defn}
+    \begin{enumerate}[label=(\roman*)]
+        \item We say that a scheme $X$ is \textit{Frobenius split} if the $\calo_X$-linear map $F^{\#}$ splits, i.e. there exists an $\calo_X$-linear map
+    \[\varphi \colon F_* \calo_X \longrightarrow \calo_X\]
+    such that $\varphi \circ F^{\#} $ is the identity on $\calo_X$.
+    \item A closed subscheme $Y \subset X$ is \textit{compatibly split} if there is a splitting $\varphi$ of $X$ such that 
+    \[\varphi(F_* \cali_Y) \subset \cali_Y\]
+    \item A collection of closed subschemes $Y_1,\ldots,Y_m$ are \textit{compatibly split} if there is a splitting $\varphi$ of $X$ such that each subscheme is compatibly split with respect to $\varphi$.
+    \end{enumerate}
+\end{defn}
+Note that a splitting $\varphi$ is equivalent to an endomorphism $\varphi \colon \calo_X \to \calo_X$ such that $\varphi(f^p g) = f \varphi(g)$ and $\varphi(1) = 1$. The first condition means $\varphi \in \End_{\calo_X}(F_* \calo_X, \calo_X)$ and since $\varphi(F^{\#}(f)) = \varphi(f^p) = f\varphi(1)$ the composition is the identity if and only if $\varphi(1) = 1$.
+
+    Further, for a closed subscheme $Y \subset X$ we always have $\cali_Y \subset \varphi(F_* \cali_Y)$ since for any section $f$ of $\cali_Y$ we have $f = \varphi(f^p) \in \varphi(F_*\cali_Y)$. Thus condition (ii) can be restated as $\varphi(F_* \cali_Y) = \cali_Y$.
+
+    We give a collection of first properties with brief justifications, but more details can be found in \cite{Brion2004FrobeniusSM}.
+
+    \begin{lem}
+        Let $f \colon X \to Y$ be a morphism of schemes such that $f^{\#} \colon \calo_Y \to f_* \calo_X$ splits as a morphism of $\calo_Y$-modules. Then if $X$ is split, so is $Y$.
+    \end{lem}
+    \begin{proof}
+        Compose the splittings.
+    \end{proof}
+
+    \begin{lem}
+        Let $f \colon X \to Y$ be a morphism of schemes such that $f^{\#} \colon \calo_Y \to f_* \calo_X$ is an isomorphism. Let $Z \subset X$ be a subscheme, and let $W \subset Y$ be the scheme-theoretic image of $Z$. Then $\cali_Z = f_* \cali_W$ and if $X$ is split compatibly with $Z$, so is $Y$ with $W$.
+    \end{lem}
+    \begin{proof}
+        The first claim is standard. If $\varphi$ is a splitting of $X$ then $f_* \varphi$ is a splitting of $Y$ after identifying $f_* \calo_X$ with $\calo_Y$. To see why this is compatible, since $\varphi(F_*\cali_Z) = \cali_Z$ by assumption,
+        \[(f_* \varphi)(F_* \cali_W) = (f_* \varphi)(F_* f_* \cali_Z) = f_*\varphi(F_* \cali_Z) = f_* \cali_Z = \cali_W \]
+    \end{proof}
+
+    \begin{prop}
+        If $X$ is split, then $X$ is reduced. If closed subschemes $Y,Z \subset X$ are compatibly split, so are their intersections $Y \cap Z$ and unions $Y \cup Z$, as well as the irreducible components of all these schemes. In particular, $Y \cap Z$ is reduced.
+    \end{prop}
+    \begin{proof}
+        Let $\varphi$ be a splitting of $X$ and $f$ a nilpotent section of $\calo_X$ on some open. Then $f^{p^v} = 0$ for some $v$, hence $f^{p^{v-1}} = \varphi(f^{p^v}) = \varphi(0) = 0$ so by induction $f = 0$. For the latter claim, note $\cali_{Y \cup Z} = \cali_Y \cap \cali_Z$ and 
+        \[\varphi(F_* \cali_{Y \cup Z}) = \varphi(F_* (\cali_Y \cap \cali_Z)) \subset \varphi(F_* \cali_Y) \cap \varphi(F_* \cali_Z) = \cali_{Y \cup Z}\]
+        and similarly for $\cali_{Y \cap Z} = \cali_Y + \cali_Z$. Let $A \subset X$ be an irreducible component and $B$ the union of all other components. Then $\varphi(F_* \cali_A)$ and $\cali_A$ coincide on $X \setminus B = A \setminus B$ since $\cali_A$ restricted to this set vanishes, and since $A \setminus B$ is dense in $A$ the claim follows.
+    \end{proof}
+\begin{defn}
+    A scheme $X$ is \textit{weakly normal} if every finite, birational, bijective morphism $f \colon Y \to X$ is an isomorphism.
+\end{defn}
+For example, weakly normal and normal coincide for varieties. The cuspidal cubic $X := (y^2 = x^3)$ in $\bba^2$ is not weakly normal since $\bba^1 \to X$ given by $t \mapsto (t^2, t^3)$ is finite, birational, bijective but not an isomorphism. 
+
+The normal cubic $X := (y^2 = x^2(x-1))$ in $\bba^2$ is weakly normal (when $p \neq 2$). If $f \colon Y \to X$ is finite, birational, bijective $f \colon Y \to X$ then the normalization $\eta \colon \bba^1 \to X$, $t \mapsto (t^2-1,t(t^2-1))$ factors through $f$, and $\eta$ is an isomorphism away from $(0,0) \in X$ which has fiber $\{-1,1\}$. Then the fibers of $\bba^1 \to Y$ are the same as $\eta$, hence $f$ is an isomorphism.
+
+\subsection{Consequences of Splitting}
+
+\begin{prop}
+    Every split $X$ is weakly normal.
+\end{prop}
+\begin{proof}
+    \cite{Brion2004FrobeniusSM} Proposition 1.2.5. Roughly, it suffices to show for $f \colon \spec B \to \spec A$. The conductor $I = \{a \in A \colon aB \subset A\}$ defines an ideal such that $\spec A$ splits compatibly with $\spec A/I$, $\spec B/I$ is reduced, and $\spec B/I \to \spec A/I$ is nowhere birational, finite. Then assuming $I \neq A$ we construct a nontrivial, purely inseparable extension $(B/I)_P$ of $(A/I)_P$ such that there is $b \in B_P$ with $b^p \in A_P$ but $b \not \in A_P$, and use the splitting to show $b = \varphi(b^p) \in \varphi(A_P) = A_P$, hence $I = A$ and therefore $A = B$.
+\end{proof}
+
+One of the most important consequences is that the higher cohomology of all ample line bundles on a split scheme $X$ vanishes. Compare this with Serre vanishing, which says for an ample line bundle $\fanl$ all higher cohomology vanishes \textit{after twisting sufficiently high}, i.e. $H^{i > 0}(X,\fanl^{\otimes v}) = 0$ for all $v \gg 0$. For split schemes, higher cohomology vanishes without having to twist the bundle.
+
+\begin{lem}
+    Let $\fanl$ be a line bundle on $X$, i.e. an invertible $\calo_X$-module. Then
+    \[F^* \fanl \simeq \fanl^p \quad\textit{ and }\quad F_*F^* \fanl \simeq \fanl \otimes_{\calo_X} F_* \calo_X \]
+\end{lem}
+\begin{proof}
+    Recall
+    \[F^* \fanl = F^{-1} \fanl \otimes_{F^{-1} \calo_X} \calo_X\]
+    Since $F$ is the identity map on points and the $p$th power map on on sheaves, 
+    \[F^* \fanl = \fanl \otimes_{\calo_X} \calo_X\]
+    where $\calo_X$ is a module over itself by the $p$th power map, i.e. $f.g = f^pg$. Then define the isomorphism $\fanl \otimes_{\calo_X} \calo_X \longrightarrow \fanl^p$ by $\sigma \otimes g \mapsto \sigma^p g$, which is $\calo_X$-linear as $\sigma f \otimes g = \sigma \otimes f^p g \mapsto \sigma^p f^p g = (\sigma f)^p g$. The second isomorphism follows from the projection formula.
+\end{proof}
+
+\begin{lem}\label{bklem1.2.7}
+    Let $\fanl$ be a line bundle on a split scheme $X$. Then
+    \begin{enumerate}[label=(\roman*)]
+        \item If $H^i(X, \fanl^v) = 0$ for fixed $i$ and all $v \gg 0$, then $H^i(X, \fanl) = 0$.
+        \item If $Y \subset X$ is compatibly split and the restriction $H^0(X, \fanl^v) \longrightarrow H^0(Y, \fanl\vert_Y^v)$ is surjective for all $v \gg 0$, then $H^0(X, \fanl) \longrightarrow H^0(Y, \fanl\vert_Y)$ is surjective.
+    \end{enumerate}
+\end{lem}
+\begin{proof}
+    (i) Let $\varphi$ split $X$, and note that $\id \otimes \varphi$ splits the map
+    \[\id \otimes F^{\#} \colon \fanl \longrightarrow \fanl \otimes_{\calo_X} F_*\calo_X\]
+    The the induced map in cohomology
+    \[H^i(\id \otimes F^{\#}) \colon H^i(X, \fanl) \longrightarrow H^i(X, \fanl \otimes_{\calo_X} F_* \calo_X)\]
+    is split, hence injective. But
+    \[H^i(X, \fanl \otimes_{\calo_X} F_* \calo_X) \simeq H^i(X, F_* F^* \fanl) \simeq H^i(X, F_* \fanl^p) \simeq H^i(X, \fanl^p)\]
+    by the previous lemma and the fact that $F$ is finite, hence affine (for the isomorphism on the right as abelian groups). Hence we have a split injection $H^i(X, \fanl) \longrightarrow H^i(X, \fanl^p)$, which inductively implies $H^i(X, \fanl)$ is a direct summand of $H^i(X, \fanl^{p^v})$ for any $v > 0$.
+
+    (ii) We have a commutative diagram
+    \[\begin{tikzcd}
+	{H^0(X, \fanl)} & {H^0(X, \fanl^p)} \\
+	{H^0(Y, \fanl\vert_Y)} & {H^0(Y, \fanl^p\vert_Y)}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=2-1, to=2-2]
+\end{tikzcd}\]
+Since $Y$ is compatibly split, the horizontal arrows are compatibly split as well. Therefore if $H^0(X, \fanl^p) \longrightarrow H^0(Y, \fanl^p\vert_Y)$ is surjective then so is $H^0(X, \fanl) \longrightarrow H^0(Y, \fanl\vert_Y)$.
+\end{proof}
+This leads us to the vanishing result.
+\begin{thm}
+    Let $X$ be a proper scheme over an affine scheme, and let $\fanl$ be an ample invertible sheaf on $X$.
+    \begin{enumerate}
+        \item If $X$ is split, $H^i(X, \fanl) = 0$ for all $i > 0$.
+        \item If $Y$ is compatibly split, then $H^0(X,\fanl) \longrightarrow H^0(Y, \fanl\vert_Y)$ is surjective and $H^i(Y, \fanl\vert_Y) =0 $ for all $i > 0$. This implies $H^i(X, \cali_Y \otimes \fanl) = 0$ for all $i > 0$.
+    \end{enumerate}
+\end{thm}
+\begin{proof}
+    By Serre vanishing $H^i(X, \fanl^v) = H^i(X, \cali_Y \otimes \fanl^v) = H^i(Y, \fanl\vert_Y^v) = 0$ for $v \gg 0$. The short exact sequence
+    \[0 \longrightarrow \cali_Y \otimes \fanl^v \longrightarrow \fanl^v \longrightarrow \fanl\vert_Y^v \longrightarrow 0 \]
+    yields
+    \[0 \longrightarrow H^0(X, \cali_Y \otimes \fanl^v) \longrightarrow H^0(X, \fanl^v) \longrightarrow H^0(Y, \fanl\vert_Y^v) \longrightarrow H^1(X, \cali_Y \otimes \fanl^v) \longrightarrow \ldots\]
+    It follows $H^0(X, \fanl^v) \longrightarrow H^0(Y, \fanl\vert_Y^v)$ is surjective, and by Lemma \ref{bklem1.2.7} the result follows.
+\end{proof}
+\subsection{Splitting Criteria}
+Define the evaluation map on sheaves
+\[\eps \colon \rHom_{\calo_X}(F_* \calo_X, \calo_X) \longrightarrow \calo_X, \quad \varphi \mapsto \varphi(1)\]
+where the domain is a coherent $F_* \calo_X$-module.
 \printbibliography
 
 \end{document}
