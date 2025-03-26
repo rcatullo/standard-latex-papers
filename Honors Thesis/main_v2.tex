@@ -9,7 +9,7 @@
 \begin{document}
 
 \maketitle
-\abstract{\lipsum[1-1]}
+\abstract{We give a brief overview of the theory of affine Grassmannians and background on Frobenius splittings. In particular, we discuss Frobenius splitting methods relating to Schubert varieties and connect this to a discussion of splitting for Schubert cells of variants of the affine Grassmannian. The hope is to use the \'adelic uniformization of $\Bun_G$ to imply Frobenius splitting by showing that the so-called Rational Grassmannian $\GrRat$ is split.}
 
 \tableofcontents
 
@@ -17,39 +17,96 @@
 \pagestyle{fancy}
 
 \section*{Acknowledgements}
-This project is submitted in partial fulfillment of the requirements for the degree in Bachelor of Science in Mathematics with Honors. I would like to thank my advisor, Professor Xinwen Zhu, for suggesting this topic and providing invaluable guidance through the research process. 
+This project is submitted in partial fulfillment of the requirements for the degree in Bachelor of Science in Mathematics with Honors at Stanford University. I would like to thank my advisor, Professor Xinwen Zhu, for suggesting this topic and providing invaluable guidance through the research process. 
 
-\section{Definitions}
-In this section we fix standard definitions and notations for objects used throughout this paper, largely following the notes in \cite{zhu}. Let $F$ be a local field over $k$ with ring of integers $\calo$. Upon choice of uniformizer $t \in \calo$ we have $F \cong k((t))$ and $\calo \cong k[[t]]$. Let $D = \spec k[[t]]$ denote the disk, and $D^* = \spec k((t))$ the punctured disk. For a $k$-algebra $R$, we let $D_R = D \hat{\times} \spec R = \spec R[[t]]$ and similarly $D^*_R = D^* \hat{\times} \spec R = \spec R((t))$.
+\section{Introduction}
 
-Let $G$ be an affine group scheme smooth over $k[[t]]$. 
+\subsection{Motivation}
+The main motivation for the results in this paper is toward the study of the moduli stack of principal $G$-bundles over a curve $X$, denoted $\Bun_G$ (when $X$ is clear from context). Given a smooth projective curve $X$ over $k$ and a smooth affine group scheme $G$ over $X$, the $2$-functor $\Bun_G \colon \Aff_k^{\op} \to \Grpd$ sends a $k$-algebra $R$ to the category of principal $G$-bundles $\fane$ on $X_R := X \times_k \spec R$. Perhaps the most enlightening example is when $G=\GL_r$ in which case $\Bun_{\GL_r}$, which is usually denoted $\Bun_r$, sends $R$ to the category of $\GL_r$-bundles on $X_R$. If we fix the trivial representation $\rho \colon \GL_r \to \End(k^r)$ we can form the associated category of rank $r$ vector bundles $\fane \times_{\rho} k^r = (\fane \times k^r)/\GL_r$ on $X_R$, and therefore $\Bun_r$ can be seen to be the moduli stack of rank $r$ vector bundles on $X$.
+
+We can equivalently define it as the Hom $2$-functor $\rHom(X, \bg)$ where $\bg$ is the classifying stack. For a $k$-algebra $R$, the $R$-points is the category $\Hom_R(X_R, \bg) \simeq \bg(X_R)$, which is defined as the category of principal $G$-bundles on $X_R$. This stack has some nice properties like being algebraic and locally of finite type over $k$.
+
+The affine Grassmannian $\Gr$ and its variants provide powerful tools to study $\Bun_G$ for the following reason. If we pick a point $x \in X(k)$ and a local coordinate $t$ of the complete local ring $\hat{\calo}_{X,x} \cong k[[t]]$ at $x$, then we can identify
+\[\Gr_{\GL_r, x} = \{\fane \text{ is a vector bundle on } X \text{ and } \beta \colon \fane\vert_{X\setminus \{x\}} \simeq \calo^{\oplus r}_{X\setminus \{x\}} \text{ a trivialization}\}\]
+It is apparent that this maps to the underlying set of points on $\Bun_r$ by $(\fane, \beta) \mapsto \fane$, which we want to upgrade to a morphism $\Gr_{\GL_r, x} \to \Bun_r$. In fact we can define $\Gr_{G,x}$ for more general smooth affine group schemes $G$, and construct a morphism
+\[u_x \colon \Gr_{G,x} \longrightarrow \Bun_G\]
+Such a map is called a \textit{uniformization map}, and this particular morphism is called the one-point uniformization map. Following the idea of Beilinson and Drinfeld, we can trivialize away from collections of points $x = \{x_1,\ldots,x_n\}$ that we let "wander" along the curve to produce the range Grassmannian $\GrRan$, whose points are $(x, \fane, \beta)$ where $\beta$ is a trivialization of a vector bundle $\fane$ over $X$ away from $x$.
+
+If we quotient this space by the equivalence relation $(x,\fane, \beta) \sim (x', \fane', \beta')$ whenever there is an isomorphism of vector bundles $\fane \simeq \fane'$ which restricted away from $x \cup x'$ is compatible with the trivializations $\beta, \beta'$, we roughly get the rational Grassmannian $\GrRat$. This space upgrades our morphism
+\[u_{\mathrm{Rat}} \colon \GrRat \longrightarrow \Bun_G\]
+which is called the \'adelic uniformization map.
+
+We consider the Frobenius morphism $F \colon X \to X$ which is the identity on points, but on the structure sheaf $F^{\#}\colon \calo_X \to F_* \calo_X$ is the $p$th power map. We can make sense of this more generally for prestacks on $\Aff_k$, and in particular for $\Bun_G$ and $\GrRat$. We say a space is Frobenius split if $\calo_X \to F_* \calo_X$ splits as $\calo_X$-modules. This is a particularly nice property since a number of nice consequences arise, one being vanishing of higher cohomology of ample line bundles on split spaces (without twisting!). The goal is the following conjecture.
+\begin{conj}
+    For $G$ a simple, simply connected smooth affine group scheme, the stack $\Bun_G$ is Frobenius split.
+\end{conj}
+We will see that we can understand the relevant geometry, i.e. rigidified line bundles $\Pic^e(\Bun_G)$ on $\Bun_G$, in terms of $\Pic^e(\GrRan/\mathrm{Ran})$ by adelic uniformization. We understand this Picard group well in special cases, and can build line bundles from analogues of Schubert cells as in the usual Grassmannian. The fact that Schubert varieties are well-known split spaces gives some loose motivation for the conjecture.
+
+\subsection{Notation}
+
+We strongly suggest the reader skip this section and come back only when necessary.
+
+
+
+
+
+\section{Affine Grassmannian}
+In this section we fix standard definitions and notations for objects used throughout this paper, largely following the notes in \cite{zhu}. Let $F$ be a local field over $k$ with ring of integers $\calo$. Upon choice of uniformizer $t \in \calo$ we have $F \cong k((t))$ and $\calo \cong k[[t]]$. Let $D := \spec k[[t]]$ denote the disk, and $D^* := \spec k((t))$ the punctured disk. For a $k$-algebra $R$, we let $D_R := D \hat{\times} \spec R = \spec R[[t]]$ and similarly $D^*_R := D^* \hat{\times} \spec R = \spec R((t))$. 
+
+Similarly, if $X$ is a reduced, geometrically connected curve over $k$ with smooth closed point $x \in |X|$, let $X^* := X \setminus \{x\}$. We denote $\calo_x := \hat{\calo}_{X,x}$ by the completion of the local ring at $x$, and $F_x$ its field of fractions. Let $D_{x,R} := \spec \calo_x \hat{\otimes} R \simeq \spec R[[t]]$ and $D_{x,R}^* := \spec F_x \hat{\otimes} R \simeq \spec R((t))$. If $x \colon \spec R \to X$ is an $R$-point let $\Gamma_x \subset X_R$ denote the graph of $x$ and $\hat{\Gamma}_x$ its formal completion in $X_R$.
+
+In the following section, we give an overview of definitions and first properties of the standard variants of the affine Grassmannian, as discussed in \cite{zhu}. 
+
 \begin{defn}
-    The \textit{affine Grassmannian} of $G$ is 
+    Let $G$ be an affine group scheme smooth over $k[[t]]$. The \textit{affine Grassmannian} $\Gr_G$ is the presheaf on $\Aff_k$ whose $R$-points are given by
+    \[\Gr_G(R) := \left\{(\fane,\beta) \;\Big\vert\; \begin{array}{c}
+    \fane \text{ is a } G \text{-torsor on } D_R \\ 
+    \beta \colon \fane\vert_{D_R^*} \simeq \fane^0\vert_{D_R^*} \text{ is a trivialization} 
+    \end{array} \right\}\]
 \end{defn}
 
-\section{Frobenius Splitting}
+This presheaf is represented by an ind-scheme, ind-of finite type over $k$. Recall an ind-scheme is a filtered colimit of schemes where all morphisms are closed embeddings of schemes.
+
+Let $X$ be a reduced connected curve (but not necessarily smooth) over $k$ and $x \in |X|$ a smooth closed point. Let $G$ be a smooth affine group scheme over $X$.
+\begin{defn}
+    We define the presheaf $\Gr_{G,x}$ whose $R$-points are given by
+    \[\Gr_{G,x}(R) := \left\{(\fane,\beta) \;\Big\vert\; \begin{array}{c}
+        \fane \text{ is a } G\text{-torsor on } X_R \\
+        \beta \colon \fane\vert_{X_R^*} \simeq \fane^0\vert_{X_R^*} \text{ is a trivialization} 
+    \end{array}\right\}\]
+\end{defn}
+In fact, we can see this is just a reinterpretation of the affine Grassmannian by noting that for $G_x := G \otimes_X \calo_x$, there is a natural isomorphism
+\[\text{res} \colon \Gr_{G,x} \xrightarrow{\quad \sim \quad} \Gr_{G_x}\]
+The proof that this is an isomorphism is slightly technical so we omit it.
+
+Let $\fane_1, \fane_2$ be $G$-torsors over $D_R$ and $\beta \colon \fane_1\vert_{D_R^*} \simeq \fane_2\vert_{D_R^*}$. For $x \in \spec R$, recall the \textit{relative position} $\inv_x(\beta) \in \coweight^+$ defined in Section 2 of \cite{zhu}.
+
+\begin{defn}
+    Let $\mu \in \coweight$ be a coweight. We define the \textit{spherical Schubert variety} as the closed subset
+    \[\Gr_{\leq \mu} := \{(\fane, \beta) \in \Gr_G \mid \inv(\beta) \leq \mu\} \subset \Gr_G\]
+\end{defn}
+
+
+
+TODO add definitions up to Ran and Rat Grassmannian.
+
+\section{Frobenius Splitting}\label{frobsplit}
 
 We give an overview of the basic definitions and properties of Frobenius splittings based on the exposition given in \cite{Brion2004FrobeniusSM}. The reader should consult this book for a more in-depth discussion.
 
 \begin{defn}
-    Let $X$ be a scheme. Then the \textit{absolute Frobenius morphism} 
-    \[F_X \colon X \longrightarrow X\]
-    is the identity on the underlying space $X$, and the $p$th power map on $\calo_X$.
+    Let $X$ be a prestack on $\Aff_t$. The \textit{absolute Frobenius morphism} $F_X \colon X \longrightarrow X$ sends 
 \end{defn}
 
 We write $F_X$ as $F$ when $X$ is clear from context, and similarly we denote the associated $p$th-power map on the structure sheaf
 \[F^{\#}_X \colon \calo_X \longrightarrow F_* \calo_X\]
 by $F^{\#}$ when $X$ is clear.
 
-\begin{defn}
-    \begin{enumerate}[label=(\roman*)]
-        \item We say that a scheme $X$ is \textit{Frobenius split} if the $\calo_X$-linear map $F^{\#}$ splits, i.e. there exists an $\calo_X$-linear map
+\begin{defn} We say that a scheme $X$ is \textit{Frobenius split} if the $\calo_X$-linear map $F^{\#}$ splits, i.e. there exists an $\calo_X$-linear map
     \[\varphi \colon F_* \calo_X \longrightarrow \calo_X\]
-    such that $\varphi \circ F^{\#} $ is the identity on $\calo_X$.
-    \item A closed subscheme $Y \subset X$ is \textit{compatibly split} if there is a splitting $\varphi$ of $X$ such that 
+    such that $\varphi \circ F^{\#} $ is the identity on $\calo_X$. A closed subscheme $Y \subset X$ is \textit{compatibly split} if there is a splitting $\varphi$ of $X$ such that 
     \[\varphi(F_* \cali_Y) \subset \cali_Y\]
-    \item A collection of closed subschemes $Y_1,\ldots,Y_m$ are \textit{compatibly split} if there is a splitting $\varphi$ of $X$ such that each subscheme is compatibly split with respect to $\varphi$.
-    \end{enumerate}
+    A collection of closed subschemes $Y_1,\ldots,Y_m$ are \textit{compatibly split} if there is a splitting $\varphi$ of $X$ such that each subscheme is compatibly split with respect to $\varphi$.
 \end{defn}
 Note that a splitting $\varphi$ is equivalent to an endomorphism $\varphi \colon \calo_X \to \calo_X$ such that $\varphi(f^p g) = f \varphi(g)$ and $\varphi(1) = 1$. The first condition means $\varphi \in \End_{\calo_X}(F_* \calo_X, \calo_X)$ and since $\varphi(F^{\#}(f)) = \varphi(f^p) = f\varphi(1)$ the composition is the identity if and only if $\varphi(1) = 1$.
 
@@ -98,7 +155,7 @@ The normal cubic $X := (y^2 = x^2(x-1))$ in $\bba^2$ is weakly normal (when $p \
 
 One of the most important consequences is that the higher cohomology of all ample line bundles on a split scheme $X$ vanishes. Compare this with Serre vanishing, which says for an ample line bundle $\fanl$ all higher cohomology vanishes \textit{after twisting sufficiently high}, i.e. $H^{i > 0}(X,\fanl^{\otimes v}) = 0$ for all $v \gg 0$. For split schemes, higher cohomology vanishes without having to twist the bundle.
 
-\begin{lem}
+\begin{lem}\label{bklem1.2.6}
     Let $\fanl$ be a line bundle on $X$, i.e. an invertible $\calo_X$-module. Then
     \[F^* \fanl \simeq \fanl^p \quad\textit{ and }\quad F_*F^* \fanl \simeq \fanl \otimes_{\calo_X} F_* \calo_X \]
 \end{lem}
@@ -155,7 +212,156 @@ This leads us to the vanishing result.
 \subsection{Splitting Criteria}
 Define the evaluation map on sheaves
 \[\eps \colon \rHom_{\calo_X}(F_* \calo_X, \calo_X) \longrightarrow \calo_X, \quad \varphi \mapsto \varphi(1)\]
-where the domain is a coherent $F_* \calo_X$-module.
+From now on we assume all Homs are taken as $\calo_X$-modules unless otherwise stated. Note the domain above is a coherent $F_* \calo_X$-module, and since $F$ is finite there is a unique $F^! \calo_X$ such that (\cite{vakil2025} Exercise 17.1.I.)
+\[\rHom(F_* \calo_X, \calo_X) \simeq F_*(F^! \calo_X)\]
+If $X$ is regular then $F$ is flat, and Grothendieck-Serre duality for a finite flat morphism yields
+\[F^! \calo_X \simeq \rHom(F^* \omega_X, \omega_X)\]
+Note that Lemma \ref{bklem1.2.6} then implies $F^! \calo_X \simeq \rHom(\omega_X^p, \omega_X) \simeq \omega_X^{1-p}$. Recall the trace map $\tau \colon F_* \omega_X \to \omega_X$ defined as in Grothendieck-Serre duality. Then by these remarks, the evaluation map
+\[\eps \colon F_* \rHom(F^* \omega_X, \omega_X) \simeq \rHom(\omega_X, F_* \omega_X) \longrightarrow \calo_X\]
+can be identified with
+\[\hat{\tau} \colon F_* \omega_X^{1-p} \simeq \rHom(\omega_X, F_* \omega_X) \longrightarrow \rEnd(\omega_X) \simeq \calo_X, \quad u \mapsto \tau \circ u\]
+\begin{rem}If $X$ is a nonsingular variety, then one can show that $\hat{\tau}$ above is given locally at any closed point $x$ by
+\[\hat{\tau}(f(dt_1 \wedge \ldots \wedge dt_n)^{1-p}) = \tr(f)\]
+for all $f \in \calo_{X,x} \subset k[[t_1,\ldots,t_n]]$ and 
+\[\tr\left(\sum_{\ul{i}}f_{\ul{i}} t^{\ul i}\right) := \sum f_{\ul{i}}^{1/p} t^{\ul{j}}\] 
+where the summation is over $t^{\ul j} = t^{(j_1,\ldots,j_n)} = t_1^{j_1} \cdots t_n^{j_n}$ such that $\ul i = \ul{p-1} + p \ul j$.
+\end{rem}
+Then we have the following characterization of split varieties.
+\begin{thm}\label{bkthm1.3.8}
+    Let $X$ be a nonsingular variety. Then $\varphi \in H^0(X, \omega_X^{1-p})$ splits $X$ iff $\hat{\tau}(\varphi) = 1$.
+\end{thm}
+In particular, it is a necessary condition for a nonsingular variety $X$ to be split that $\omega_X^{1-p}$ has a nonzero section. We have the following consequence, which will be of use in the section on Schubert varieties.
+\begin{prop}\label{bkprop1.3.11}
+    Let $X$ be a nonsingular variety of dimension $n$. If $X$ is complete and there is $\sigma \in H^0(X, \omega_X^{-1})$ with divisor of zeros 
+    \[(\sigma)_0 = Y_1 + \ldots + Y_n + Z\]
+    where $Y_1,\ldots,Y_n$ are prime divisors intersecting transversally at a point $x$ and $Z$ is effective with support disjoint from $x$, then $\sigma^{p-1} \in H^0(X,\omega_X^{1-p})$ splits $X$ compatibly with $Y_1,\ldots,Y_n$.
+
+    Conversely, if $\sigma \in H^0(X, \omega_X^{-1})$ is such that $\sigma^{p-1}$ splits $X$, then the subscheme of zeros of $\sigma$ is compatibly split (in particular reduced).
+\end{prop}
+\begin{proof}
+    TODO Choose local coordinates $t$ at $x \in X$ and use the local form of $\hat{\tau}$ in the above remark along with Theorem \ref{bkthm1.3.8}.
+\end{proof}
+
+\subsection{Splitting Relative a Divisor}
+
+\begin{defn}
+    Let $X$ be a scheme and $D$ an effective Cartier divisor on $X$ with the canonical map $\sigma \colon \calo_X \to \calo_X(D)$ corresponding to the canonical section $\sigma(1) = s_D$. Then $X$ is \textit{Frobenius split relative} $D$ if there is an $\calo_X$-linear map
+    \[\psi \colon F_* \calo_X(D) \to \calo_X\]
+    such that $\varphi := \psi \circ F_*(\sigma) \in \Hom(F_* \calo_X, \calo_X)$ is a splitting of $X$.
+\end{defn}
+
+We can also make similar definitions for compatibly split $Y \subset X$ relative to $D$ as long as $\supp(D)$ doesn't contain any components of $Y$. Note that any $\psi \in \Hom(F_* \calo_X(D), \calo_X)$ is a $D$-splitting if and only if $\psi(s_D) = 1$. We generalize the criterion for splitting in Theorem \ref{bkthm1.3.8}. We have the evaluation map
+\[\eps_D \colon \rHom(F_* \calo_X(D), \calo_X) \to \calo_X, \quad \psi \mapsto \psi(s_D)\]
+By duality we have an isomorphism
+\[\rHom(F_* \calo_X(D), \calo_X(D)) \simeq F_*\rHom(\calo_X(D), F^! \calo_X)\]
+If $X$ is regular, recall $F^! \calo_X \simeq \omega_X^{1-p}$, hence
+\[F_*\rHom(\calo_X(D), F^! \calo_X) \simeq F_* \omega_X^{1-p}(-D)\]
+As a slight abuse of notation, if we denote the induced map $\sigma \colon \omega_X^{1-p}(-D) \xrightarrow{\times s_D} \omega_X^{1-p}$ then we can identify as before $\eps_D$ with the $\calo_X$-linear map
+\[\hat{\tau} \circ F_*(\sigma) \colon F_* \omega_X^{1-p}(-D) \longrightarrow \calo_X\]
+Thus we get the following refinement of Theorem \ref{bkthm1.3.8}.
+\begin{thm}\label{bkthm1.4.10}
+    Let $X$ be a nonsingular variety and $D$ an effective Cartier divisor on $X$. Then $\varphi \in H^0(X, \omega_X^{1-p}(-D))$ splits $X$ relative to $D$ if and only if $\hat{\tau}(\varphi s_D) = 1$
+\end{thm}
+\section{Splitting of Schubert Varieties}
+We follow the notation of the general theory of algebraic groups. Namely, let $G$ be a connected, simply connected, semisimple algebraic group over an algebraically closed field $k$ of characteristic $p > 0$. Let $B$ be a fixed Borel subgroup, $T$ a maximal torus, $U$ the unipotent radical of $B$ such that $B = TU$. Let $W = N(T)/T$ be the Weyl group. Varieties are assumed integral. We let $\{s_1,\ldots,s_{\ell}\} \subset W$ be the set of simple reflections generating $W$.
+
+We have the bijective correspondance between standard parabolic subgroups $G \supset P \supset B$ and $I \subset \{1,\ldots,\ell\}$ by
+\[I \longleftrightarrow P_I := \bigsqcup_{w \in W_I} BwB\]
+where $W_I \leq W$ is the subgroup generated by $\{s_{i} \colon i \in I\}$. We denote the standard minimal parabolic subgroups $P_i := P_{\{i\}} = B \sqcup Bs_iB$.
+
+Recall the Bruhat cell $C_w = BwB/B$ and the Schubert variety $X_w$, the closure of $C_w$ in $G/B$ with the reduced subscheme structure. The boundary is the union of all codimension one Schubert subvarieties in $X_w$
+\[\del X_w = X_w \setminus C_w = \bigsqcup_{x < w} C_x\]
+where $x < w$ is the Bruhat-Chevally order on $W$.
+
+Let $w \in W$ and write $w = s_{i_1}\cdots s_{i_n}$ be a reduced expression in terms of simple reflections. Then by the Bruhat decomposition, $BwB = Bs_{i_1}B\cdots Bs_{i_n}B$. It follows that
+\[X_w = P_{i_1}\cdots P_{i_n}/B\]
+The product map $P_{i_1} \times \ldots \times P_{i_n} \to X_w$ is invariant under the action of $B^n$ given by $(p_1,\ldots,p_n) \odot (b_1,\ldots,b_n) = (p_1 b_1, b_1^{-1} p_2 b_2, \ldots, b_{n-1}^{-1} p_n b_n)$.
+\begin{defn}[BSDH Variety]
+    Let $\mfw = (s_{i_1},\ldots,s_{i_n})$ be an ordered sequence of simple reflections in $W$, also called a word in $W$. Define the \textit{Bott–Samelson–Demazure–Hansen (BSDH) variety} $Z_{\mfw}$ as the orbit space
+    \[Z_{\mfw} := P_{\mfw}/B^n\]
+    where $B^n$ acts on $P_{\mfw} := P_{i_1} \times \ldots \times P_{i_n}$ as above.
+\end{defn}
+The goal of this section is to show that $Z_{\mfw}$ is split. We give a few important first properties, and then construct its canonical line bundle in order to use some of the theory developed in Section \ref{frobsplit}.
+
+We can put a smooth projective variety structure on $Z_{\mfw}$ such that the orbit map $\pi_{\mfw} \colon P_{\mfw} \to Z_{\mfw}$ is a locally trivial principal $B^n$-bundle. For details see \cite{Brion2004FrobeniusSM} Section 2.2, which gives a commutative diagram below whose horizontal arrows are closed embeddings and vertical arrows are $B^n$-bundles.
+\[\begin{tikzcd}
+	{P_{\mathfrak{w}}} & {G^n} \\
+	{Z_{\mathfrak{w}}} & {(G/B)^n}
+	\arrow["{\phi_n}", from=1-1, to=1-2]
+	\arrow["{\pi_{\mathfrak{w}}}"', from=1-1, to=2-1]
+	\arrow["\pi", from=1-2, to=2-2]
+	\arrow["{\phi_{\mathfrak{w}}}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+Namely, the horizontal maps are given by
+\[\phi_n(p_1,\ldots,p_n) := (p_1,p_1p_2,\ldots,p_1\cdots p_n), \quad \phi_{\mfw}[p_1,\ldots,p_n]=(p_1B, p_1p_2B, \ldots, p_1\cdots p_n B)\]
+where $[p_1,\ldots,p_n]$ denotes the $B^n$-orbit of the corresponding $P_{\mfw}$ point. In particular, $Z_{\mfw}$ is smooth since $P_{\mfw}$ is smooth.
+
+The left multiplication of $P_{i_1}$ on the first factor of $\phi_{\mfw}$ gives $Z_{\mfw}$ the structure of a $P_{i_1}$-variety. The projection of $\phi_{\mfw}$ on the last factor gives a $P_{i_1}$-equivariant morphism 
+\[\theta_{\mfw} \colon Z_{\mfw} \longrightarrow G/B, \quad \theta_{\mfw}[p_1,\ldots,p_n] := p_1\cdots p_n B\]
+Since $P_i = B \sqcup Bs_i B$ and $Bs_i B \simeq U_{\alpha_i} \times B$ where $U_{\alpha_i}$ is the root subgroup of $U$ corresponding to $\alpha_i \leftrightarrow s_i$, we see
+\[\interior Z_{\mfw} := ((Bs_{i_1}B) \times \ldots \times (B s_{i_n} B))/B^n\]
+is an open subset isomorphic to the affine space $\prod_{j=1}^n U_{\alpha_{i_j}}$. We can see if $\mfw$ gives a reduced expression in $W$ that $\theta_{\mfw}(Z_{\mfw}) = P_{i_1}\cdots P_{i_n}/B = X_w$ is a Schubert variety, where $w= s_{i_1}\cdots s_{i_n}$. Moreover $\theta(\interior Z_{\mfw}) = Bs_{i_1}B\cdots Bs_{i_n} B/B = C_w$ is the Bruhat cell, and $\theta_{\mfw}$ restricts to an isomorphism $\interior Z_{\mfw} \to C_w$. Thus $\theta_{\mfw}$ provides a desingularization of $X_w$.
+
+We can take subsequences of $\mfw_J := (s_{i_{j_1}}, \ldots, s_{i_{j_m}}) \subset (s_{i_1}, \ldots, s_{i_n}) = \mfw$ for $J \subset I$ and construct a closed embedding 
+\begin{equation}\label{closedembedding}
+    \iota_{\mfw_J, \mfw} \colon Z_{\mfw_J} \longrightarrow Z_{\mfw}
+\end{equation} 
+In particular, for $1 \leq m \leq n$ we can take $\mfw[m] := (s_{i_1}, \ldots, s_{i_m})$ which is $\mfw_J$ for $J = (i_1,\ldots,i_m) \subset (i_1,\ldots,i_n) = I$, and we denote the morphism given by projection to the first $m$ coordinates by
+\[\psi_{\mfw, m} \colon Z_{\mfw} \longrightarrow Z_{\mfw[m]}\]
+For $m = n-1$ we give it the special notation $\psi_{\mfw}$. Note then that
+\[\psi_{\mfw, m} = \psi_{\mfw[m+1]}\circ\ldots \circ\psi_{\mfw[n-1]}\circ \psi_{\mfw}\]
+The following proposition is given in \cite{Brion2004FrobeniusSM}.
+\begin{prop}
+    The projection $\psi_{\mfw}$ is a locally trivial $\bbp^1$-fibration and therefore $\psi_{\mfw,m}$ is smooth. We also have the following fiber diagram where $\mfv := \mfw[n-1]$ and $f_{i} := G/B \to G/P_{i}$ is the standard projection.
+    \[\begin{tikzcd}
+	{Z_{\mathfrak{w}}} & {G/B} \\
+	{Z_{\mathfrak{v}}} & {G/P_{i_n}}
+	\arrow["{\theta_{\mathfrak{w}}}", from=1-1, to=1-2]
+	\arrow["{\psi_{\mathfrak{w}}}"', from=1-1, to=2-1]
+	\arrow["f_{i_n}", from=1-2, to=2-2]
+	\arrow["{f_{i_n}\circ \theta_{\mathfrak{v}}}"', from=2-1, to=2-2]
+\end{tikzcd}\]
+\end{prop}
+We work out the diagram to familiarize the reader with the definitions. Clockwise, it reads $f_{i_n} \circ \theta_{\mfw}[p_1,\ldots,p_n] = f_{i_n}(p_1\cdots p_n B) = p_1\cdots p_{n-1} P_{i_n}$. Counterclockwise, we get $f_{i_n} \circ \theta_{\mfv} \circ \psi_{\mfw}[p_1,\ldots,p_n] = f_{i_n} \circ \theta_{\mfv}[p_1,\ldots,p_{n-1}] = f_{i_n}(p_1\cdots p_{n-1} B) = p_1\cdots p_{n-1} P_{i_n}$ which is equivalent.
+
+Let $\mfw(j) := (s_{i_1}, \ldots, \hat{s}_{i_j}, \ldots, s_{i_n})$ for $j \in I$ and define the "boundary" $\del Z_{\mfw}$ of $Z_{\mfw}$ by
+\[\del Z_{\mfw} := \bigcup_{j=1}^n Z_{\mfw(j)}\]
+with the closed reduced subscheme structure, where $Z_{\mfw(j)}$ are seen to be divisors of $Z_{\mfw}$ via the closed embedding $\iota_{\mfw(j), \mfw}$ in (\ref{closedembedding}). Further they are the irreducible components of $\del Z_{\mfw}$ such that for any $J \subset I$, as schemes
+\[Z_{\mfw_J} \simeq \bigcap_{j \not \in J} Z_{\mfw(j)}\]
+In particular, $\interior Z_{\mfw} = Z_{\mfw} \setminus \del Z_{\mfw}$.
+
+Recall we can construct a line bundle on $G/B$ as follows. We can identify the characters $\bbx^*(B)$ on $B$ with $\weight$ on the torus $T$ by restriction, so given a character $\lambda \in \weight$ let $k_{\lambda}$ denote the corresponding one-dimensional representation of $B$. Then we have a $G$-equivariant line bundle
+\[\fanl(\lambda) := G \times_B k_{-\lambda} \longrightarrow G/B\]
+associated to the principal $B$-bundle $\pi_B \colon G \to G/B$ via $k_{-\lambda}$. In fact all line bundles are of this form, and in particular 
+\[\omega_{G/B} \simeq \fanl(-2\rho)\]
+where $\rho := \chi_1 + \ldots + \chi_{\ell}$ is the sum of the fundamental weights which form a basis of $\weight$, and equivalently the half-sum of the positive roots. More generally if $V$ is a finite $B$-module we define $\fanl(V) := G \times_B V \to G/B$ as the associated vector bundle.
+
+We define $\fanl_{\mfw}(\lambda)$ as the pullback of $\fanl(\lambda)$ on $G/B$ along $\theta_{\mfw}$. More generally for a finite $B$-module $V$ define $\fanl_{\mfw}(V)$ as the pullback of $\fanl(V)$ along $\theta_{\mfw}$.
+
+\begin{prop}
+    Let $\mfw = (s_{i_1}, \ldots, s_{i_n})$ be any sequence of simple reflections in $W$. Then the canonical bundle $\omega_{Z_{\mfw}}$ of $Z_{\mfw}$ is given by 
+    \[\omega_{Z_{\mfw}} \simeq \calo_{Z_{\mfw}}(-\del Z_{\mfw}) \otimes \fanl_{\mfw}(-p)\]
+    and as $B$-equivariant line bundles,
+    \[\omega_{Z_{\mfw}} \simeq \calo_{Z_{\mfw}}(-\del Z_{\mfw}) \otimes \fanl_{\mfw}(-p) \otimes \mathbf{k}_{-\rho}\]
+    where $\mathbf{k}_{-\rho}$ is the trivial line bundle on $Z_{\mfw}$ equipped with the $B$-equivariant line bundle structure coming from the representation $k_{-\rho}$ of $B$.
+\end{prop}
+
+The proof given in \cite{Brion2004FrobeniusSM} is enlightening so we include it here.
+\begin{proof}
+    We proceed by induction on $\ell(\mfw) = n$. For $n = 1$, $Z_{\mfw} = P_i/B \simeq \bbp^1$ and hence $\omega_{Z_{\mfw}} \simeq \calo_{\bbp^1}(-2x_0)$ for any $x_0 \in \bbp^1$. It's easy to see $\fanl_{\mfw}(-\rho) \simeq \calo_{\bbp^1}(-x_0)$. TODO
+\end{proof}
+
+As a corollary we get the following theorem.
+
+\begin{thm}
+    $Z_{\mfw}$ is split by $\sigma^{p-1}$ where $\sigma \in H^0(Z_{\mfw}, \omega_{Z_{\mfw}}^{-1})$ vanishes on all the divisors $Z_{\mfw(j)}$ for $1 \leq j \leq n$. Thus for any $J \subset I$, $Z_{\mfw_J}$ is compatibly split by $\sigma^{p-1}$ where $Z_{\mfw_J}$ is identified with its image under the closed embedding $\iota_{\mfw_J, \mfw}$ in (\ref{closedembedding}).
+\end{thm}
+\begin{proof}
+    This is essentially a direct application of Proposition \ref{bkprop1.3.11}.
+\end{proof}
+
+\newpage
+
 \printbibliography
 
 \end{document}
