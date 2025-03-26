@@ -87,17 +87,21 @@ mathescape=true}
 \definecolor{shadecolor}{gray}{0.95}
 %%%%%%%%%%%%%%%%%%%%%%%%
 
+%% ENUMERATE ENVIRONMENT %%
+\setlist[enumerate]{label=(\roman*)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%% THEOREM ENVIRONMENTS %%%%%%%%%%%%%%%%
 \newtheoremstyle{standard}
-    {10pt}
-    {10pt}
     {}
-    {\parindent}
-    {\scshape}
     {}
-    {.5em}
+    {\itshape}
+    {}
+    {\scshape\bfseries}
+    {.}
+    { }
     {}
 \theoremstyle{standard}
 \newtheorem{thm}{Theorem}[section]
@@ -108,6 +112,7 @@ mathescape=true}
 \newtheorem{exmp}{Example}[section]
 \newtheorem*{rem}{Remark}
 \newtheorem*{question}{Question}
+\newtheorem*{conj}{Conjecture}
 \newtheorem{exer}{Exercise}[section]
 \newtheorem*{todo}{TODO}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -279,6 +284,9 @@ mathescape=true}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
 \newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
 \newcommand{\sqbrack}[1]{\left[ #1 \right]}
+%% Misc. Shorthand %%
+\newcommand{\ul}{\underline}
+%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -299,10 +307,9 @@ mathescape=true}
 
 
 %%%%%%%%%%%%%%%% MISC OPS&COMMANDS %%%%%%%%%%%%%%%%%
-%% Categorical tingz %%
+%% Categorical %%
 \DeclareMathOperator{\Set}{\mathsf{Set}}
 \DeclareMathOperator{\Isom}{\mathsf{Isom}}
-\DeclareMathOperator{\Afft}{\mathsf{Aff}^{ft}}
 \DeclareMathOperator{\Aff}{\mathsf{Aff}}
 \DeclareMathOperator{\CommAlg}{\mathsf{CommAlg}}
 \DeclareMathOperator{\Ab}{\mathsf{Ab}}
@@ -335,7 +342,7 @@ mathescape=true}
 \DeclareMathOperator{\op}{\mathsf{op}}
 \DeclareMathOperator{\coker}{coker}
 \DeclareMathOperator{\coim}{coim}
-%% Algebra Tingz %%
+%% Algebra %%
 \DeclareMathOperator{\Ext}{Ext}
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\Tor}{Tor}
@@ -360,13 +367,14 @@ mathescape=true}
 \DeclareMathOperator{\wt}{wt}
 \newcommand{\rExt}{\cale xt}
 \newcommand{\rHom}{\calh om}
+\newcommand{\rEnd}{\cale nd}
 \newcommand{\ideal}{\trianglelefteq}
 \newcommand{\acts}{\curverightarrow}
 \newcommand{\actson}{\curverightarrow}
-\renewcommand{\action}{\curverightarrow}
+\newcommand{\action}{\curverightarrow}
 \newcommand{\pt}[1]{#1\Parens{t}}
 \newcommand{\bt}[1]{#1\Brackets{t}}
-%% ANT Tings %%
+%% Analytic Number Theory %%
 \DeclareMathOperator{\Pic}{Pic}
 \DeclareMathOperator{\cl}{Cl}
 \DeclareMathOperator{\bigdiv}{Div}
@@ -375,14 +383,13 @@ mathescape=true}
 \DeclareMathOperator{\tr}{Tr}
 \DeclareMathOperator{\disc}{disc}
 \newcommand{\zzz}[1]{\zz/#1 \zz}
-%% Function Tingz %%
+%% Functions %%
 \DeclareMathOperator{\id}{Id}
 \DeclareMathOperator{\sgn}{sgn}
 \DeclareMathOperator{\image}{Im}
 \newcommand{\im}[1]{\mathfrak{Im} \left( #1 \right)}
 \newcommand{\re}[1]{\mathfrak{Re} \left( #1 \right)}
-\newcommand{\inv}[1]{#1^{-1}}
-%% Alg Geo Tingz %%
+%% Algebraic Geometry %%
 \newcommand{\ox}{\calo_X}
 \renewcommand{\div}{div}
 \DeclareMathOperator{\spec}{Spec}
@@ -404,7 +411,10 @@ mathescape=true}
 \DeclareMathOperator{\Bun}{Bun}
 \DeclareMathOperator{\Maps}{Maps}
 \DeclareMathOperator{\Sect}{Sect}
-%% Matrix Tingz %%
+\newcommand{\GrRan}{\Gr_{\mathrm{Ran}}}
+\newcommand{\GrRat}{\Gr_{\mathrm{Rat}}}
+\newcommand{\GrG}{\Gr_G}
+%% Linear Algebra %%
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\Gl}{GL}
 \DeclareMathOperator{\gl}{GL}
@@ -423,7 +433,11 @@ mathescape=true}
 \DeclareMathOperator{\res}{Res}
 \DeclareMathOperator{\sym}{Sym}
 \renewcommand{\O}{\textsc{O}}
-%% Analysis Tingz %%
+%% Representation Theory %%
+\DeclareMathOperator{\inv}{Inv}
+\newcommand{\weight}{\bbx^*(T)}
+\newcommand{\coweight}{\bbx_*(T)}
+%% Analysis %%
 \DeclareMathOperator{\grad}{grad}
 \DeclareMathOperator{\curl}{curl}
 \newcommand{\dA}{\, \mathrm{d}A}
@@ -440,14 +454,16 @@ mathescape=true}
 \newcommand{\dtheta}{\, \mathrm{d}\theta}
 \newcommand{\domega}{\, \mathrm{d}\omega}
 \newcommand{\del}{\partial}
+\newcommand{\eps}{\varepsilon}
 \DeclareMathOperator{\vol}{Vol}
-%% Topology Tingz %%
+%% Topology %%
 \DeclareMathOperator{\rel}{rel}
 \newcommand{\lift}[1]{\widetilde{#1}}
-%% Logic Tingz %%
+\newcommand*\interior[1]{#1^{\mathrm{o}}}
+%% Logic %%
 \newcommand{\semantics}[1]{[\![\textnormal{$ #1 $\/}]\!]}
 \newcommand{\entails}{\Vdash}
-%% Prob Tingz %%
+%% Probability %%
 \newcommand{\given}{\mid}
 \DeclareMathOperator{\opt}{opt}
 \DeclareMathOperator{\var}{var}
@@ -455,6 +471,7 @@ mathescape=true}
 \DeclareMathOperator{\geo}{Geo}
 \DeclareMathOperator{\poi}{Poi}
 \DeclareMathOperator{\ber}{Ber}
+\DeclareMathOperator{\softmax}{softmax}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
