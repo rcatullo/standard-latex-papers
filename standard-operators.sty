@@ -1,122 +1,3 @@
-%%%%%%%%%%%%%% REQUIRED PACKAGES %%%%%%%%%%%%%%%%
-\RequirePackage{setspace}
-\RequirePackage[skip=0.5em]{parskip}
-\RequirePackage{amssymb}
-\RequirePackage{amsmath}
-\RequirePackage{amsthm}
-\RequirePackage{float}
-\RequirePackage{mathrsfs}
-\RequirePackage{tikz-cd}
-\RequirePackage[margin=1in]{geometry}
-\RequirePackage{enumitem}
-\RequirePackage{graphicx}
-\RequirePackage{titlesec}
-\RequirePackage{ragged2e}
-\RequirePackage{color}
-\RequirePackage{hyperref}
-\RequirePackage{mdframed}
-\RequirePackage{framed}
-\RequirePackage{fancyhdr}
-\RequirePackage{titleref}
-\RequirePackage{lipsum}
-\RequirePackage{tocloft}
-\RequirePackage{extarrows}
-\RequirePackage{mathtools}
-\RequirePackage{listings}
-\RequirePackage[toc,page]{appendix}
-\RequirePackage[backend=biber,style=alphabetic]{biblatex} 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%% BIBLIOGRAPHY SETUP %%%%%%%%%%%%%%%%
-\addbibresource{refs.bib}
-\hypersetup{
-    colorlinks=true, 
-    linktoc=all,
-    linkcolor=black,
-    citecolor=black,
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%% FORMATTING THINGS %%%%%%%%%%%%%%%%
-%% SECTIONS AND SUBSECTIONS %%
-\titleformat{\section}[block]{\center\normalfont\scshape}{\thesection.}{0.5em}{}
-\titlespacing*{\section}{0pt}{0.5em}{0.5em}
-
-\titleformat{\subsection}[hang]{\normalfont\bfseries}{\normalfont\thesubsection.}{0.5em}{}
-\titlespacing*{\subsection}{0pt}{0.5em}{0.5em}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% ABSTRACT %%
-\mdfdefinestyle{abstract}{leftmargin=.05\linewidth,rightmargin=.05\linewidth,%
-innerleftmargin=0pt,innerrightmargin=0pt,roundcorner=0pt, linewidth=0pt}
-
-\renewcommand{\abstract}[1]{\begin{mdframed}[style=abstract] \textsc{Abstract}. #1
-\end{mdframed}}
-%%%%%%%%%%%%%%
-
-%% TABLE OF CONTENTS %%
-\renewcommand{\cfttoctitlefont}{\hfil\normalfont\scshape}
-\renewcommand{\cftaftertoctitle}{\hfil}
-\setlength{\cftsubsecindent}{0pt}
-\setlength{\cftbeforesecskip}{0.5em}
-\renewcommand{\cftdotsep}{9}
-\renewcommand{\cftsecfont}{\normalfont}
-\renewcommand{\cftsecpagefont}{\normalfont}
-\renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}}
-\renewcommand{\cftsecdotsep}{\cftdotsep}
-\renewcommand{\cftsubsecdotsep}{\cftdotsep}
-%%%%%%%%%%%%%%%%%%%%%%%
-
-%% HEADERS AND FOOTERS %%
-\fancyhf{}
-\fancyhead[L]{\footnotesize \leftmark}
-\fancyhead[R]{\footnotesize \thepage}
-%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% PARAGRAPH INDENT %%
-\setlength{\parindent}{0pt}
-%%%%%%%%%%%%%%%%%%%%%%
-
-%% LISTINGS ENVIRONMENT %%
-\lstset{basicstyle=\ttfamily,
-escapeinside={||},
-mathescape=true}
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% SHADED ENVIRONMENT %%
-\definecolor{shadecolor}{gray}{0.95}
-%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% ENUMERATE ENVIRONMENT %%
-\setlist[enumerate,1]{label=(\roman*)}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%% THEOREM ENVIRONMENTS %%%%%%%%%%%%%%%%
-\newtheoremstyle{standard}
-    {}
-    {}
-    {\itshape}
-    {}
-    {\scshape\bfseries}
-    {.}
-    { }
-    {}
-\theoremstyle{standard}
-\newtheorem{thm}{Theorem}[section]
-\newtheorem{lem}[thm]{Lemma}
-\newtheorem{prop}[thm]{Proposition}
-\newtheorem{cor}[thm]{Corollary}
-\newtheorem{defn}{Definition}[section]
-\newtheorem{exmp}{Example}[section]
-\newtheorem*{rem}{Remark}
-\newtheorem*{question}{Question}
-\newtheorem*{conj}{Conjecture}
-\newtheorem{exer}{Exercise}[section]
-\newtheorem*{todo}{TODO}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 %%%%%%%%%%%%%% STYLIZED LETTERS %%%%%%%%%%%%%%%%
 %% BOLD LETTERS %%
 \newcommand{\bba}{\mathbb{A}}
@@ -273,8 +154,8 @@ mathescape=true}
 \DeclareMathOperator{\topint}{int}
 \newcommand{\topwedge}{\vee}
 \newcommand{\bigtopwedge}{\bigvee}
-\renewcommand{\tilde}{\widetilde}
-\renewcommand{\hat}{\widehat}
+\newcommand{\wtilde}{\widetilde}
+\newcommand{\what}{\widehat}
 %% Left-Righting Things %%
 \newcommand{\set}[1]{\left\{ #1 \right\}}
 \newcommand{\brangle}[1]{\left\langle #1 \right\rangle}
@@ -290,7 +171,7 @@ mathescape=true}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-%%%%%%%%%%%%%%% CUSTOM SYMBOLS FOR FUNZIES %%%%%%%%%%%%%
+%%%%%%%%%%%%%%% CUSTOM SYMBOLS %%%%%%%%%%%%%
 \newcommand{\fish}{ %% For R.V. w/ Poisson dist %%
   \mathchoice
     {\mathrel{\ooalign{$\alpha$\cr\hidewidth \kern -0.13em $\cdot$\hidewidth}}}% \displaystyle
