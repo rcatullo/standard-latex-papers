@@ -21,7 +21,6 @@
 This project is submitted in partial fulfillment of the requirements for the degree in Bachelor of Science in Mathematics with Honors at Stanford University. I would like to thank my advisor, Professor Xinwen Zhu, for suggesting this topic and providing invaluable guidance through the research process.
 
 \section{Introduction}
-
 \subsection{Motivation}
 The main motivation for the results in this paper is toward the study of the moduli stack of principal $G$-bundles over a curve $X$, denoted $\Bun_G$ (when $X$ is clear from context). Given a smooth projective curve $X$ over $k$ and a smooth affine group scheme $G$ over $X$, the $2$-functor $\Bun_G \colon \Aff_k^{\op} \to \Grpd$ sends a $k$-algebra $R$ to the category of principal $G$-bundles $\fane$ on $X_R := X \times_k \spec R$. Perhaps the most enlightening example is when $G=\GL_r$ in which case $\Bun_{\GL_r}$, which is usually denoted $\Bun_r$, sends $R$ to the category of $\GL_r$-bundles on $X_R$. If we fix the trivial representation $\rho \colon \GL_r \to \End(k^r)$ we can form the associated category of rank $r$ vector bundles $\fane \times_{\rho} k^r = (\fane \times k^r)/\GL_r$ on $X_R$, and therefore $\Bun_r$ can be seen to be the moduli stack of rank $r$ vector bundles on $X$.
 
@@ -212,13 +211,13 @@ This leads us to the vanishing result.
 \end{proof}
 \subsection{Splitting Criteria}
 Define the evaluation map on sheaves
-\[\eps \colon \rHom_{\calo_X}(F_* \calo_X, \calo_X) \longrightarrow \calo_X, \quad \varphi \mapsto \varphi(1)\]
+\[\veps \colon \rHom_{\calo_X}(F_* \calo_X, \calo_X) \longrightarrow \calo_X, \quad \varphi \mapsto \varphi(1)\]
 From now on we assume all Homs are taken as $\calo_X$-modules unless otherwise stated. Note the domain above is a coherent $F_* \calo_X$-module, and since $F$ is finite there is a unique $F^! \calo_X$ such that (\cite{vakil2025} Exercise 17.1.I.)
 \[\rHom(F_* \calo_X, \calo_X) \simeq F_*(F^! \calo_X)\]
 If $X$ is regular then $F$ is flat, and Grothendieck-Serre duality for a finite flat morphism yields
 \[F^! \calo_X \simeq \rHom(F^* \omega_X, \omega_X)\]
 Note that Lemma \ref{bklem1.2.6} then implies $F^! \calo_X \simeq \rHom(\omega_X^p, \omega_X) \simeq \omega_X^{1-p}$. Recall the trace map $\tau \colon F_* \omega_X \to \omega_X$ defined as in Grothendieck-Serre duality. Then by these remarks, the evaluation map
-\[\eps \colon F_* \rHom(F^* \omega_X, \omega_X) \simeq \rHom(\omega_X, F_* \omega_X) \longrightarrow \calo_X\]
+\[\veps \colon F_* \rHom(F^* \omega_X, \omega_X) \simeq \rHom(\omega_X, F_* \omega_X) \longrightarrow \calo_X\]
 can be identified with
 \[\hat{\tau} \colon F_* \omega_X^{1-p} \simeq \rHom(\omega_X, F_* \omega_X) \longrightarrow \rEnd(\omega_X) \simeq \calo_X, \quad u \mapsto \tau \circ u\]
 \begin{rem}If $X$ is a nonsingular variety, then one can show that $\hat{\tau}$ above is given locally at any closed point $x$ by
@@ -252,12 +251,12 @@ In particular, it is a necessary condition for a nonsingular variety $X$ to be s
 \end{defn}
 
 We can also make similar definitions for compatibly split $Y \subset X$ relative to $D$ as long as $\supp(D)$ doesn't contain any components of $Y$. Note that any $\psi \in \Hom(F_* \calo_X(D), \calo_X)$ is a $D$-splitting if and only if $\psi(s_D) = 1$. We generalize the criterion for splitting in Theorem \ref{bkthm1.3.8}. We have the evaluation map
-\[\eps_D \colon \rHom(F_* \calo_X(D), \calo_X) \to \calo_X, \quad \psi \mapsto \psi(s_D)\]
+\[\veps_D \colon \rHom(F_* \calo_X(D), \calo_X) \to \calo_X, \quad \psi \mapsto \psi(s_D)\]
 By duality we have an isomorphism
 \[\rHom(F_* \calo_X(D), \calo_X(D)) \simeq F_*\rHom(\calo_X(D), F^! \calo_X)\]
 If $X$ is regular, recall $F^! \calo_X \simeq \omega_X^{1-p}$, hence
 \[F_*\rHom(\calo_X(D), F^! \calo_X) \simeq F_* \omega_X^{1-p}(-D)\]
-As a slight abuse of notation, if we denote the induced map $\sigma \colon \omega_X^{1-p}(-D) \xrightarrow{\times s_D} \omega_X^{1-p}$ then we can identify as before $\eps_D$ with the $\calo_X$-linear map
+As a slight abuse of notation, if we denote the induced map $\sigma \colon \omega_X^{1-p}(-D) \xrightarrow{\times s_D} \omega_X^{1-p}$ then we can identify as before $\veps_D$ with the $\calo_X$-linear map
 \[\hat{\tau} \circ F_*(\sigma) \colon F_* \omega_X^{1-p}(-D) \longrightarrow \calo_X\]
 Thus we get the following refinement of Theorem \ref{bkthm1.3.8}.
 \begin{thm}\label{bkthm1.4.10}
