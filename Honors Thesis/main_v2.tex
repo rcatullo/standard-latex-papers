@@ -29,11 +29,11 @@ We can equivalently define it as the Hom $2$-functor $\rHom(X, \bg)$ where $\bg$
 The affine Grassmannian $\Gr$ and its variants provide powerful tools to study $\Bun_G$ for the following reason. If we pick a point $x \in X(k)$ and a local coordinate $t$ of the complete local ring $\hat{\calo}_{X,x} \cong k[[t]]$ at $x$, then we can identify
 \[\Gr_{\GL_r, x} = \{\fane \text{ is a vector bundle on } X \text{ and } \beta \colon \fane\vert_{X\setminus \{x\}} \simeq \calo^{\oplus r}_{X\setminus \{x\}} \text{ a trivialization}\}\]
 It is apparent that this maps to the underlying set of points on $\Bun_r$ by $(\fane, \beta) \mapsto \fane$, which we want to upgrade to a morphism $\Gr_{\GL_r, x} \to \Bun_r$. In fact we can define $\Gr_{G,x}$ for more general smooth affine group schemes $G$, and construct a morphism
-\[u_x \colon \Gr_{G,x} \longrightarrow \Bun_G\]
+\[u_x \colon \Gr_{G,x} \rightarrow \Bun_G\]
 Such a map is called a \textit{uniformization map}, and this particular morphism is called the one-point uniformization map. Following the idea of Beilinson and Drinfeld, we can trivialize away from collections of points $x = \{x_1,\ldots,x_n\}$ that we let "wander" along the curve to produce the range Grassmannian $\GrRan$, whose points are $(x, \fane, \beta)$ where $\beta$ is a trivialization of a vector bundle $\fane$ over $X$ away from $x$.
 
 If we quotient this space by the equivalence relation $(x,\fane, \beta) \sim (x', \fane', \beta')$ whenever there is an isomorphism of vector bundles $\fane \simeq \fane'$ which restricted away from $x \cup x'$ is compatible with the trivializations $\beta, \beta'$, we roughly get the rational Grassmannian $\GrRat$. This space upgrades our morphism
-\[u_{\mathrm{Rat}} \colon \GrRat \longrightarrow \Bun_G\]
+\[u_{\mathrm{Rat}} \colon \GrRat \rightarrow \Bun_G\]
 which is called the \'adelic uniformization map.
 
 We consider the Frobenius morphism $F \colon X \to X$ which is the identity on points, but on the structure sheaf $F^{\#}\colon \calo_X \to F_* \calo_X$ is the $p$th power map. We can make sense of this more generally for prestacks on $\Aff_k$, and in particular for $\Bun_G$ and $\GrRat$. We say a space is Frobenius split if $\calo_X \to F_* \calo_X$ splits as $\calo_X$-modules. This is a particularly nice property since a number of nice consequences arise, one being vanishing of higher cohomology of ample line bundles on split spaces (without twisting!). The goal is the following conjecture.
@@ -46,26 +46,190 @@ We will see that we can understand the relevant geometry, i.e. rigidified line b
 
 We strongly suggest the reader skip this section and come back only when necessary.
 
-Let $G$ be a smooth affine algebraic group scheme over $k$. Let $T$ denote the abstract Cartan subgroup of $G$
-
-
-
-\section{Affine Grassmannian}
-In this section we fix standard definitions and notations for objects used throughout this paper, largely following the notes in \cite{zhu}. Let $F$ be a local field over $k$ with ring of integers $\calo$. Upon choice of uniformizer $t \in \calo$ we have $F \cong k((t))$ and $\calo \cong k[[t]]$. Let $D := \spec k[[t]]$ denote the disk, and $D^* := \spec k((t))$ the punctured disk. For a $k$-algebra $R$, we let $D_R := D \hat{\times} \spec R = \spec R[[t]]$ and similarly $D^*_R := D^* \hat{\times} \spec R = \spec R((t))$. 
+Let $F$ be a local field over $k$ with ring of integers $\calo$. Upon choice of uniformizer $t \in \calo$ we have $F \cong k((t))$ and $\calo \cong k[[t]]$. Let $D := \spec k[[t]]$ denote the disk, and $D^* := \spec k((t))$ the punctured disk. For a $k$-algebra $R$, we let $D_R := D \hat{\times} \spec R = \spec R[[t]]$ and similarly $D^*_R := D^* \hat{\times} \spec R = \spec R((t))$. 
 
 Similarly, if $X$ is a reduced, geometrically connected curve over $k$ with smooth closed point $x \in |X|$, let $X^* := X \setminus \{x\}$. We denote $\calo_x := \hat{\calo}_{X,x}$ by the completion of the local ring at $x$, and $F_x$ its field of fractions. Let $D_{x,R} := \spec \calo_x \hat{\otimes} R \simeq \spec R[[t]]$ and $D_{x,R}^* := \spec F_x \hat{\otimes} R \simeq \spec R((t))$. If $x \colon \spec R \to X$ is an $R$-point let $\Gamma_x \subset X_R$ denote the graph of $x$ and $\hat{\Gamma}_x$ its formal completion in $X_R$.
 
-In the following section, we give an overview of definitions and first properties of the standard variants of the affine Grassmannian, as discussed in \cite{zhu}. 
+Let $G$ be a smooth affine algebraic group scheme over $k$. Let $T$ denote the abstract Cartan subgroup of $G$
+
+\section{Affine Grassmannians}
+
+The purpose of this section is to review the standard definitions and relevant constructions as presented in the literature (\cite{Zhu2016}, \cite{Faltings2003}), and in the particular setting of positive characteristic. 
+
+Recall that---for $G$ a semisimple algebraic group over $k$, $B$ a Borel subgroup---the space $G/B$ is a flag variety consisting of finitely many $B$-orbits parameterized by the Weyl group $W$. In particular,
+\begin{equation}\label{bruhat}
+    G/B = \bigsqcup_{w \in W} BwB/B = \bigsqcup_{w \in W} \interior C_w
+\end{equation}
+is the \textit{Bruhat decomposition} of $G/B$ into Bruhat cells. These are cells in the sense of algebraic topology, i.e. $C_w := BwB/B \simeq k^{\ell(w)}$. Poincar\'e duality then gives information on the cell decomposition, in particular that the top dimensional cell (fundamental class) is unique and corresponds to the unique longest element $w_0 \in W$ by the previous observation. 
+
+The closures $X_w := \overline{\interior C_w}$ equipped with the reduced subscheme structure are \textit{Schubert varieties}. In fact $X_w = \bigsqcup_{x \leq w} C_x$ where $\leq$ is the Bruhat order on the Weyl group $W$. The idea of the affine Grassmannian is to define affine analogues of these objects, which allows one to develop the theory in more generality.
+
+We give a concise account as in \cite{Faltings2003}, but a more detailed description of the general theory can be found in \cite{Zhu2016}, \cite{Sorger2000}. Central to this study is the following definitions of loop groups.
 
 \begin{defn}
-    Let $G$ be an affine group scheme smooth over $k[[t]]$. The \textit{affine Grassmannian} $\Gr_G$ is the presheaf on $\Aff_k$ whose $R$-points are given by
+    Let $G$ be a smooth affine algebraic group scheme. The positive loop group $L^+G$ is the affine group scheme given by $L^+G(R) = G(R[[t]])$. The strict positive loop group $L^{++}G$ is the kernel of the restriction map $L^+G \to G$. 
+\end{defn}
+    
+
+\begin{defn}
+    The negative loop group $L^-G$ is the ind-affine group scheme with $L^-G(R) = G(R[t^{-1}])$. The strict negative loop group $L^{--}G$ is the kernel of the restriction map $L^-G \to G$.
+\end{defn}
+
+\begin{defn}
+    The loop group $LG$ is the ind-affine group with $LG(R) = G(R((t)))$.
+\end{defn}
+
+The loop group $LG$ is perhaps most easily motivated. As $D^*_R = \spec R((t))$ is the punctured disk, the $R$-valued points of $LG$ are sections $D^*_R \to G$ defining loops in $G$. 
+
+\begin{defn}
+    The affine Grassmannian of $\GL_n$ is the presheaf $\Gr_{\GL_n}$ which assigns to every $k$-algebra $R$ the set of projective $R[[t]]$-modules $L \subseteq R((t))^n$ such that
+    \begin{enumerate}
+        \item $L$ is finitely generated, and
+        \item $L \otimes_{R[[t]]} R((t)) = R((t))^n$
+    \end{enumerate}
+\end{defn}
+
+A module $L$ satisfying (i) and (ii) in the above definition is sometimes referred to as an $R$-family of lattices.
+
+Analogously, we can define $\Gr_{\SL_n}(R)$ as follows.
+
+\begin{defn}\label{GrSLn}
+    The affine Grassmannian of $\SL_n$ is the presheaf $\Gr_{\SL_n}$ which assigns to every $k$-algebra $R$ the set of projective $R[[t]]$-modules $L \subseteq R((t))^n$ such that
+    \begin{enumerate}
+        \item $L$ is finitely generated, and
+        \item $\det(L) = R[[t]]$
+    \end{enumerate}
+\end{defn}
+
+For more general $G$, the definition is not quite an obvious generalization but we will see that it is equivalent.
+
+\begin{defn}
+    Let $G$ be a smooth affine group scheme over $k$. The affine Grassmannian $\Gr_G$ of $G$ is the presheaf whose $R$-points are given by
     \[\Gr_G(R) := \left\{(\fane,\beta) \;\Big\vert\; \begin{array}{c}
     \fane \text{ is a } G \text{-torsor on } D_R \\ 
     \beta \colon \fane\vert_{D_R^*} \simeq \fane^0\vert_{D_R^*} \text{ is a trivialization} 
     \end{array} \right\}\]
 \end{defn}
 
-This presheaf is represented by an ind-scheme, ind-of finite type over $k$. Recall an ind-scheme is a filtered colimit of schemes where all morphisms are closed embeddings of schemes.
+This presheaf is represented by an ind-scheme, ind-of finite type over $k$. If $G$ is reductive then $\Gr_G$ is ind-projective (see \cite{Zhu2016}). 
+
+Note that for $G = \GL_n$ the $R$-points are $(\fane, \beta)$ where $\fane$ is a $\GL_n$-torsor on $D_R$, or equivalently vector bundle (locally free sheaf) of rank $n$ on $\spec R[[t]]$. Any such quasicoherent sheaf is given by a projective $R[[t]]$-module $L$ and $\beta$ therefore specifies an isomorphism $L \otimes_{R[[t]]} R((t)) \simeq R((t))^n$.
+
+This space admits a natural action by $LG$. An $R$-point $g \in G(R((t)))$ is an automorphism of the trivial $G$-torsor $\fane^0 \vert_{D^*_R}$ on $D^*_R = \spec R((t))$, and thus $g$ acts on $(\fane, \beta)$ by sending it to $(\fane, \beta^* g)$. The action is transitive and the stabilizer of the origin $(\fane^0, \id)$ is $L^+G$. Then the following theorem, taking these facts for granted, follows from a souped up generalization of orbit-stabilizer.
+
+\begin{prop}[Coset Description]\label{cosetdescription}
+    The affine Grassmannian $\Gr_G$ can be identified with the fpqc quotient $[LG/L^+G]$.
+\end{prop}
+
+We can define a natural very ample line bundle on the affine Grassmannian $\Gr_G$. There is an explicit description in the case $G = \SL_n$, but in generality it is constructed for the so-called Sato Grassmannian associated to a Tate vector space $V$. 
+
+Then letting $V = k((t))^n$ with the $t$-adic topology allows one to define it for $\GL_n$. Any faithful $\calo$-linear representation $\rho \colon G \to \GL_n$  induces a locally closed embedding $\Gr_G \to \Gr_{\GL_n}$ by Proposition 1.2.6 in \cite{Zhu2016}. The pullback along $\rho$ then determines a very ample line bundle on $\Gr_G$.
+
+We will proceed with the explicit description in the special case of $\SL_n$ using Definition \ref{GrSLn}. Let $L \in \Gr_{\SL_n}(R)$ be an $R$-family of lattices, and 
+\[M = t^{-1} R[t^{-1}]^n\subset R[[t]]^n \oplus M = R((t))^n\] 
+an $R$-module. We have a $2$-term complex of $R$-modules
+\begin{equation}
+    0 \to L \oplus M \xrightarrow{\gamma} R((t))^n \to 0
+\end{equation}
+where
+\begin{equation*}
+    \gamma(v,w) = (0,w) + \beta(v)
+\end{equation*}
+where $\beta \colon L \to R((t))^n$ is the natural inclusion. Recall that the determinant of a finite projective $R$-module is an invertible module given by the top exterior power. We can take the determinant cohomology of this complex to obtain a line bundle. That is, dividing both terms by 
+\[D = t^N R[[t]]^n \oplus M\]
+for $N \gg 0$ ensures they are finite and projective as $R$-modules, so we can take the determinant of the complex to get
+\[\det\nolimits_R (R((t))^n/D) \otimes \det\nolimits_R (L \oplus M/D)^{-1} = \det\nolimits_R(L)^{-1}\]
+Varying $L$ gives us a line bundle.
+\begin{equation}
+    \fanl_{\det} = \det\nolimits_R(L)^{-1}
+\end{equation}
+
+In fact, we have also shown the following result for $G = \SL_n$ by letting $\vartheta = \det(\gamma)$, but which also holds in more generality (Proposition 2.4.1 in \cite{Zhu2016}).
+
+\begin{prop}
+    There is a global section $\vartheta \in \Gamma(\Gr_G, \fanl_{\det})$ invariant under $L^-G$, whose zero set is denoted by $\Theta$.
+\end{prop}
+
+The action of $LG$ extends to a projective action on $\fanl_{\det}$ due to the above procedure, but the stabilizer of any fixed lattice ($L^+G$) acts honestly (\cite{Faltings2003}).
+
+\subsection{Affine Schubert Schubert Varieties}
+We will see that the line bundle constructed above actually has a rather explicit connection to the generalization of Shubert subvarieties of $\Gr$.
+
+Unless otherwise noted, we assume that $k$ is algebraically closed and write $\Gr$ for $\Gr_G$ when no confusion will arise. We use the notation in Section 1.2.
+
+There is a canonical bijection
+\begin{equation}\label{dblcosetbij}
+    G(\calo) \backslash G(F) / G(\calo) \simeq \coweight / W \simeq \coweight^+
+\end{equation}
+given as follows. Fix embeddings $T \subset B \subset G$. Then a coweight $\mu \in \coweight$ gives rise to a map $\mu \colon F^{\times} \to T(F) \subset G(F)$. For a given choice of uniformizer $t$ of $F$, which induces $F \simeq k((t))$, we denote its image by $\mu(t) = t^{\mu} \in G(F)$, regarded as an element of $LG(k) = G(k((t))) \simeq G(F)$.
+
+By Proposition \ref{cosetdescription} this induces an element of $\Gr_G(k)$ which we still denote $t^{\mu}$, but this is independent of choice of uniformizer since two choices are equivalent under the action of $L^+G(k)$.
+
+Then we have the Cartan decomposition
+\begin{equation}\label{cartan}
+    G(F) = \bigsqcup_{\mu \in \coweight^+} G(\calo) t^{\mu} G(\calo)
+\end{equation}
+whose double cosets depend neither on $t^{\mu}$ nor choice of embedding $T \subset G$, and therefore induces (\ref{dblcosetbij}).
+
+With this in hand, let $\fane_1, \fane_2$ be two $G$-torsors over $D = \spec \calo$ and
+\[\beta \colon \fane_1\vert_{D^*} \simeq \fane_2\vert_{D^*}\]
+be an isomorphism over $D^* = \spec F$. Since $D$ is contractible $\fane_1, \fane_2$ are trivializable, so we can pick isomorphisms $\phi_1 \colon \fane_1 \simeq \fane^0$ and $\phi_2 \colon \fane_2 \simeq \fane^0$. 
+
+We can then construct an automorphism of the trivial $G$-torsor over $D^*$ by $\phi_2 \circ \beta \circ \phi_1^{-1} \in \Aut(\fane^0 \vert_{D^*})$ and therefore an element of $G(F)$. Different choices of $\phi_1$ (resp. $\phi_2$) differ this element by left (resp. right) multiplication by an element of $G(\calo)$, and therefore $\beta$ gives rise to a well-defined element 
+\begin{equation}
+    \inv \beta \in G(\calo) \backslash G(F) / G(\calo) \simeq \coweight^+
+\end{equation}
+sometimes called the \textit{relative position of} $\beta$. In terms of the Cartan decomposition (\ref{cartan}), $\inv \beta$ is the \textit{unique} dominant coweight such that
+\[\phi_2 \circ \beta \circ \phi_1^{-1} \in G(\calo) t^{\inv \beta} G(\calo)\]
+
+We can bootstrap this definition to define it over $\spec R$. First, if $K$ is some non-algebraically closed containing $k$ then we can pass to an algebraic closure $\bar{K}/K$ to define
+\[\inv \beta_{\bar{K}} \in G(\bar{K}[[t]]) \backslash G(\bar{K}((t))) / G(\bar{K}[[t]])\]
+which is independent of our choice of $\bar{K}$. Therefore, $\inv \beta = \inv \beta_{\bar{K}}$ is well-defined.
+
+Now let $\fane_1,\fane_2$ be two $G$-torsors over $D_R$, and 
+\[\beta \colon \fane_1\vert_{D_R^*} \simeq \fane_2 \vert_{D_R^*}\]
+Then for each $x \in \spec R$, we can base change to $k(x)$ to obtain $\fane_1\vert_{D_{k(x)}}, \fane_2\vert_{D_{k(x)}}$ and an isomorphism
+\[\beta_{k(x)} \colon \fane_1\vert_{D_{k(x)}^*} \simeq \fane_2 \vert_{D_{k(x)}^*}\]
+where $k(x)/k$ is not necessarily algebraically closed. Then $\inv_x \beta = \inv \beta_{k(x)} = \inv \beta_{\bar{k(x)}}$ is well-defined.
+
+The following is Proposition 2.1.4. in \cite{Zhu2016}.
+\begin{prop}\label{zhu2.1.4}
+    Let $X = \spec R$. Given $\mu \in \coweight^+$, the set of points
+    \[X_{\leq \mu} := \{x \in X \mid \inv_x \beta \leq \mu\}\]
+    is Zariski-closed in $X$.
+\end{prop}
+The following definition is our analogue of a Schubert variety in the context of the affine Grassmannian.
+\begin{defn}
+    Let $\mu \in \coweight^+$ be a coweight. We define the \textit{spherical Schubert variety} as the closed subset
+    \[\Gr_{\leq \mu} := \{(\fane, \beta) \in \Gr_G \mid \inv \beta \leq \mu\} \subset \Gr_G\]
+    endowed with the reduced scheme structure. 
+\end{defn}
+The condition $\inv \beta \leq \mu$ is shorthand for $\inv_x \beta \leq \mu$ for all $x \in \spec R = X$, which is the closed condition $X_{\leq \mu} = X$ by Proposition \ref{zhu2.1.4}. By analogy, this enables us to define the affine Schubert cell.
+\begin{defn}
+    The \textit{affine Schubert cell} associated to a coweight $\mu \in \coweight^+$ is the subset
+    \[\Gr_{\mu} := \{(\fane, \beta) \in \Gr_G \mid \inv \beta  = \mu\} = \Gr_{\leq \mu} \setminus \bigcup_{\lambda < \mu} \Gr_{\leq \lambda}\]
+\end{defn}
+By Proposition \ref{zhu2.1.4}, $\Gr_{\mu}$ is an open subset of $\Gr_{\leq \mu}$.
+\begin{prop} The following two statements hold.
+    \begin{enumerate}
+        \item $\Gr_{\mu}$ forms a single $L^+G$-orbit and is a smooth quasi-projective variety of dimension $(2\rho, \mu)$.
+        \item $\Gr_{\leq \mu}$ is the Zariski closure of $\Gr_{\mu}$, and so is a projective variety.
+    \end{enumerate}
+\end{prop}
+
+If $\mu$ is a minimal nonzero dominant coweight with respect to the Bruhat order, i.e. for any positive root $\alpha$ the inner product $(\alpha, \mu) \leq 1$, then $\mu$ is called \textit{minuscule}.
+\begin{lem}
+    If $\mu$ is minuscule, then $\Gr_{\leq \mu} = \Gr_{ \mu} \simeq G/P_{\mu}$ where $P_{\mu}$ is the parabolic subgroup of $G$ corresponding to $\mu$.
+\end{lem}
+This is exactly our definition of a partial flag variety in the usual setting. 
+
+A nonzero dominant coroot $\mu$ is \textit{quasi-minuscule} if it is not minuscule and $(\alpha, \mu) \leq 2$ for all positive roots $\alpha$. If we assume the derived group $G_{der}$ of $G$ is simple this element is unique, denoted $\theta$, and is minimal in $\coweight^+ \setminus 0$ under the Bruhat order. The root $\theta^{\vee}$ associated to $\theta$ is the highest root. 
+
+After our discussion of Frobenius splitting in Section 3, we will return to discuss a kind of Demazure resolution associated to the spherical Schubert variety.
+
+\subsection{Beilinsin-Drinfeld Grassmannians}
+
+The content of this subsection is the main substance of the conjecture at hand. The idea of these Grassmannians is to allow $G$-torsors over excised graphs of collections of points that wander across our curve. We will see it has a deep connection with the moduli stack of principal $G$-bundles on a curve. 
 
 Let $X$ be a reduced connected curve (but not necessarily smooth) over $k$ and $x \in |X|$ a smooth closed point. Let $G$ be a smooth affine group scheme over $X$.
 \begin{defn}
@@ -75,85 +239,165 @@ Let $X$ be a reduced connected curve (but not necessarily smooth) over $k$ and $
         \beta \colon \fane\vert_{X_R^*} \simeq \fane^0\vert_{X_R^*} \text{ is a trivialization} 
     \end{array}\right\}\]
 \end{defn}
-In fact, we can see this is just a reinterpretation of the affine Grassmannian by noting that for $G_x := G \otimes_X \calo_x$, there is a natural isomorphism
-\[\text{res} \colon \Gr_{G,x} \xrightarrow{\quad \sim \quad} \Gr_{G_x}\]
+In fact, we can see this is just a reinterpretation of the affine Grassmannian by noting that for $G_x := G \otimes_X \calo_{X,x}$, there is a natural isomorphism
+\begin{equation}\label{resiso}
+    \text{res} \colon \Gr_{G,x} \xrightarrow{ \sim } \Gr_{G_x}
+\end{equation}
 The proof that this is an isomorphism is slightly technical so we omit it.
 
-Let $\fane_1, \fane_2$ be $G$-torsors over $D_R$ and $\beta \colon \fane_1\vert_{D_R^*} \simeq \fane_2\vert_{D_R^*}$. For $x \in \spec R$, recall the \textit{relative position} $\inv_x(\beta) \in \coweight^+$ defined in Section 2 of \cite{zhu}.
+Now we allow the point to move. For a point $x \in X(R)$, let $\Gamma_x $ denote the graph of $x \colon \spec R \to X$. 
+\begin{defn}
+    We define the prestack $\Gr_{G,X}$ whose $R$-points are given by
+    \[\Gr_{G,X}(R) := \left\{(x, \fane, \beta) \;\Big\vert\; \begin{array}{c}
+        x \in X(R), \quad\fane \text{ is a } G\text{-torsor on } X_R \\
+        \beta \colon \fane\vert_{X_R\setminus \Gamma_x} \simeq \fane^0\vert_{X_R\setminus \Gamma_x} \text{ is a trivialization} 
+    \end{array}\right\}\]
+\end{defn}
+We can allow multiple points to move as well using a similar idea. Let $I$ be a finite nonempty set, and $x = (x_i)_{i \in I} \in X^I(R)$ a point. Let
+\[\Gamma_x := \bigcup_{i \in I} \Gamma_{x_i}\]
+denote the union of the graphs of $x_i \colon \spec R \to X$ (as closed subschemes of $X_R$). Then the following is also referred to as the Beilinsin-Drinfeld Grassmannian.
 
 \begin{defn}
-    Let $\mu \in \coweight$ be a coweight. We define the \textit{spherical Schubert variety} as the closed subset
-    \[\Gr_{\leq \mu} := \{(\fane, \beta) \in \Gr_G \mid \inv(\beta) \leq \mu\} \subset \Gr_G\]
+    We define the presheaf $\Gr_{G, X^I}$ over the self product of curves whose $R$-points are given by
+    \[\Gr_{G, X^I}(R) := \left\{(x, \fane, \beta) \;\Big\vert\; \begin{array}{c}
+        x \in X^I(R), \quad\fane \text{ is a } G\text{-torsor on } X_R \\
+        \beta \colon \fane\vert_{X_R\setminus \Gamma_x} \simeq \fane^0\vert_{X_R\setminus \Gamma_x} \text{ is a trivialization} 
+    \end{array}\right\}\]
+\end{defn}
+Let $q_I \colon \Gr_{G,X^I} \to X^I$ denote the structure map. As a first account of the properties, which we present without proof but are found in Theorem 3.1.3 in \cite{Zhu2016}, the presheaf $\Gr_{G,X^I}$ is represented by an ind-scheme, ind-of finite type over $X^I$. It is ind-projective if $G$ is reductive.
+
+We can also define analogues of loop groups and produce a similar coset description. Namely, for $x \in X^I(R)$ let $\hat{\Gamma}_x$ denote the formal completion of the graph $\Gamma_x$ in $X_R$. There is the canonical map $\pi \colon \hat{\Gamma}_x \to X_R$.
+
+Recall this is like a "formal thickening" of the topological algebra $A_x$ of its ring of functions. 
+
+Then the Beilinsin-Drinfeld positive loop group is
+\[(L^+G)_{X^I} := \{(x,\beta) \mid x \in X^I(R), \beta \in G(\hat{\Gamma}_x)\}\]
+which is representable by a scheme affine over $X^I$.
+
+To rigorously define global loop groups, we need the notion of a "punctured formal completion" as we did with disks. 
+\begin{lem}
+    The formal scheme $\hat{\Gamma}_x$ is ind-affine. Let $A_x$ be the topological algebra of its ring of functions, so $\hat{\Gamma}_x = \mathrm{Spf} A_x$. Let $\hat{\Gamma}'_x = \spec A_x$ which gives a canonical map $p \colon \hat{\Gamma}_x \to \hat{\Gamma}'_x$. Then there is a unique morphism $i \colon \hat{\Gamma}'_x \to \hat{\Gamma}_x$ such that $\pi = ip \colon \hat{\Gamma}'_x \to X_R$.
+\end{lem}
+The above lemma essentially says that $\hat{\Gamma}'_x$ is the underlying scheme without the formal thickening, and therefore our punctured equivalent would be $\interior{\hat{\Gamma}}_x := \hat{\Gamma}'_x \setminus \hat{\Gamma}_x$.
+
+The Beilinsin-Drinfeld global loop group is then defined as
+\[(LG)_{X^I} := \{(x, \beta) \mid x \in X^I(R), \beta \in G(\interior{\hat{\Gamma}}_x)\}\]
+Then we have an analogue of the coset description given in Proposition \ref{cosetdescription}.
+\begin{prop}
+    The Beilinsin-Drinfeld Grassmannian $\Gr_{G,X^I}$ can be identified with the fpqc quotient $[(LG)_{X^I} / (L^+G)_{X^I}]$.
+\end{prop}
+Let's analyze the cases $I = \{1\}, \{1,2\}$. In the first case we can write $\Gr_{G,X}$ or $\Gr_X$ when $G$ is apparent from context. Locally, at any $x \in X$ we have an isomorphism
+\[\Gr_X \vert_x \simeq \Gr_{G,x} \simeq \Gr_{G_x}\]
+where the latter isomorphism is (\ref{resiso}). However, globally it is not true that $\Gr_X \simeq \Gr_{G} \times X$ in general. Instead, $\Gr_X$ is a twisted product $X \tilde{\times} \Gr_G$ in the sense that there is an $\Aut(D)$-torsor $\hat{X} \to X$ for which 
+\[\Gr_X \simeq \hat{X} \times^{\Aut(D)} \Gr_G\]
+There is a second isomorphism as well. We can define an $\Aut^+(D)$-torsor $\hat{X}^+ \to X$ for which 
+\[\Gr_X \simeq \hat{X}^+ \times^{\Aut^+(D)} \Gr_G\]
+See (3.1.11) in \cite{Zhu2016} for the definition of these torsors. The second isomorphism allows us to define
+\[\Gr_{\leq \mu, X} := X \tilde{\times} \Gr_{\leq \mu} := \hat{X}^+ \times^{\Aut^+(D)} \Gr_{\leq \mu}\]
+as a closed subscheme of $\Gr_X$. On the level of points, we can see
+\[\Gr_{\leq \mu, X} = \{(x,\fane, \beta) \in \Gr_X \mid \inv_x \beta \leq \mu\} \subset \Gr_X\]
+Now suppose $I = \{1,2\}$ and denote the Beilinsin-Drinfeld Grassmannian in this case by $\Gr_{X^2}$. Let $\Delta \colon X \to X^2$ be the diagonal embedding. 
+\begin{prop}\label{factorX2}
+    There are canonical isomorphisms
+    \[\Delta \colon \Gr_X \simeq \Gr_{X^2} \times_{\Delta} X, \qquad c\colon \Gr_{X^2} \vert_{X^2 \setminus \Delta} \simeq (\Gr_X \times \Gr_X)\vert_{X^2 \setminus \Delta}\]
+\end{prop}
+\begin{proof}
+    We prove this statement as the details are not too bad. Consider the first isomorphism. On the level of $R$-points, $\Gr_{X^2}$ is given by tuples $ ((x,y), \fane, \beta)$ such that $\fane$ is a $G$-torsor over $X_R$ admitting a trivialization over $X_R \setminus (\Gamma_x \cup \Gamma_y)$. 
+    
+    The structure map sends $((x,y), \fane, \beta) \mapsto (x,y)$, so if the image lies on the diagonal then $x = y$. Thus our $R$-points are given by $((x,x), \fane, \beta)$ where $\fane$ admits a trivialization over $X_R \setminus \Gamma_x$. But this is exactly $\Gr_X$.
+
+    For the second isomorphism, consider again the functor of $R$-valued points $((x,y), \fane, \beta)$. Since we are off-diagonal, $x,y$ are distinct. Then
+    \[\beta \colon \fane\vert_{(X_R \setminus \Gamma_x) \cap (X_R \setminus \Gamma_y)} \simeq \fane^0\vert_{(X_R \setminus \Gamma_x) \cap (X_R \setminus \Gamma_y)}\]
+    We first can define a map
+    \[\Gr_{X^2} \times_{X^2} \spec R \to \Gr_X \times_{X,x} \spec R\]
+    by sending $((x,y), \fane, \beta)$ to the $G$-torsor $\fane_x$ on $X_R$ given by gluing $\fane\vert_{X_R \setminus \Gamma_y}$ to $\fane^0\vert_{X_R \setminus \Gamma_x}$ along $\beta$ above (on the restriction to $X_R \setminus (\Gamma_x \cup \Gamma_y)$). Since $X_R \setminus \Gamma_x$ and $X_R\setminus \Gamma_y$ cover $X_R$, this is a well-defined torsor on the whole space. This also comes with a natural trivialization $\beta_x$ over $X_R \setminus \Gamma_x$ since $\fane_x \vert_{X_R \setminus \Gamma_x} = \fane^0\vert_{X_R \setminus \Gamma_x}$.
+
+    We similarly have a map $\Gr_{X^2} \times_{X^2} \spec R \to \Gr_X \times_{X,y} \spec R$. Together, they define a map
+    \[c\colon \Gr_{X^2} \vert_{X^2 \setminus \Delta} \to (\Gr_X \times \Gr_X)\vert_{X^2 \setminus \Delta}, \quad ((x,y), \fane, \beta) \mapsto ((x, \fane_x, \beta_x), (y, \fane_y, \beta_y))\]
+    To see this is an isomorphism, suppose we are given $(x, \fane_x, \beta_x)$ and $(y,\fane_y, \beta_y)$. We can glue $\fane_x$ and $\fane_y$ along $\beta_y^{-1}\beta_x$ over $X_R \setminus (\Gamma_x \cup \Gamma_y)$, over which by definition it is equipped with a trivialization.
+\end{proof}
+
+There is a natural generalization of this statement to general Beilinsin-Drinfeld Grassmannians which we state but leave the proof to Theorem 3.2.1 in \cite{Zhu2016}. This is sometimes referred to as the \textit{Factorization Property} of these Grassmannians. 
+\begin{thm}[Factorization Property]\label{factorization}
+    Let $G$ be a smooth affine group scheme over $X$. 
+    \begin{enumerate}
+        \item For every $I$, there is a unit section $e^I \colon X^I \to \Gr_{X^I}$ given by the trivial $G$-torsor.
+        \item For every $\phi \colon J \twoheadrightarrow I$, let $\Delta(\phi) \colon X^I \to X^J$ be the corresponding diagonal embedding sending $(x_i)_{i \in I}$ to $(x_{\phi(j)})_{j \in J}$. Then there is a canonical isomorphism
+        \begin{equation}
+            \Delta(\phi) \colon \Gr_{X^J} \times_{X^J} X^I \simeq \Gr_{X^I}
+        \end{equation}
+        Then we can naturally define the map on Grassmannians by composing the above isomorphism with fiber projection
+        \[\Delta(\phi) \colon \Gr_{X^I} \to \Gr_{X^J}\]
+        We also denote this $\Delta(\phi)$ by abuse of notation.
+        \item Partition $J = \sqcup_{i \in I} J_{i}$ where $J_i = \phi^{-1}(i)$, and let $X^{(\phi)} \subset X^J$ denote the open subset of tuples $(x_j)_{j \in J}$ such that $x_j, x_j'$ are disjoint if $\phi(j) \neq \phi(j')$. That is, the coordinates in $J_i$ are disjoint from the coordinates in $J_{i'}$ for every $i' \neq i$. Then there is a canonical isomorphism (factorization isomorphism)
+        \begin{equation}
+            c_{\phi} \colon \Gr_{X^J} \times_{X^J} X^{(\phi)} \simeq \left(\prod_{i \in I} \Gr_{X^{J_i}}\right) \times_{X^J} X^{(\phi)}
+        \end{equation}
+    \end{enumerate}
+\end{thm}
+Analyzing statement (iii) above, it becomes clear why this is a natural generalization of the factorization map in Proposition \ref{factorX2}. Taking the fiber product with $X^{(\phi)}$ ensures we are "off-diagonal" in the sense that graphs of coordinates in different preimages under $\phi$ are disjoint. 
+
+This allows us to glue the trivial torsor restricted to the complement of our $J_i$ graphs to the given torsor over the complement of everything else, yielding an element of $\Gr_{X^{J_i}}$ for each $i \in I$.
+
+The factorization statement becomes much cleaner when we organize all of our $\Gr_{X^I}$ into a single object. This is the motivating idea behind the \textit{Ran Grassmannian}.
+
+\subsection{The Ran Grassmannian}
+
+\begin{defn}
+    We define the Ran space $\Ran(X)$ of $X$ as the presheaf that sends $R$ to the colimit $\varinjlim_I X^I(R)$, where the limit is taken in the category of presheaves over the category of finite nonempty sets under surjections.
 \end{defn}
 
+Despite the name, $\Ran(X)$ is not a space since the colimit is taken over a non-filtered category. It is not a sheaf either, even for the \'etale topology. 
 
+\begin{defn}
+    The Ran Grassmannian $\Gr_{G,\Ran(X)}$ is the prestack whose $R$-valued points are given by
+    \[\Gr_{G,\Ran(X)}(R) := \left\{(x, \fane,\beta) \;\Big\vert\; \begin{array}{c}
+    x \in \Ran(X)(R),\qquad \fane \text{ is a } G \text{-torsor on } X_R \\ 
+    \beta \colon \fane\vert_{X_R \setminus \Gamma_x} \simeq \fane^0\vert_{X_R \setminus \Gamma_x} \text{ is a trivialization} 
+    \end{array} \right\}\]
+\end{defn}
 
-TODO add definitions up to Ran and Rat Grassmannian.
+We'll denote this by $\Gr_{\Ran}$ when $G, X$ is clear from context. Now we turn to the factorization property.
+
+$\Ran$ has a nice semigroup structure given by union of points:
+\[\Ran \times \Ran \to \Ran, \quad ((x_i)_{i \in I}, (x_j)_{j \in J}) \mapsto (x_k)_{k \in I \sqcup J}\]
+Let $(\Ran \times \Ran)_{disj} \subset \Ran \times \Ran$ denote the open subpresheaf consisting of $(x_i)_{i \in I}$ and $(x_j)_{j \in J}$ with $x_i \cap x_j = \emptyset$ disjoint for all $i \in I, j \in J$. One similarly defines $(\Ran \times \Ran \times \Ran)_{disj}$. 
+\begin{thm}
+    There is a canonical isomorphism
+    \begin{equation}
+        a\colon \Gr_{\Ran} \times_{\Ran} (\Ran \times \Ran)_{disj} \simeq (\Gr_{\Ran} \times \Gr_{\Ran})\vert_{(\Ran \times \Ran)_{disj}}
+    \end{equation}
+    compatible with the unit section $e_{\Ran} \colon \Ran \to \Gr_{\Ran}$ and satisfying a natural cocycle condition over $(\Ran \times \Ran \times \Ran)_{disj}$.
+\end{thm}
+
+This is in fact equivalent to Theorem \ref{factorization}.
+
 
 \section{Frobenius Splitting}\label{frobsplit}
 
-We give an overview of the basic definitions and properties of Frobenius splittings based on the exposition given in \cite{Brion2004FrobeniusSM}. The reader should consult this book for a more in-depth discussion.
+We give an overview of the basic definitions and properties of Frobenius splittings based on the exposition given in \cite{Brion2004}. Throughout this section, we assume $X$ is a scheme over a field $k$ of characteristic $p > 0$.
 
 \begin{defn}
-    Let $X$ be a prestack on $\Aff_t$. The \textit{absolute Frobenius morphism} $F_X \colon X \longrightarrow X$ sends 
+    Let $\fanf$ be a presheaf of commutative rings on $X$. The (absolute) Frobenius morphism on $\fanf$ is the natural transformation $F_{\fanf} \colon \fanf \rightarrow \fanf$ sending sections $s \mapsto s^p$.
+
+    If $\fanf = \calo_X$, then the Frobenius morphism on $X$ refers to the map $F \colon X \to X$ which is the identity on points, but for which $F^\# \colon \calo_X \to F_* \calo_X$ is the $p$th power map.
 \end{defn}
 
-We write $F_X$ as $F$ when $X$ is clear from context, and similarly we denote the associated $p$th-power map on the structure sheaf
-\[F^{\#}_X \colon \calo_X \longrightarrow F_* \calo_X\]
-by $F^{\#}$ when $X$ is clear.
+Then the definition of Frobenius splitting is as one would expect. We state these definitions and results for a scheme $X$, but they can be generalized to a presheaf valued in commutative rings on $X$.
 
 \begin{defn} We say that a scheme $X$ is \textit{Frobenius split} if the $\calo_X$-linear map $F^{\#}$ splits, i.e. there exists an $\calo_X$-linear map
-    \[\varphi \colon F_* \calo_X \longrightarrow \calo_X\]
+    \[\varphi \colon F_* \calo_X \rightarrow \calo_X\]
     such that $\varphi \circ F^{\#} $ is the identity on $\calo_X$. A closed subscheme $Y \subset X$ is \textit{compatibly split} if there is a splitting $\varphi$ of $X$ such that 
     \[\varphi(F_* \cali_Y) \subset \cali_Y\]
     A collection of closed subschemes $Y_1,\ldots,Y_m$ are \textit{compatibly split} if there is a splitting $\varphi$ of $X$ such that each subscheme is compatibly split with respect to $\varphi$.
 \end{defn}
 Note that a splitting $\varphi$ is equivalent to an endomorphism $\varphi \colon \calo_X \to \calo_X$ such that $\varphi(f^p g) = f \varphi(g)$ and $\varphi(1) = 1$. The first condition means $\varphi \in \End_{\calo_X}(F_* \calo_X, \calo_X)$ and since $\varphi(F^{\#}(f)) = \varphi(f^p) = f\varphi(1)$ the composition is the identity if and only if $\varphi(1) = 1$.
 
-    Further, for a closed subscheme $Y \subset X$ we always have $\cali_Y \subset \varphi(F_* \cali_Y)$ since for any section $f$ of $\cali_Y$ we have $f = \varphi(f^p) \in \varphi(F_*\cali_Y)$. Thus condition (ii) can be restated as $\varphi(F_* \cali_Y) = \cali_Y$.
+    Further, for a closed subscheme $Y \subset X$ we always have $\cali_Y \subset \varphi(F_* \cali_Y)$ since for any section $f$ of $\cali_Y$ we have $f = \varphi(f^p) \in \varphi(F_*\cali_Y)$. Thus compatibly split can be restated as $\varphi(F_* \cali_Y) = \cali_Y$.
 
-    We give a collection of first properties with brief justifications, but more details can be found in \cite{Brion2004FrobeniusSM}.
+One of the most important consequences is that the higher cohomology of all ample line bundles on a split scheme $X$ vanishes. 
 
-    \begin{lem}
-        Let $f \colon X \to Y$ be a morphism of schemes such that $f^{\#} \colon \calo_Y \to f_* \calo_X$ splits as a morphism of $\calo_Y$-modules. Then if $X$ is split, so is $Y$.
-    \end{lem}
-    \begin{proof}
-        Compose the splittings.
-    \end{proof}
-
-    \begin{lem}
-        Let $f \colon X \to Y$ be a morphism of schemes such that $f^{\#} \colon \calo_Y \to f_* \calo_X$ is an isomorphism. Let $Z \subset X$ be a subscheme, and let $W \subset Y$ be the scheme-theoretic image of $Z$. Then $\cali_Z = f_* \cali_W$ and if $X$ is split compatibly with $Z$, so is $Y$ with $W$.
-    \end{lem}
-    \begin{proof}
-        The first claim is standard. If $\varphi$ is a splitting of $X$ then $f_* \varphi$ is a splitting of $Y$ after identifying $f_* \calo_X$ with $\calo_Y$. To see why this is compatible, since $\varphi(F_*\cali_Z) = \cali_Z$ by assumption,
-        \[(f_* \varphi)(F_* \cali_W) = (f_* \varphi)(F_* f_* \cali_Z) = f_*\varphi(F_* \cali_Z) = f_* \cali_Z = \cali_W \]
-    \end{proof}
-
-    \begin{prop}
-        If $X$ is split, then $X$ is reduced. If closed subschemes $Y,Z \subset X$ are compatibly split, so are their intersections $Y \cap Z$ and unions $Y \cup Z$, as well as the irreducible components of all these schemes. In particular, $Y \cap Z$ is reduced.
-    \end{prop}
-    \begin{proof}
-        Let $\varphi$ be a splitting of $X$ and $f$ a nilpotent section of $\calo_X$ on some open. Then $f^{p^v} = 0$ for some $v$, hence $f^{p^{v-1}} = \varphi(f^{p^v}) = \varphi(0) = 0$ so by induction $f = 0$. For the latter claim, note $\cali_{Y \cup Z} = \cali_Y \cap \cali_Z$ and 
-        \[\varphi(F_* \cali_{Y \cup Z}) = \varphi(F_* (\cali_Y \cap \cali_Z)) \subset \varphi(F_* \cali_Y) \cap \varphi(F_* \cali_Z) = \cali_{Y \cup Z}\]
-        and similarly for $\cali_{Y \cap Z} = \cali_Y + \cali_Z$. Let $A \subset X$ be an irreducible component and $B$ the union of all other components. Then $\varphi(F_* \cali_A)$ and $\cali_A$ coincide on $X \setminus B = A \setminus B$ since $\cali_A$ restricted to this set vanishes, and since $A \setminus B$ is dense in $A$ the claim follows.
-    \end{proof}
-\begin{defn}
-    A scheme $X$ is \textit{weakly normal} if every finite, birational, bijective morphism $f \colon Y \to X$ is an isomorphism.
-\end{defn}
-For example, weakly normal and normal coincide for varieties. The cuspidal cubic $X := (y^2 = x^3)$ in $\bba^2$ is not weakly normal since $\bba^1 \to X$ given by $t \mapsto (t^2, t^3)$ is finite, birational, bijective but not an isomorphism. 
-
-The normal cubic $X := (y^2 = x^2(x-1))$ in $\bba^2$ is weakly normal (when $p \neq 2$). If $f \colon Y \to X$ is finite, birational, bijective $f \colon Y \to X$ then the normalization $\eta \colon \bba^1 \to X$, $t \mapsto (t^2-1,t(t^2-1))$ factors through $f$, and $\eta$ is an isomorphism away from $(0,0) \in X$ which has fiber $\{-1,1\}$. Then the fibers of $\bba^1 \to Y$ are the same as $\eta$, hence $f$ is an isomorphism.
-
-\subsection{Consequences of Splitting}
-
-\begin{prop}
-    Every split $X$ is weakly normal.
-\end{prop}
-\begin{proof}
-    \cite{Brion2004FrobeniusSM} Proposition 1.2.5. Roughly, it suffices to show for $f \colon \spec B \to \spec A$. The conductor $I = \{a \in A \colon aB \subset A\}$ defines an ideal such that $\spec A$ splits compatibly with $\spec A/I$, $\spec B/I$ is reduced, and $\spec B/I \to \spec A/I$ is nowhere birational, finite. Then assuming $I \neq A$ we construct a nontrivial, purely inseparable extension $(B/I)_P$ of $(A/I)_P$ such that there is $b \in B_P$ with $b^p \in A_P$ but $b \not \in A_P$, and use the splitting to show $b = \varphi(b^p) \in \varphi(A_P) = A_P$, hence $I = A$ and therefore $A = B$.
-\end{proof}
-
-One of the most important consequences is that the higher cohomology of all ample line bundles on a split scheme $X$ vanishes. Compare this with Serre vanishing, which says for an ample line bundle $\fanl$ all higher cohomology vanishes \textit{after twisting sufficiently high}, i.e. $H^{i > 0}(X,\fanl^{\otimes v}) = 0$ for all $v \gg 0$. For split schemes, higher cohomology vanishes without having to twist the bundle.
+Compare this with Serre vanishing, which says for an ample line bundle $\fanl$ all higher cohomology vanishes \textit{after twisting sufficiently high}, i.e. $H^{i > 0}(X,\fanl^{\otimes v}) = 0$ for all $v \gg 0$. For split schemes, higher cohomology vanishes without having to twist the bundle.
 
 \begin{lem}\label{bklem1.2.6}
     Let $\fanl$ be a line bundle on $X$, i.e. an invertible $\calo_X$-module. Then
@@ -164,24 +408,24 @@ One of the most important consequences is that the higher cohomology of all ampl
     \[F^* \fanl = F^{-1} \fanl \otimes_{F^{-1} \calo_X} \calo_X\]
     Since $F$ is the identity map on points and the $p$th power map on on sheaves, 
     \[F^* \fanl = \fanl \otimes_{\calo_X} \calo_X\]
-    where $\calo_X$ is a module over itself by the $p$th power map, i.e. $f.g = f^pg$. Then define the isomorphism $\fanl \otimes_{\calo_X} \calo_X \longrightarrow \fanl^p$ by $\sigma \otimes g \mapsto \sigma^p g$, which is $\calo_X$-linear as $\sigma f \otimes g = \sigma \otimes f^p g \mapsto \sigma^p f^p g = (\sigma f)^p g$. The second isomorphism follows from the projection formula.
+    where $\calo_X$ is a module over itself by the $p$th power map, i.e. $f.g = f^pg$. Then define the isomorphism $\fanl \otimes_{\calo_X} \calo_X \rightarrow \fanl^p$ by $\sigma \otimes g \mapsto \sigma^p g$, which is $\calo_X$-linear as $\sigma f \otimes g = \sigma \otimes f^p g \mapsto \sigma^p f^p g = (\sigma f)^p g$. The second isomorphism follows from the projection formula.
 \end{proof}
 
 \begin{lem}\label{bklem1.2.7}
     Let $\fanl$ be a line bundle on a split scheme $X$. Then
     \begin{enumerate}[label=(\roman*)]
         \item If $H^i(X, \fanl^v) = 0$ for fixed $i$ and all $v \gg 0$, then $H^i(X, \fanl) = 0$.
-        \item If $Y \subset X$ is compatibly split and the restriction $H^0(X, \fanl^v) \longrightarrow H^0(Y, \fanl\vert_Y^v)$ is surjective for all $v \gg 0$, then $H^0(X, \fanl) \longrightarrow H^0(Y, \fanl\vert_Y)$ is surjective.
+        \item If $Y \subset X$ is compatibly split and the restriction $H^0(X, \fanl^v) \rightarrow H^0(Y, \fanl\vert_Y^v)$ is surjective for all $v \gg 0$, then $H^0(X, \fanl) \rightarrow H^0(Y, \fanl\vert_Y)$ is surjective.
     \end{enumerate}
 \end{lem}
 \begin{proof}
     (i) Let $\varphi$ split $X$, and note that $\id \otimes \varphi$ splits the map
-    \[\id \otimes F^{\#} \colon \fanl \longrightarrow \fanl \otimes_{\calo_X} F_*\calo_X\]
+    \[\id \otimes F^{\#} \colon \fanl \rightarrow \fanl \otimes_{\calo_X} F_*\calo_X\]
     The the induced map in cohomology
-    \[H^i(\id \otimes F^{\#}) \colon H^i(X, \fanl) \longrightarrow H^i(X, \fanl \otimes_{\calo_X} F_* \calo_X)\]
+    \[H^i(\id \otimes F^{\#}) \colon H^i(X, \fanl) \rightarrow H^i(X, \fanl \otimes_{\calo_X} F_* \calo_X)\]
     is split, hence injective. But
     \[H^i(X, \fanl \otimes_{\calo_X} F_* \calo_X) \simeq H^i(X, F_* F^* \fanl) \simeq H^i(X, F_* \fanl^p) \simeq H^i(X, \fanl^p)\]
-    by the previous lemma and the fact that $F$ is finite, hence affine (for the isomorphism on the right as abelian groups). Hence we have a split injection $H^i(X, \fanl) \longrightarrow H^i(X, \fanl^p)$, which inductively implies $H^i(X, \fanl)$ is a direct summand of $H^i(X, \fanl^{p^v})$ for any $v > 0$.
+    by the previous lemma and the fact that $F$ is finite, hence affine (for the isomorphism on the right as abelian groups). Hence we have a split injection $H^i(X, \fanl) \rightarrow H^i(X, \fanl^p)$, which inductively implies $H^i(X, \fanl)$ is a direct summand of $H^i(X, \fanl^{p^v})$ for any $v > 0$.
 
     (ii) We have a commutative diagram
     \[\begin{tikzcd}
@@ -192,34 +436,34 @@ One of the most important consequences is that the higher cohomology of all ampl
 	\arrow[from=1-2, to=2-2]
 	\arrow[from=2-1, to=2-2]
 \end{tikzcd}\]
-Since $Y$ is compatibly split, the horizontal arrows are compatibly split as well. Therefore if $H^0(X, \fanl^p) \longrightarrow H^0(Y, \fanl^p\vert_Y)$ is surjective then so is $H^0(X, \fanl) \longrightarrow H^0(Y, \fanl\vert_Y)$.
+Since $Y$ is compatibly split, the horizontal arrows are compatibly split as well. Therefore if $H^0(X, \fanl^p) \rightarrow H^0(Y, \fanl^p\vert_Y)$ is surjective then so is $H^0(X, \fanl) \rightarrow H^0(Y, \fanl\vert_Y)$.
 \end{proof}
 This leads us to the vanishing result.
 \begin{thm}
     Let $X$ be a proper scheme over an affine scheme, and let $\fanl$ be an ample invertible sheaf on $X$.
     \begin{enumerate}
         \item If $X$ is split, $H^i(X, \fanl) = 0$ for all $i > 0$.
-        \item If $Y$ is compatibly split, then $H^0(X,\fanl) \longrightarrow H^0(Y, \fanl\vert_Y)$ is surjective and $H^i(Y, \fanl\vert_Y) =0 $ for all $i > 0$. This implies $H^i(X, \cali_Y \otimes \fanl) = 0$ for all $i > 0$.
+        \item If $Y$ is compatibly split, then $H^0(X,\fanl) \rightarrow H^0(Y, \fanl\vert_Y)$ is surjective and $H^i(Y, \fanl\vert_Y) =0 $ for all $i > 0$. This implies $H^i(X, \cali_Y \otimes \fanl) = 0$ for all $i > 0$.
     \end{enumerate}
 \end{thm}
 \begin{proof}
     By Serre vanishing $H^i(X, \fanl^v) = H^i(X, \cali_Y \otimes \fanl^v) = H^i(Y, \fanl\vert_Y^v) = 0$ for $v \gg 0$. The short exact sequence
-    \[0 \longrightarrow \cali_Y \otimes \fanl^v \longrightarrow \fanl^v \longrightarrow \fanl\vert_Y^v \longrightarrow 0 \]
+    \[0 \rightarrow \cali_Y \otimes \fanl^v \rightarrow \fanl^v \rightarrow \fanl\vert_Y^v \rightarrow 0 \]
     yields
-    \[0 \longrightarrow H^0(X, \cali_Y \otimes \fanl^v) \longrightarrow H^0(X, \fanl^v) \longrightarrow H^0(Y, \fanl\vert_Y^v) \longrightarrow H^1(X, \cali_Y \otimes \fanl^v) \longrightarrow \ldots\]
-    It follows $H^0(X, \fanl^v) \longrightarrow H^0(Y, \fanl\vert_Y^v)$ is surjective, and by Lemma \ref{bklem1.2.7} the result follows.
+    \[0 \rightarrow H^0(X, \cali_Y \otimes \fanl^v) \rightarrow H^0(X, \fanl^v) \rightarrow H^0(Y, \fanl\vert_Y^v) \rightarrow H^1(X, \cali_Y \otimes \fanl^v) \rightarrow \ldots\]
+    It follows $H^0(X, \fanl^v) \rightarrow H^0(Y, \fanl\vert_Y^v)$ is surjective, and by Lemma \ref{bklem1.2.7} the result follows.
 \end{proof}
 \subsection{Splitting Criteria}
 Define the evaluation map on sheaves
-\[\veps \colon \rHom_{\calo_X}(F_* \calo_X, \calo_X) \longrightarrow \calo_X, \quad \varphi \mapsto \varphi(1)\]
-From now on we assume all Homs are taken as $\calo_X$-modules unless otherwise stated. Note the domain above is a coherent $F_* \calo_X$-module, and since $F$ is finite there is a unique $F^! \calo_X$ such that (\cite{vakil2025} Exercise 17.1.I.)
+\[\veps \colon \rHom_{\calo_X}(F_* \calo_X, \calo_X) \rightarrow \calo_X, \quad \varphi \mapsto \varphi(1)\]
+From now on we assume all Homs are taken as $\calo_X$-modules unless otherwise stated. Note the domain above is a coherent $F_* \calo_X$-module, and since $F$ is finite there is a unique $F^! \calo_X$ such that (\cite{Vakil2025} Exercise 17.1.I.)
 \[\rHom(F_* \calo_X, \calo_X) \simeq F_*(F^! \calo_X)\]
 If $X$ is regular then $F$ is flat, and Grothendieck-Serre duality for a finite flat morphism yields
 \[F^! \calo_X \simeq \rHom(F^* \omega_X, \omega_X)\]
 Note that Lemma \ref{bklem1.2.6} then implies $F^! \calo_X \simeq \rHom(\omega_X^p, \omega_X) \simeq \omega_X^{1-p}$. Recall the trace map $\tau \colon F_* \omega_X \to \omega_X$ defined as in Grothendieck-Serre duality. Then by these remarks, the evaluation map
-\[\veps \colon F_* \rHom(F^* \omega_X, \omega_X) \simeq \rHom(\omega_X, F_* \omega_X) \longrightarrow \calo_X\]
+\[\veps \colon F_* \rHom(F^* \omega_X, \omega_X) \simeq \rHom(\omega_X, F_* \omega_X) \rightarrow \calo_X\]
 can be identified with
-\[\hat{\tau} \colon F_* \omega_X^{1-p} \simeq \rHom(\omega_X, F_* \omega_X) \longrightarrow \rEnd(\omega_X) \simeq \calo_X, \quad u \mapsto \tau \circ u\]
+\[\hat{\tau} \colon F_* \omega_X^{1-p} \simeq \rHom(\omega_X, F_* \omega_X) \rightarrow \rEnd(\omega_X) \simeq \calo_X, \quad u \mapsto \tau \circ u\]
 \begin{rem}If $X$ is a nonsingular variety, then one can show that $\hat{\tau}$ above is given locally at any closed point $x$ by
 \[\hat{\tau}(f(dt_1 \wedge \ldots \wedge dt_n)^{1-p}) = \tr(f)\]
 for all $f \in \calo_{X,x} \subset k[[t_1,\ldots,t_n]]$ and 
@@ -238,35 +482,12 @@ In particular, it is a necessary condition for a nonsingular variety $X$ to be s
 
     Conversely, if $\sigma \in H^0(X, \omega_X^{-1})$ is such that $\sigma^{p-1}$ splits $X$, then the subscheme of zeros of $\sigma$ is compatibly split (in particular reduced).
 \end{prop}
-\begin{proof}
-    TODO Choose local coordinates $t$ at $x \in X$ and use the local form of $\hat{\tau}$ in the above remark along with Theorem \ref{bkthm1.3.8}.
-\end{proof}
 
-\subsection{Splitting Relative a Divisor}
-
-\begin{defn}
-    Let $X$ be a scheme and $D$ an effective Cartier divisor on $X$ with the canonical map $\sigma \colon \calo_X \to \calo_X(D)$ corresponding to the canonical section $\sigma(1) = s_D$. Then $X$ is \textit{Frobenius split relative} $D$ if there is an $\calo_X$-linear map
-    \[\psi \colon F_* \calo_X(D) \to \calo_X\]
-    such that $\varphi := \psi \circ F_*(\sigma) \in \Hom(F_* \calo_X, \calo_X)$ is a splitting of $X$.
-\end{defn}
-
-We can also make similar definitions for compatibly split $Y \subset X$ relative to $D$ as long as $\supp(D)$ doesn't contain any components of $Y$. Note that any $\psi \in \Hom(F_* \calo_X(D), \calo_X)$ is a $D$-splitting if and only if $\psi(s_D) = 1$. We generalize the criterion for splitting in Theorem \ref{bkthm1.3.8}. We have the evaluation map
-\[\veps_D \colon \rHom(F_* \calo_X(D), \calo_X) \to \calo_X, \quad \psi \mapsto \psi(s_D)\]
-By duality we have an isomorphism
-\[\rHom(F_* \calo_X(D), \calo_X(D)) \simeq F_*\rHom(\calo_X(D), F^! \calo_X)\]
-If $X$ is regular, recall $F^! \calo_X \simeq \omega_X^{1-p}$, hence
-\[F_*\rHom(\calo_X(D), F^! \calo_X) \simeq F_* \omega_X^{1-p}(-D)\]
-As a slight abuse of notation, if we denote the induced map $\sigma \colon \omega_X^{1-p}(-D) \xrightarrow{\times s_D} \omega_X^{1-p}$ then we can identify as before $\veps_D$ with the $\calo_X$-linear map
-\[\hat{\tau} \circ F_*(\sigma) \colon F_* \omega_X^{1-p}(-D) \longrightarrow \calo_X\]
-Thus we get the following refinement of Theorem \ref{bkthm1.3.8}.
-\begin{thm}\label{bkthm1.4.10}
-    Let $X$ be a nonsingular variety and $D$ an effective Cartier divisor on $X$. Then $\varphi \in H^0(X, \omega_X^{1-p}(-D))$ splits $X$ relative to $D$ if and only if $\hat{\tau}(\varphi s_D) = 1$
-\end{thm}
-\section{Splitting of Schubert Varieties}
+\subsection{Splitting of Schubert Varieties}
 We follow the notation of the general theory of algebraic groups. Namely, let $G$ be a connected, simply connected, semisimple algebraic group over an algebraically closed field $k$ of characteristic $p > 0$. Let $B$ be a fixed Borel subgroup, $T$ a maximal torus, $U$ the unipotent radical of $B$ such that $B = TU$. Let $W = N(T)/T$ be the Weyl group. Varieties are assumed integral. We let $\{s_1,\ldots,s_{\ell}\} \subset W$ be the set of simple reflections generating $W$.
 
 We have the bijective correspondance between standard parabolic subgroups $G \supset P \supset B$ and $I \subset \{1,\ldots,\ell\}$ by
-\[I \longleftrightarrow P_I := \bigsqcup_{w \in W_I} BwB\]
+\[I \leftrightarrow P_I := \bigsqcup_{w \in W_I} BwB\]
 where $W_I \leq W$ is the subgroup generated by $\{s_{i} \colon i \in I\}$. We denote the standard minimal parabolic subgroups $P_i := P_{\{i\}} = B \sqcup Bs_iB$.
 
 Recall the Bruhat cell $C_w = BwB/B$ and the Schubert variety $X_w$, the closure of $C_w$ in $G/B$ with the reduced subscheme structure. The boundary is the union of all codimension one Schubert subvarieties in $X_w$
@@ -283,7 +504,7 @@ The product map $P_{i_1} \times \ldots \times P_{i_n} \to X_w$ is invariant unde
 \end{defn}
 The goal of this section is to show that $Z_{\mfw}$ is split. We give a few important first properties, and then construct its canonical line bundle in order to use some of the theory developed in Section \ref{frobsplit}.
 
-We can put a smooth projective variety structure on $Z_{\mfw}$ such that the orbit map $\pi_{\mfw} \colon P_{\mfw} \to Z_{\mfw}$ is a locally trivial principal $B^n$-bundle. For details see \cite{Brion2004FrobeniusSM} Section 2.2, which gives a commutative diagram below whose horizontal arrows are closed embeddings and vertical arrows are $B^n$-bundles.
+We can put a smooth projective variety structure on $Z_{\mfw}$ such that the orbit map $\pi_{\mfw} \colon P_{\mfw} \to Z_{\mfw}$ is a locally trivial principal $B^n$-bundle. For details see \cite{Brion2004} Section 2.2, which gives a commutative diagram below whose horizontal arrows are closed embeddings and vertical arrows are $B^n$-bundles.
 \[\begin{tikzcd}
 	{P_{\mathfrak{w}}} & {G^n} \\
 	{Z_{\mathfrak{w}}} & {(G/B)^n}
@@ -297,20 +518,23 @@ Namely, the horizontal maps are given by
 where $[p_1,\ldots,p_n]$ denotes the $B^n$-orbit of the corresponding $P_{\mfw}$ point. In particular, $Z_{\mfw}$ is smooth since $P_{\mfw}$ is smooth.
 
 The left multiplication of $P_{i_1}$ on the first factor of $\phi_{\mfw}$ gives $Z_{\mfw}$ the structure of a $P_{i_1}$-variety. The projection of $\phi_{\mfw}$ on the last factor gives a $P_{i_1}$-equivariant morphism 
-\[\theta_{\mfw} \colon Z_{\mfw} \longrightarrow G/B, \quad \theta_{\mfw}[p_1,\ldots,p_n] := p_1\cdots p_n B\]
+\[\theta_{\mfw} \colon Z_{\mfw} \rightarrow G/B, \quad \theta_{\mfw}[p_1,\ldots,p_n] := p_1\cdots p_n B\]
 Since $P_i = B \sqcup Bs_i B$ and $Bs_i B \simeq U_{\alpha_i} \times B$ where $U_{\alpha_i}$ is the root subgroup of $U$ corresponding to $\alpha_i \leftrightarrow s_i$, we see
 \[\interior Z_{\mfw} := ((Bs_{i_1}B) \times \ldots \times (B s_{i_n} B))/B^n\]
 is an open subset isomorphic to the affine space $\prod_{j=1}^n U_{\alpha_{i_j}}$. We can see if $\mfw$ gives a reduced expression in $W$ that $\theta_{\mfw}(Z_{\mfw}) = P_{i_1}\cdots P_{i_n}/B = X_w$ is a Schubert variety, where $w= s_{i_1}\cdots s_{i_n}$. Moreover $\theta(\interior Z_{\mfw}) = Bs_{i_1}B\cdots Bs_{i_n} B/B = C_w$ is the Bruhat cell, and $\theta_{\mfw}$ restricts to an isomorphism $\interior Z_{\mfw} \to C_w$. Thus $\theta_{\mfw}$ provides a desingularization of $X_w$.
 
 We can take subsequences of $\mfw_J := (s_{i_{j_1}}, \ldots, s_{i_{j_m}}) \subset (s_{i_1}, \ldots, s_{i_n}) = \mfw$ for $J \subset I$ and construct a closed embedding 
 \begin{equation}\label{closedembedding}
-    \iota_{\mfw_J, \mfw} \colon Z_{\mfw_J} \longrightarrow Z_{\mfw}
+    \iota_{\mfw_J, \mfw} \colon Z_{\mfw_J} \rightarrow Z_{\mfw}
 \end{equation} 
 In particular, for $1 \leq m \leq n$ we can take $\mfw[m] := (s_{i_1}, \ldots, s_{i_m})$ which is $\mfw_J$ for $J = (i_1,\ldots,i_m) \subset (i_1,\ldots,i_n) = I$, and we denote the morphism given by projection to the first $m$ coordinates by
-\[\psi_{\mfw, m} \colon Z_{\mfw} \longrightarrow Z_{\mfw[m]}\]
+\begin{equation}\label{fibration}
+    \psi_{\mfw, m} \colon Z_{\mfw} \rightarrow Z_{\mfw[m]}
+\end{equation}
 For $m = n-1$ we give it the special notation $\psi_{\mfw}$. Note then that
 \[\psi_{\mfw, m} = \psi_{\mfw[m+1]}\circ\ldots \circ\psi_{\mfw[n-1]}\circ \psi_{\mfw}\]
-The following proposition is given in \cite{Brion2004FrobeniusSM}.
+since, for example $\psi_{\mfw[n-1]} \colon Z_{\mfw[n-1]} \to Z_{\mfw[n-2]}$.
+The following proposition is given in \cite{Brion2004}.
 \begin{prop}
     The projection $\psi_{\mfw}$ is a locally trivial $\bbp^1$-fibration and therefore $\psi_{\mfw,m}$ is smooth. We also have the following fiber diagram where $\mfv := \mfw[n-1]$ and $f_{i} := G/B \to G/P_{i}$ is the standard projection.
     \[\begin{tikzcd}
@@ -324,6 +548,11 @@ The following proposition is given in \cite{Brion2004FrobeniusSM}.
 \end{prop}
 We work out the diagram to familiarize the reader with the definitions. Clockwise, it reads $f_{i_n} \circ \theta_{\mfw}[p_1,\ldots,p_n] = f_{i_n}(p_1\cdots p_n B) = p_1\cdots p_{n-1} P_{i_n}$. Counterclockwise, we get $f_{i_n} \circ \theta_{\mfv} \circ \psi_{\mfw}[p_1,\ldots,p_n] = f_{i_n} \circ \theta_{\mfv}[p_1,\ldots,p_{n-1}] = f_{i_n}(p_1\cdots p_{n-1} B) = p_1\cdots p_{n-1} P_{i_n}$ which is equivalent.
 
+The fibration also admits a section
+\begin{equation}\label{section}
+    \sigma_\mfw \colon Z_{\mfv} \to Z_\mfw, \quad [p_1,\ldots,p_{n-1}] \mapsto [p_1,\ldots,p_{n-1},1]
+\end{equation}
+
 Let $\mfw(j) := (s_{i_1}, \ldots, \hat{s}_{i_j}, \ldots, s_{i_n})$ for $j \in I$ and define the "boundary" $\del Z_{\mfw}$ of $Z_{\mfw}$ by
 \[\del Z_{\mfw} := \bigcup_{j=1}^n Z_{\mfw(j)}\]
 with the closed reduced subscheme structure, where $Z_{\mfw(j)}$ are seen to be divisors of $Z_{\mfw}$ via the closed embedding $\iota_{\mfw(j), \mfw}$ in (\ref{closedembedding}). Further they are the irreducible components of $\del Z_{\mfw}$ such that for any $J \subset I$, as schemes
@@ -331,7 +560,7 @@ with the closed reduced subscheme structure, where $Z_{\mfw(j)}$ are seen to be 
 In particular, $\interior Z_{\mfw} = Z_{\mfw} \setminus \del Z_{\mfw}$.
 
 Recall we can construct a line bundle on $G/B$ as follows. We can identify the characters $\bbx^{\bullet}(B)$ on $B$ with $\weight$ on the torus $T$ by restriction, so given a character $\lambda \in \weight$ let $k_{\lambda}$ denote the corresponding one-dimensional representation of $B$. Then we have a $G$-equivariant line bundle
-\[\fanl(\lambda) := G \times_B k_{-\lambda} \longrightarrow G/B\]
+\[\fanl(\lambda) := G \times_B k_{-\lambda} \rightarrow G/B\]
 associated to the principal $B$-bundle $\pi_B \colon G \to G/B$ via $k_{-\lambda}$. In fact all line bundles are of this form, and in particular 
 \[\omega_{G/B} \simeq \fanl(-2\rho)\]
 where $\rho := \chi_1 + \ldots + \chi_{\ell}$ is the sum of the fundamental weights which form a basis of $\weight$, and equivalently the half-sum of the positive roots. More generally if $V$ is a finite $B$-module we define $\fanl(V) := G \times_B V \to G/B$ as the associated vector bundle.
@@ -340,15 +569,92 @@ We define $\fanl_{\mfw}(\lambda)$ as the pullback of $\fanl(\lambda)$ on $G/B$ a
 
 \begin{prop}
     Let $\mfw = (s_{i_1}, \ldots, s_{i_n})$ be any sequence of simple reflections in $W$. Then the canonical bundle $\omega_{Z_{\mfw}}$ of $Z_{\mfw}$ is given by 
-    \[\omega_{Z_{\mfw}} \simeq \calo_{Z_{\mfw}}(-\del Z_{\mfw}) \otimes \fanl_{\mfw}(-p)\]
+    \begin{equation}\label{eq1}
+        \omega_{Z_{\mfw}} \simeq \calo_{Z_{\mfw}}(-\del Z_{\mfw}) \otimes \fanl_{\mfw}(-p)
+    \end{equation}
     and as $B$-equivariant line bundles,
-    \[\omega_{Z_{\mfw}} \simeq \calo_{Z_{\mfw}}(-\del Z_{\mfw}) \otimes \fanl_{\mfw}(-p) \otimes \mathbf{k}_{-\rho}\]
+    \begin{equation}\label{eq2}
+        \omega_{Z_{\mfw}} \simeq \calo_{Z_{\mfw}}(-\del Z_{\mfw}) \otimes \fanl_{\mfw}(-p) \otimes \mathbf{k}_{-\rho}
+    \end{equation}
     where $\mathbf{k}_{-\rho}$ is the trivial line bundle on $Z_{\mfw}$ equipped with the $B$-equivariant line bundle structure coming from the representation $k_{-\rho}$ of $B$.
 \end{prop}
 
-The proof given in \cite{Brion2004FrobeniusSM} is enlightening so we include it here.
+The proof given in \cite{Brion2004} is enlightening so we include it here.
 \begin{proof}
-    We proceed by induction on $\ell(\mfw) = n$. For $n = 1$, $Z_{\mfw} = P_i/B \simeq \bbp^1$ and hence $\omega_{Z_{\mfw}} \simeq \calo_{\bbp^1}(-2x_0)$ for any $x_0 \in \bbp^1$. It's easy to see $\fanl_{\mfw}(-\rho) \simeq \calo_{\bbp^1}(-x_0)$. TODO
+    We proceed by induction on $\ell(\mfw) = n$. For $n = 1$, $Z_{\mfw} = P_i/B \simeq \bbp^1$ and hence $\omega_{Z_{\mfw}} \simeq \calo_{\bbp^1}(-2x_0)$ for any $x_0 \in \bbp^1$. It's easy to see $\fanl_{\mfw}(-\rho) \simeq \calo_{\bbp^1}(-x_0)$. Then (\ref{eq1}) follows for $n = 1$.
+
+    Recall the $\bbp^1$-fibration $\psi_{\mfw} \colon Z_{\mfw} \to Z_\mfv$ in (\ref{fibration}) and section $\sigma_\mfw$ in (\ref{section}). By induction, suppose the validity of (\ref{eq1}) for $Z_\mfv$. The line bundle $\fanl_\mfw(\rho)$ is of degree $1 = \langle \rho, \alpha^\vee_i \rangle$ along the fibers $P_i/B \cong \bbp^1$ of $\psi_\mfw$. Then 
+    \[\sigma_\mfw^* \fanl_\mfw(\rho) = \fanl_\mfv(\rho)\]
+hence
+\begin{equation}\label{fanl}
+\fanl_\mfw(\rho)
+\;\simeq\;
+\calo_{Z_{\mfw}}\bigl(\sigma_{\mfw}(Z_{\mfv})\bigr)
+\;\otimes\;
+\psi_{\mfw}^*\,\fanl_{\mfv}(\rho).
+\end{equation}
+Since 
+\(\partial Z_{\mfw}
+=\psi_{\mfw}^{-1}(\partial Z_{\mfv})\;\cup\;\sigma_{\mfw}(Z_{\mfv})\),
+we also have
+\begin{equation}\label{partial}
+\calo_{Z_{\mfw}}\bigl(-\partial Z_{\mfw}\bigr)
+\;\simeq\;
+\calo_{Z_{\mfw}}\bigl(-\sigma_{\mfw}(Z_{\mfv})\bigr)
+\;\otimes\;
+\psi_{\mfw}^*\,\calo_{Z_{\mfv}}\bigl(-\partial Z_{\mfv}\bigr).
+\end{equation}
+
+\smallskip
+
+\noindent
+By the inductive hypothesis,
+\[
+\omega_{Z_{\mfv}}
+\;\simeq\;
+\calo_{Z_{\mfv}}\bigl(-\partial Z_{\mfv}\bigr)
+\;\otimes\;
+\fanl_{\mfv}(-\rho),
+\]
+and since for any \(\bbp^1\)–bundle \(\pi\colon X\to Y\) one has
+\(\omega_{X}\simeq\omega_{X/Y}\otimes\pi^*\omega_Y\) with
+\(\omega_{X/Y}\simeq\calo_X(-2\,\sigma(Y))\),
+we deduce
+\[
+\begin{aligned}
+\omega_{Z_{\mfw}}
+&\;\simeq\;
+\calo_{Z_{\mfw}}\bigl(-2\,\sigma_{\mfw}(Z_{\mfv})\bigr)
+\;\otimes\;
+\psi_{\mfw}^*
+\Bigl(
+\calo_{Z_{\mfv}}(-\partial Z_{\mfv})
+\otimes
+\fanl_{\mfv}(-\rho)
+\Bigr)
+\\
+&\;\simeq\;
+\Bigl[
+\calo_{Z_{\mfw}}\bigl(-\sigma_{\mfw}(Z_{\mfv})\bigr)
+\otimes
+\psi_{\mfw}^*\calo_{Z_{\mfv}}(-\partial Z_{\mfv})
+\Bigr]
+\;\otimes\;
+\Bigl[
+\calo_{Z_{\mfw}}\bigl(-\sigma_{\mfw}(Z_{\mfv})\bigr)
+\otimes
+\psi_{\mfw}^*\fanl_{\mfv}(-\rho)
+\Bigr]
+\\
+&\;\simeq\;
+\underbrace{\calo_{Z_{\mfw}}(-\partial Z_{\mfw})}_{(\ref{partial})}
+\;\otimes\;
+\underbrace{\fanl_{\mfw}(-\rho)}_{(\ref{fanl})}.
+\end{aligned}
+\]
+By induction, we have shown (\ref{eq1}) holds.
+
+Since $Z_\mfw$ is projective, for any two $B$-equivariant bundles $\fanl_1, \fanl_2$ isomorphic as nonequivariant bundles, there exists a character $\lambda \in \weight^+$ such that $\fanl_1 \simeq \fanl_2 \otimes \bfk_{\lambda}$.
 \end{proof}
 
 As a corollary we get the following theorem.
@@ -359,6 +665,56 @@ As a corollary we get the following theorem.
 \begin{proof}
     This is essentially a direct application of Proposition \ref{bkprop1.3.11}.
 \end{proof}
+
+\section{Frobenius Splitting of $\Bun_G$}
+
+Recall our definition of the Ran space of a reduced connected curve $X$ over $k$. 
+\[\Ran(X)(R) = \varinjlim\nolimits_{I} X^I(R)\]
+It suffices to show that the Frobenius morphism $F \colon \Ran(X) \to \Ran(X)$ is split. In fact, we believe the stronger statement that $F_* \calo_{\Ran(X)} = \calo_{\Ran(X)}$. That is, for all $x\colon \spec R \to \Ran(X)$ we want to show that if the following is a fiber product diagram
+\[\begin{tikzcd}
+	Z & {\mathrm{Ran}(X)} \\
+	{\mathrm{Spec}\, R} & {\mathrm{Ran}(X)}
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+	\arrow["F", from=1-2, to=2-2]
+	\arrow["x"', from=2-1, to=2-2]
+\end{tikzcd}\]
+then $\Gamma(Z, \calo_Z) \simeq R$. Suppose first that $R = k$ and $x \colon \spec k \to \Ran(X)$ is given by $x \in X(k)$. The $A$-valued points $Z(A)$ are given by $\spec A \to Z$, hence by the universal property by maps $\spec A \to \spec k$ and $\spec A \to \Ran(X)$ that commute with $x,F$.
+\[\begin{tikzcd}
+	{\mathrm{Spec}\,A} \\
+	& Z & {\mathrm{Ran}(X)} \\
+	& {\mathrm{Spec}\, k} & {\mathrm{Ran}(X)}
+	\arrow[from=1-1, to=2-2]
+	\arrow["y", curve={height=-12pt}, from=1-1, to=2-3]
+	\arrow["x_A", curve={height=12pt}, from=1-1, to=3-2, swap]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=2-2, to=3-2]
+	\arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=2-2, to=3-3]
+	\arrow["F", from=2-3, to=3-3]
+	\arrow["x"', from=3-2, to=3-3]
+\end{tikzcd}\]
+In the above diagram, $y = \{y_i \in X(A) \mid i \in I\} \in X^I(A)$ for some finite nonempty $I$. By commutativity, 
+\[x_A = Fy = \{F(y_i) \in X(A) \mid i \in I\} \in X(A)\]
+Let $F^I \colon X^I \to X^I$ be the component-wise Frobenius, and define $Z^I(A) := (F^I)^{-1}(x_A)$ where we denote the constant point $x_A = \{x_i = x_A \in X(A) \mid i \in I\} \in X^I(A)$. Then it is obvious from the above description that $Z = \varinjlim_I Z^I$. 
+
+Suppose $X$ is \textit{smooth} so that \'etale locally around $x$, we can pick a uniformizer $t$ such that $\hat{\calo}_{X,x}\simeq k[[t]]$ and $F^{\#}(t) = t^p$. Then for $I = \{1,\ldots,n\}$, the fiber has complete local ring 
+\[\hat{\calo}_{Z^I} \simeq k[[t_1,\ldots,t_n]]/(t_1^p, \ldots,t_n^p) 
+\simeq k[t_1,\ldots,t_n]/(t_1^p, \ldots, t_n^p)\]
+over the unique closed point. Since $Z^I$ is zero dimensional this equals its ring of global sections.
+\[\calo_{Z_I} \simeq k[t_1,\ldots,t_n]/(t_1^p, \ldots, t_n^p)\]
+Given a surjection $\phi \colon J \twoheadrightarrow I$, the corresponding diagonal map $\Delta(\phi) \colon X^I \to X^J$ carries the fibers of $F^I$ to the fibers of $F^J$.
+\[\Delta(\phi)(F^I)^{-1}(x_1,\ldots,x_n) = \Delta(\phi)(F^{-1}(x_1),\ldots,F^{-1}(x_n)) = (F^{-1}(x_{\phi(1)}), \ldots, F^{-1}(x_{\phi(m)}))\]
+\[(F^J)^{-1}(x_{\phi(1)}, \ldots, x_{\phi(m)}) = (F^{-1}(x_{\phi(1)}), \ldots, F^{-1}(x_{\phi(m)}))\]
+and therefore we have diagonal maps
+\[\Delta(\phi) \colon Z^I \to Z^J\]
+On the level of functions
+\[\Delta(\phi)^{\#} \colon \hat{\calo}_{Z^J} \to \hat{\calo}_{Z^I}\]
+\[ k[t_1,\ldots,t_m]/(t_1^p, \ldots,t_m^p) \to  k[t_1,\ldots,t_n]/(t_1^p, \ldots,t_n^p)\]
+sending $t_j \mapsto t_{\phi(j)}$. Then
+\[\varprojlim\nolimits_I \Gamma(Z^I, \calo_{Z^I}) = \{(f_I) \in \prod_{I} k[t_1,\ldots,t_n]/(t_1^p, \ldots, t_n^p) \mid \Delta(\phi)^{\#}(f_J) = f_I\}\]
+Suppose $f_1(t_1)$. Then $\phi \colon \{1,2\} \to \{1\}$ implies $f_2(t_1,t_1) = f_1(t_1)$. 
+
 
 \newpage
 
